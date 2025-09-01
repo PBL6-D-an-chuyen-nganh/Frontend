@@ -1,4 +1,4 @@
-import React from 'react'
+import { Link } from 'react-router-dom';
 import logo from '../../assets/Frame.svg'
 import MenuItem from '../MenuItem'
 
@@ -28,8 +28,19 @@ function Navbar() {
             </div>
         </div>
         <div className='w-1/4 flex items-center gap-4'>
-            <button className='border-1 rounded-lg px-6 py-1 text-green-900 cursor-pointer hover:bg-green-900 hover:text-white' style={{ borderColor: "#E0E8E0" }}>Đăng nhập</button>
-            <button className='border-1 rounded-lg bg-green-900 text-white px-6 py-1 cursor-pointer hover:bg-white hover:text-green-900'>Đăng ký</button>
+            <Link to="/login">
+                <button className='border-1 rounded-lg px-6 py-1 text-green-900 cursor-pointer hover:bg-green-900 hover:text-white' 
+                        style={{ borderColor: "#E0E8E0" }}
+                >
+                Đăng nhập
+                </button>
+            </Link>
+        
+            <Link to="/signup">
+                <button className='border-1 rounded-lg bg-green-900 text-white px-6 py-1 cursor-pointer hover:bg-white hover:text-green-900'>
+                Đăng ký
+                </button>
+            </Link>
         </div>
     </nav>
   )
