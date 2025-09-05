@@ -15,9 +15,7 @@ function LoginPage() {
     <div className='relative z-10 flex items-center justify-center min-h-screen'>
       <Login />
     </div>
-  
-
-</div>
+  </div>
 
   )
 }

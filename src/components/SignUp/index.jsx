@@ -23,27 +23,6 @@ function SignUp() {
       </div>
     
       <div>
-        <div className='mb-3 relative'>
-            <label 
-                className='block text-gray-500 text-sm font-light mb-2' 
-                htmlFor='role'
-            >
-                Vai trò 
-            </label>
-            <select
-                id="role"
-                className="w-full p-3 bg-white rounded-lg font-light 
-                            focus:outline-none focus:ring-2 focus:ring-green-900 
-                            focus:border-transparent appearance-none pr-10"
-                defaultValue="select"
-            >
-                 <option value="select">Chọn</option>
-                <option value="patient">Bệnh nhân</option>
-                <option value="doctor">Bác sĩ</option>
-            </select>
-            <FaChevronDown className="absolute right-3 top-2/3 -translate-y-1/2 text-gray-500 pointer-events-none cursor-pointer" />
-        </div>
-
         <div className='mb-3'>
             <label 
                 className='block text-gray-500 text-sm font-light mb-2' 
@@ -102,6 +81,13 @@ function SignUp() {
             id='password' 
             placeholder='Nhập mật khẩu ' 
           />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)} 
+            className="absolute right-3 top-11 text-gray-500 hover:text-gray-700"
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}  
+          </button>
         </div>
 
         <div className='mb-6 relative'>

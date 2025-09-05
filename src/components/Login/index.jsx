@@ -7,7 +7,7 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false)
 
   return (
-    <div className='w-full max-w-lg p-8 bg-white/30 backdrop-blur-xs rounded-lg shadow-neutral-300 relative'>
+    <div className='w-full max-w-sm p-8 bg-white/30 backdrop-blur-xs rounded-lg shadow-neutral-300 relative sm:max-w-md md:max-w-lg '>
       <div className='mb-8'>
         <h2 className='text-2xl font-normal mb-6 text-green-950'>Đăng nhập</h2>
         <p className='text-gray-500 text-sm font-light'>
