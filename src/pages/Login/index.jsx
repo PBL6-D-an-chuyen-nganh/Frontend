@@ -1,4 +1,3 @@
-import React from 'react'
 import backgroundImage from '../../assets/img/BG.jpg'
 import Login from '../../components/Login'
 

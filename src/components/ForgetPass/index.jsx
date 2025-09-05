@@ -22,7 +22,7 @@ function Login() {
         <div className='space-y-3'>
              <button className='w-full p-3 border-1 rounded-lg bg-green-900 text-white cursor-pointer hover:bg-white hover:text-green-900'>Gửi mã xác thực</button>
             <Link
-                to="/login"
+                to="/signup"
                 className="text-green-900 font-medium hover:underline flex justify-center"
             >
                 Tạo tài khoản mới
