@@ -225,14 +225,14 @@ function SignUp() {
         <div className='mb-6 relative'>
           <label 
             className='block text-gray-500 text-sm font-light mb-2' 
-            htmlFor='password'
+            htmlFor='enterpassagain'
           >
             Nhập lại mật khẩu
           </label>
           <input 
             className='w-full p-3 bg-white rounded-lg font-light focus:outline-none focus:ring-2 focus:ring-green-900 focus:border-transparent' 
-            type={showPassword ? 'text' : 'password'}  
-            id='password' 
+            type={showPassword ? 'text' : 'enterpassagain'}  
+            id='enterpassagain' 
             placeholder='Nhập lại mật khẩu' 
             onBlur={checkEnterPassAgain}
           />
