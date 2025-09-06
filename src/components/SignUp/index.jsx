@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa6";
-import { fetchRegister } from '../../api/Registe';
+import { fetchRegister } from '../../api/Register';
 import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
@@ -225,17 +225,20 @@ function SignUp() {
         <div className='mb-6 relative'>
           <label 
             className='block text-gray-500 text-sm font-light mb-2' 
-            htmlFor='enterpassagain'
+            htmlFor='password'
           >
             Nhập lại mật khẩu
           </label>
-          <input 
-            className='w-full p-3 bg-white rounded-lg font-light focus:outline-none focus:ring-2 focus:ring-green-900 focus:border-transparent' 
-            type={showPassword ? 'text' : 'enterpassagain'}  
-            id='enterpassagain' 
-            placeholder='Nhập lại mật khẩu' 
-            onBlur={checkEnterPassAgain}
-          />
+        <input 
+          className='w-full p-3 bg-white rounded-lg font-light focus:outline-none focus:ring-2 focus:ring-green-900 focus:border-transparent' 
+          type={showPassword ? 'text' : 'password'}  
+          id='enterpassagain' 
+          placeholder='Nhập lại mật khẩu' 
+          value={enterpassagain}
+          onChange={(e) => setEnterPassAgain(e.target.value)}
+          onBlur={checkEnterPassAgain}
+        />
+
            {error.enterpassagain && (
             <span className="mb-1 text-xs text-red-500 text-center">
               {error.enterpassagain}
