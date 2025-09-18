@@ -4,6 +4,8 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa6";
 import { fetchRegister } from '../../api/Register';
 import { useNavigate } from 'react-router-dom';
+import { verifyOTP } from '../../api/VerifyOTP';
+import Modal from '../Modal';
 
 function SignUp() {
   const [showPassword, setShowPassword] = useState(false)
@@ -13,6 +15,7 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [enterpassagain, setEnterPassAgain] = useState("");
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState({
     email: "",
     password: "",
@@ -67,12 +70,28 @@ function SignUp() {
   const handleRegister = async () => {
     try {
       const user = await fetchRegister(name, email, phoneNumber, password);
-      navigate(`/login`);
-    } catch (error) {
-      console.error("Register failed:", error);
-      setError(error.message);
-    } 
+      setIsModalOpen(true);
+    } catch (err) {
+      console.error("Đăng ký không thành công", err);
+      setError((prev) => ({
+        ...prev,
+        email: err.response?.data?.message || "Đăng ký thất bại"
+      }));
+    }
   };
+
+  const handleVerify = async (otp) => {
+    const result = await verifyOTP(email, otp);
+    if (result.success) {
+      setIsModalOpen(false);
+      navigate('/login');
+    } else {
+      setError((prev) => ({
+        ...prev,
+        otp: result.message || "Xác thực OTP thất bại. Vui lòng thử lại.",
+      }));
+    }
+  }
 
   const checkEnterPassAgain = (e) => {
     if(e.target.value !== password) {
@@ -225,7 +244,7 @@ function SignUp() {
         <div className='mb-6 relative'>
           <label 
             className='block text-gray-500 text-sm font-light mb-2' 
-            htmlFor='password'
+            htmlFor='enterpassagain'
           >
             Nhập lại mật khẩu
           </label>
@@ -267,6 +286,12 @@ function SignUp() {
                       Hoàn tác</button>
                 </div>
       </div>
+     <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        email={email}
+        onVerify={handleVerify}
+      />
     </div>
   )
 }
