@@ -23,7 +23,7 @@ export default function Pagination({ current, total, onChange }) {
                 "w-10 h-10 rounded-md border " +
                 (active
                   ? "bg-green-900 text-white border-green-900 shadow"
-                  : "bg-white text-green-900 hover:bg-green-50 border-gray-300")
+                  : "bg-white text-green-900 hover:bg-green-50 cursor-pointer border-gray-300")
               }
               aria-current={active ? "page" : undefined}
             >
@@ -38,7 +38,7 @@ export default function Pagination({ current, total, onChange }) {
             "w-10 h-10 rounded-md border flex items-center justify-center " +
             (current === total
               ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
-              : "bg-white hover:bg-green-50 text-green-900 border-green-900")
+              : "bg-white hover:bg-green-50 cursor-pointer text-green-900 border-green-900")
           }
           aria-label="Next page"
         >
