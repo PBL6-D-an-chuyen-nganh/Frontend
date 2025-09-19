@@ -20,16 +20,6 @@ function Login() {
     setError("");
     try {
       const { user, token} = await fetchLogin(email, password);
-      // if (error === "unverified") {
-      //   navigate(`/accounts/emailverification?email=${email}`);
-      //   try {
-      //     const response = await getOTP(email);
-      //     // if (!response) setError("Email chưa được đăng ký!");
-      //   } catch (otpError) {
-      //     setError("Lỗi xảy ra khi gửi OTP. Vui lòng thử lại.");
-      //   }
-      //   return;
-      // }
 
       if (!token) {
         setError("Không nhận được token hợp lệ. Vui lòng thử lại.");
@@ -42,11 +32,6 @@ function Login() {
     } catch (err) {
       const status = err.response?.status;
 
-      // if (!status) {
-      //   setError("Lỗi mạng, vui lòng thử lại.");
-      // } else if (status === 403) {
-      //   setError("Tên đăng nhập hoặc mật khẩu không đúng.");
-      // } else {
         setError("Có lỗi xảy ra, vui lòng thử lại.");      
     } 
   };
