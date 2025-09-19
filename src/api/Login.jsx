@@ -13,9 +13,9 @@ export const fetchLogin = async (email, password) => {
     const status = error.response?.status;
     const message = error.response?.data?.error;
 
-    // if (status === 403 && message === "Tài khoản của bạn chưa được xác thực") {
-    //   return { user: { email, isVerified: false }, error: "unverified" };
-    // }
+    if (status === 403 && message === "Tài khoản của bạn chưa được xác thực") {
+      return { user: { email, isVerified: false }, error: "unverified" };
+    }
 
     throw error; 
   }
