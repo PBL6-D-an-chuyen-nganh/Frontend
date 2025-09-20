@@ -46,6 +46,7 @@ function Login() {
     <div className='w-full max-w-sm p-8 bg-white/30 backdrop-blur-xs rounded-lg shadow-neutral-300 relative sm:max-w-md md:max-w-lg '>
       <div className='mb-8'>
         <h2 className='text-2xl font-normal mb-6 text-green-950'>Đăng nhập</h2>
+        <p className='text-green-900 text-sm font-medium'>Vui lòng đăng nhập để truy cập các chức năng của hệ thống</p>
         <p className='text-gray-500 text-sm font-light'>
           Bạn chưa có tài khoản?{" "}
           <Link

@@ -7,48 +7,65 @@ import { useAuthStore } from "../store/useAuthStore";
 import HomePage from "../pages/Homepage";
 import DefaultLayout from "../layouts/DefaultLayout";
 import GuestPage from "../pages/Guest";
-
-function GuestRoute({ children }) {
-  const token = useAuthStore(s => s.token);
-  return token ? <Navigate to="/home" replace /> : children;
-}
-
+import ProfessorPage from "../pages/Professor";
 function PrivateRoute({ children }) {
   const token = useAuthStore(s => s.token);
   return token ? children : <Navigate to="/login" replace />;
 }
 
+function RouteSelector() {
+  const token = useAuthStore(s => s.token);
+  return token ? <DefaultLayout /> : <GuestLayout />;
+}
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <GuestRoute>
-        <GuestLayout />
-      </GuestRoute>
-    ),
+    element: <RouteSelector />,
     children: [
-      { index: true, element: <GuestPage /> },  
-      { path: "home", element: <HomePage /> },  
-      { path: "login", element: <LoginPage /> },
-      { path: "signup", element: <SignUpPage /> },
-      { path: "forget-password", element: <ForgetPassPage /> },
+      // Guest-only pages
+      {
+        index: true,
+        element: <GuestPage />,
+      },
+      {
+        path: "login",
+        element: <LoginPage />,
+      },
+      {
+        path: "signup",
+        element: <SignUpPage />,
+      },
+      {
+        path: "forget-password",
+        element: <ForgetPassPage />,
+      },
+
+      // Authenticated pages 
+      {
+        path: "home",
+        element: (
+          <PrivateRoute>
+            <HomePage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "professor",
+        element: (
+          <PrivateRoute>
+            <ProfessorPage />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
+
 
   {
-    path: "/home",
-    element: (
-      <PrivateRoute>
-        <DefaultLayout/>
-      </PrivateRoute>
-    ),
-    children: [
-      { index: true, element: <HomePage /> },
-
-    ],
+    path: "*",
+    element: <Navigate to="/" replace />,
   },
-
-  { path: "*", element: <Navigate to="/" replace /> },
 ]);
 
 export default router;
