@@ -10,6 +10,7 @@ function UserHeader() {
         { id: "forum", title: "Diễn đàn", path: "/forum" },
         { id: "analysis", title: "Phân tích", path: "/analysis" },
     ];
+
   return (
     <nav className='bg-white flex items-center justify-between px-8 py-6 shadow-md'>
             <div className='flex items-center gap-2'>
