@@ -5,10 +5,10 @@ import MenuItem from '../MenuItem'
 function UserHeader() {
    const menuItems = [
         { id: "homepage", title: "Trang chủ", path: "/home" },
-        { id: "professor", title: "Chuyên gia", path: "/home/professor" },
-        { id: "service", title: "Dịch vụ", path: "/home/service" },
-        { id: "forum", title: "Diễn đàn", path: "/home/forum" },
-        { id: "analysis", title: "Phân tích", path: "/home/analysis" },
+        { id: "professor", title: "Chuyên gia", path: "/professor" },
+        { id: "service", title: "Dịch vụ", path: "/service" },
+        { id: "forum", title: "Diễn đàn", path: "/forum" },
+        { id: "analysis", title: "Phân tích", path: "/analysis" },
     ];
 
   return (
