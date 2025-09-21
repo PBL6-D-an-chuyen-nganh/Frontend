@@ -3,6 +3,7 @@ import AvatarDisplay from '../AvatarDisplay';
 import DropdownMenu from '../DropdownMenu';
 import { useAuthStore } from "../../store/useAuthStore";
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import { fetchLogout } from '../../api/Logout';
 
 const UserMenu = () => {
     const [active, setActive] = useState(false);
@@ -28,8 +29,10 @@ const UserMenu = () => {
   const handleLogout = async () => {
     try {
       const res = await fetchLogout(axiosPrivate);
+      console.log(res);
       if (res.message) {
         logout();
+        window.location.href = '/login';
       }
     } catch (err) {
       console.log(err);

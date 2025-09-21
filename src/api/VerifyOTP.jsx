@@ -6,7 +6,6 @@ export const verifyOTP = async (email, otp) => {
       email,
       otp
     });
-
     const data = response.data;
     return {
       success: true,
