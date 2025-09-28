@@ -8,6 +8,7 @@ import { GrArticle } from "react-icons/gr";
 import Article from '../../components/Home/Article';
 import { getAllArticles } from '../../api/GetAllArticles';
 import Pagination from '../../components/Home/Page'
+import Dropdown from '../../components/Dropdown';
 function HomePage() {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -58,8 +59,11 @@ function HomePage() {
       <div>
         <img src={pageimg} alt="homepage" className='w-full h-min object-cover'/>
       </div>
-      <div className='border-t-46 my-3 border-green-900'></div>
+      <div className='border-t-46 border-green-900'></div>
       <div className='mb-14'>
+        <div className='max-w-6xl mx-auto space-y-8 mb-8 mt-8'>
+           <Dropdown /> 
+        </div>
         <div className='space-y-8 mb-4'>
           {inforList.map((infor) => (
             <Infor
@@ -85,7 +89,8 @@ function HomePage() {
             {loading && <div className="text-gray-500">Đang tải…</div>}
             {!loading && articles.map(a => (
               <Article
-                key={a.articleID}                            
+                key={a.articleID}    
+                articleID={a.articleID}                        
                 image={a.imageUrl}
                 title={a.title}
                 description={a.content}
