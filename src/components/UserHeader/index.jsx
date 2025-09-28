@@ -4,7 +4,7 @@ import logo from '../../assets/Frame.svg'
 import MenuItem from '../MenuItem'
 function UserHeader() {
    const menuItems = [
-        { id: "homepage", title: "Trang chủ", path: "/home" },
+        { id: "homepage", title: "Trang chủ", path: "/" },
         { id: "professor", title: "Chuyên gia", path: "/professor" },
         { id: "service", title: "Dịch vụ", path: "/service" },
         { id: "forum", title: "Diễn đàn", path: "/forum" },

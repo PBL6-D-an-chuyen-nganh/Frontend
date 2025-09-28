@@ -1,7 +1,13 @@
 import React from 'react';
 import { CiShare2 } from "react-icons/ci";
+import { useNavigate } from 'react-router-dom';
 
 const Article = ({ image, title, description }) => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+        navigate(`/flashcard/${listId}`);
+  };
+
   return (
     <div className="border-b-1 border-green-900">
       <div className="flex items-center gap-10 p-2">
