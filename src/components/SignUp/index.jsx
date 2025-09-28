@@ -133,7 +133,7 @@ function SignUp() {
         <p className='text-gray-500 text-sm font-light'>
           Đã có tài khoản?{" "}
           <Link
-            to="/login"
+            to="accounts/login"
             className="text-green-900 font-medium hover:underline"
           >
             Đăng nhập

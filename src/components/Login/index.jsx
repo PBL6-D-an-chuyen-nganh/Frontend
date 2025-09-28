@@ -50,7 +50,7 @@ function Login() {
         <p className='text-gray-500 text-sm font-light'>
           Bạn chưa có tài khoản?{" "}
           <Link
-            to="/signup"
+            to="accounts/signup"
             className="text-green-900 font-medium hover:underline"
           >
             Đăng ký ngay.
@@ -116,7 +116,7 @@ function Login() {
             Đặt lại
           </button>
           <Link 
-            to="/forget-password"
+            to="accounts/forget-password"
             className='flex justify-center text-green-900 font-medium text-sm hover:underline'>
             Quên mật khẩu?
           </Link>

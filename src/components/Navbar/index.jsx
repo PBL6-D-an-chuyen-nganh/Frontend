@@ -4,7 +4,7 @@ import MenuItem from '../MenuItem'
 
 function Navbar() {
     const menuItems = [
-        { id: "guest", title: "Trang chủ", path: "/" },
+        { id: "guest", title: "Trang chủ", path: "/accounts" },
         { id: "professor", title: "Chuyên gia", path: "/professor" },
         { id: "service", title: "Dịch vụ", path: "/service" },
         { id: "forum", title: "Diễn đàn", path: "/forum" },
@@ -31,7 +31,7 @@ function Navbar() {
             </div>
         </div>
         <div className='w-1/4 flex items-center gap-4'>
-            <Link to="/login">
+            <Link to="accounts/login">
                 <button className='border-1 rounded-lg px-6 py-1 text-green-900 cursor-pointer hover:bg-green-900 hover:text-white' 
                         style={{ borderColor: "#E0E8E0" }}
                 >
@@ -39,7 +39,7 @@ function Navbar() {
                 </button>
             </Link>
         
-            <Link to="/signup">
+            <Link to="accounts/signup">
                 <button className='border-1 rounded-lg bg-green-900 text-white px-6 py-1 cursor-pointer hover:bg-white hover:text-green-900'>
                 Đăng ký
                 </button>

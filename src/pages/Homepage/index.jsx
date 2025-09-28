@@ -19,8 +19,7 @@ function HomePage() {
       try {
         const data = await getAllArticles(p, 5);
         setArticles(data?.content || []);
-        setTotalPages(Number(data?.totalPages || 1)); // dùng totalPages từ BE
-        // data.page là 0-based -> có thể kiểm tra nếu cần: data.page + 1 === p
+        setTotalPages(Number(data?.totalPages || 1)); 
       } finally {
         setLoading(false);
       }
