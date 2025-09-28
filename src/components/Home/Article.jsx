@@ -2,10 +2,10 @@ import React from 'react';
 import { CiShare2 } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';
 
-const Article = ({ image, title, description }) => {
+const Article = ({ image, title, description, articleID }) => {
   const navigate = useNavigate();
   const handleClick = () => {
-        navigate(`/flashcard/${listId}`);
+        navigate(`articles/${articleID}`);
   };
 
   return (
@@ -30,7 +30,9 @@ const Article = ({ image, title, description }) => {
               <button className="text-green-900 hover:text-green-700 transition-colors">
                 <CiShare2 className="w-5 h-5" />
               </button>
-              <button className="text-green-900 hover:text-green-700 font-medium text-sm uppercase tracking-wider cursor-pointer">
+              <button 
+                className="text-green-900 hover:text-green-700 font-medium text-sm uppercase tracking-wider cursor-pointer"
+                onClick={handleClick}>
                 XEM CHI TIẾT
               </button>
             </div>

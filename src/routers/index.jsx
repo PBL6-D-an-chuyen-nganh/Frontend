@@ -8,6 +8,7 @@ import HomePage from "../pages/Homepage";
 import DefaultLayout from "../layouts/DefaultLayout";
 import GuestPage from "../pages/Guest";
 import ProfessorPage from "../pages/Professor";
+import ArticleDetail from "../pages/Article";
 
 function PrivateRoute({ children }) {
   const token = useAuthStore((s) => s.token);
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       { 
         index: true, 
         element: <HomePage /> },
+      {
+        path: "articles/:articleID",
+        element: <ArticleDetail />
+      },
       { 
         path: "professor", 
         element: <ProfessorPage /> 
