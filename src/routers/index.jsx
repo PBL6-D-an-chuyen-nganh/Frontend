@@ -9,7 +9,7 @@ import DefaultLayout from "../layouts/DefaultLayout";
 import GuestPage from "../pages/Guest";
 import ProfessorPage from "../pages/Professor";
 import ArticleDetail from "../pages/Article";
-
+import DoctorDetail from "../pages/Doctor";
 function PrivateRoute({ children }) {
   const token = useAuthStore((s) => s.token);
   return token ? children : <Navigate to="/accounts/login" replace />;
@@ -40,6 +40,10 @@ const router = createBrowserRouter([
         path: "professor", 
         element: <ProfessorPage /> 
       },
+      {
+        path: "doctors/:userId",
+        element: <DoctorDetail />
+      }
     ],
   },
   {

@@ -1,7 +1,7 @@
 import React from 'react';
 import Btn from '../Button';
 
-const Professor = ({ image, name, introdution, position, degree }) => {
+const Professor = ({ image, name, introdution, position, degree, userId }) => {
   return (
     <div className="border-b-1 border-green-900">
       <div className="flex items-center gap-10 p-2">
@@ -50,7 +50,7 @@ const Professor = ({ image, name, introdution, position, degree }) => {
           <div className="flex w-1/3 items-center gap-3">
               <Btn
                 title="XEM CHI TIẾT"
-                path="/professional-detail"
+                path={`/doctors/${userId}`}
               />            
             </div>           
           

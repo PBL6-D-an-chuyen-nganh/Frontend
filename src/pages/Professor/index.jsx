@@ -38,6 +38,7 @@ function ProfessorPage() {
                   position={a.position}
                   introdution={a.introduction}
                   degree={a.degree}
+                  userId={a.userId}
                 />
               ))}
               {!loading && !professors.length && (
