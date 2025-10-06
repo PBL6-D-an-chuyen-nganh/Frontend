@@ -9,16 +9,40 @@ import Article from '../../components/Home/Article';
 import { getAllArticles } from '../../api/GetAllArticles';
 import Pagination from '../../components/Home/Page'
 import Dropdown from '../../components/Dropdown';
+import { getArticleByCategory } from '../../api/getArticleByCategory';
 function HomePage() {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [category, setCategory] = useState('Tất cả');
+    const [sortBy, setSortBy] = useState('createdAt');
+    const [sortDir, setSortDir] = useState('desc');
+
+    const handleCategoryChange = async (options) => {
+      const categoryID = options.id;
+      const label = options.label;
+      setCategory(label);
+
+      if (categoryID === 'all') {
+        load(1);
+      } else {
+        setLoading(true);
+        try {
+          const data = await getArticleByCategory(categoryID, 0, sortBy, sortDir);
+          setArticles(data?.content || []);
+          setTotalPages(Number(data?.totalPages || 1)); 
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
 
     const load = async (p) => {
       setLoading(true);
       try {
-        const data = await getAllArticles(p, 5);
+        const data = await getAllArticles(p);
         setArticles(data?.content || []);
         setTotalPages(Number(data?.totalPages || 1)); 
       } finally {
@@ -27,6 +51,15 @@ function HomePage() {
     };
 
   useEffect(() => { load(page); }, [page]);
+
+  const options = [
+  { id: 'all', label: 'Tất cả' },
+  { id: 1, label: 'Phương pháp điều trị' },
+  { id: 2, label: 'Thông tin bệnh' },
+  { id: 3, label: 'Thành tích & hoạt động' },
+  { id: 4, label: 'Khác' },
+];
+
 
   const inforList = [
     {
@@ -62,7 +95,11 @@ function HomePage() {
       <div className='border-t-46 border-green-900'></div>
       <div className='mb-14'>
         <div className='max-w-6xl mx-auto space-y-8 mb-8 mt-8'>
-           <Dropdown /> 
+           <Dropdown 
+            options={options}
+            selected={category}
+            onSelect={handleCategoryChange}
+           /> 
         </div>
         <div className='space-y-8 mb-4'>
           {inforList.map((infor) => (
