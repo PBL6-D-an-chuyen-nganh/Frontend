@@ -2,7 +2,6 @@ import React from "react";
 import { HiArrowNarrowRight } from "react-icons/hi";
 
 export default function Pagination({ current, total, onChange }) {
-  if (!total || total <= 1) return null;
 
   const go = (p) => {
     if (!onChange) return;

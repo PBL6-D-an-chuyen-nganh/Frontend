@@ -1,20 +1,10 @@
 import { useState } from 'react';
 import { RiArrowDropDownLine } from "react-icons/ri";
 
-const Dropdown = () => {
+const Dropdown = ({options, selected, onSelect}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState('Tất cả');
-
-  const options = [
-    'Tất cả',
-    'Phương pháp điều trị',
-    'Thông tin bệnh', 
-    'Thành tích & hoạt động',
-    'Khác',
-  ];
-
   const handleSelect = (option) => {
-    setSelected(option);
+    if (onSelect) onSelect(option);
     setIsOpen(false);
   };
 
@@ -35,11 +25,11 @@ const Dropdown = () => {
           <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
             {options.map((option) => (
               <button
-                key={option}
+                key={option.id}
                 onClick={() => handleSelect(option)}
-                className="w-full px-4 py-3 text-left hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg text-gray-600"
+                className="w-full px-4 py-3 text-left hover:bg-green-50 first:rounded-t-lg last:rounded-b-lg text-gray-600"
               >
-                {option}
+                {option.label}
               </button>
             ))}
           </div>
