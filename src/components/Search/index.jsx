@@ -24,7 +24,7 @@ const SearchInput = ({ placeholder , onSearch }) => {
     <div className="relative max-w-md mx-auto">
       <div className={`
         relative flex items-center h-10
-        bg-white border border-gray-200 rounded-lg
+        bg-white border border-gray-200 rounded-full
         transition-all duration-200 ease-in-out
         ${isFocused 
           ? 'border-gray-300 shadow-lg ring-2 ring-gray-200' 

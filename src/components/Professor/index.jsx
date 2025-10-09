@@ -6,17 +6,17 @@ const Professor = ({ image, name, introdution, position, degree, userId }) => {
     <div className="border-b-1 border-green-900">
       <div className="flex items-center gap-10 p-2">
         {/* Image Section */}
-        <div className="flex-shrink-0 overflow-hidden rounded-md max-w-6xl mx-auto">
+        <div className="flex-shrink-0 overflow-hidden max-w-6xl mx-auto">
           <img 
             src={image} 
             alt={name}
-            className="w-52 h-50 object-cover"
+            className="w-56 h-56 object-cover border border-gray-200"
           />
         </div>
 
         {/* Text Section */}
-        <div className="flex-1 flex justify-between">
-          <div className="w-2/3 flex flex-col justify-between items-start mb-2">
+        <div className="flex flex-col justify-between gap-4 flex-grow">
+          <div className="w-full justify-between items-start mb-2">
             <div>
               <h2 className="text-xl font-bold text-gray-900 mb-1">
                 {name}
@@ -31,29 +31,20 @@ const Professor = ({ image, name, introdution, position, degree, userId }) => {
                 </p>
               )}
             </div>
-            
-            <div>
-              {/* Degree / Institution */}
-              {degree && (
-                <p className="italic text-gray-500 mb-3">
-                  {degree}
-                </p>
-              )}
-            </div>
+          
             <div>
               {/* Introduction */}
-              <p className="text-gray-600 leading-relaxed mb-4">
+              <p className="text-gray-600 leading-relaxed mb-4 line-clamp-2">
                 {introdution}
               </p>
             </div>
           </div>  
-          <div className="flex w-1/3 items-center gap-3">
-              <Btn
-                title="XEM CHI TIẾT"
-                path={`/doctors/${userId}`}
-              />            
-            </div>           
-          
+              <div className="flex justify-end mb-4 mr-4">
+        <Btn
+          title="XEM CHI TIẾT"
+          path={`/doctors/${userId}`}
+        />            
+      </div>                     
         </div>
       </div>
     </div>

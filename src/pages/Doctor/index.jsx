@@ -3,6 +3,7 @@ import { getDoctorByID } from '../../api/getDoctorByID';
 import { MdOutlineAttachEmail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import { useParams } from 'react-router-dom';
+import Btn from '../../components/Button';
 function DoctorDetail() {
     const { userId } = useParams();
     const [doctor, setDoctor] = useState(null);
@@ -60,7 +61,7 @@ function DoctorDetail() {
             </div>
             <div className='prose prose-lg max-w-none'>
                 <p className='ml-4 text-gray-700 leading-relaxed text-justify whitespace-pre-line'>
-                    {doctor?.introduction}
+                    {doctor?.achievements}
                 </p>
             </div>
         </div>
@@ -84,6 +85,12 @@ function DoctorDetail() {
                 </p>
             </div>
         </div>
+        <div className='flex justify-center mb-4 mr-4'>
+        <Btn
+          title="ĐẶT LỊCH HẸN"
+          path={`/appointments/new?doctorId=${doctor?.userId}`}
+        />            
+      </div>
     </div>
   )
 }
