@@ -94,14 +94,7 @@ function HomePage() {
       </div>
       <div className='border-t-46 border-green-900'></div>
       <div className='mb-14'>
-        <div className='max-w-6xl mx-auto space-y-8 mb-8 mt-8'>
-           <Dropdown 
-            options={options}
-            selected={category}
-            onSelect={handleCategoryChange}
-           /> 
-        </div>
-        <div className='space-y-8 mb-4'>
+        <div className='space-y-8 mt-8'>
           {inforList.map((infor) => (
             <Infor
               key={infor.id}
@@ -114,13 +107,20 @@ function HomePage() {
           ))}
         </div>
       </div>
-        <div className="flex items-center gap-2 max-w-6xl mx-auto border-b-1 border-green-900">
-          <div className='w-6 h-6 text-green-900'>
-            <GrArticle />
-          </div>
-          <h2 className="text-green-900 font-semibold text-lg m-0">
-            BÀI VIẾT LIÊN QUAN
-          </h2>
+      <div className='max-w-6xl mx-auto space-y-8 justify-end flex'>
+        <Dropdown 
+          options={options}
+          selected={category}
+          onSelect={handleCategoryChange}
+        /> 
+      </div>
+      <div className="flex items-center gap-2 max-w-6xl mx-auto border-b-1 border-green-900">
+        <div className='w-6 h-6 text-green-900'>
+          <GrArticle />
+        </div>
+        <h2 className="text-green-900 font-semibold text-lg m-0">
+          BÀI VIẾT LIÊN QUAN
+        </h2>
         </div>    
           <div className="max-w-6xl mx-auto mt-6 space-y-6">
             {loading && <div className="text-gray-500">Đang tải…</div>}
