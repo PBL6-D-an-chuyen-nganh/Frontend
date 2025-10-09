@@ -27,7 +27,7 @@ const Dropdown = ({options, selected, onSelect}) => {
               <button
                 key={option.id}
                 onClick={() => handleSelect(option)}
-                className="w-full px-4 py-3 text-left hover:bg-green-50 first:rounded-t-lg last:rounded-b-lg text-gray-600"
+                className="w-full px-4 py-3 text-left hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg text-gray-600"
               >
                 {option.label}
               </button>

@@ -6,7 +6,7 @@ function UserHeader() {
    const menuItems = [
         { id: "homepage", title: "Trang chủ", path: "/" },
         { id: "professor", title: "Chuyên gia", path: "/professor" },
-        { id: "service", title: "Dịch vụ", path: "/service" },
+        { id: "service", title: "Dịch vụ", path: "/services" },
         { id: "forum", title: "Diễn đàn", path: "/forum" },
         { id: "analysis", title: "Phân tích", path: "/analysis" },
     ];
