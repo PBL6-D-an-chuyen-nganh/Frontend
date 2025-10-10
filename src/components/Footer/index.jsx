@@ -11,7 +11,7 @@ export default function HospitalFooter() {
           <div>
             <div className="flex items-center mb-4">
               <MdLocalHospital className="text-3xl mr-2" />
-              <h3 className="text-xl font-bold">Bệnh Viện Da Liễu</h3>
+              <h3 className="text-xl font-bold">Phòng khám Da Liễu</h3>
             </div>
             <p className="text-green-100 text-sm leading-relaxed">
               Chuyên khoa hàng đầu về điều trị các bệnh lý da liễu với đội ngũ bác sĩ giàu kinh nghiệm và trang thiết bị hiện đại.
@@ -24,7 +24,7 @@ export default function HospitalFooter() {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <FaMapMarkerAlt className="text-green-300 mt-1 mr-3 flex-shrink-0" />
-                <span className="text-green-100 text-sm">123 Đường Nguyễn Văn A, Quận 1, TP.HCM</span>
+                <span className="text-green-100 text-sm">193, Nguyễn Lương Bằng, Tp. Đà Nẵng</span>
               </li>
               <li className="flex items-center">
                 <FaPhone className="text-green-300 mr-3 flex-shrink-0" />
@@ -36,7 +36,7 @@ export default function HospitalFooter() {
               </li>
               <li className="flex items-start">
                 <FaClock className="text-green-300 mt-1 mr-3 flex-shrink-0" />
-                <span className="text-green-100 text-sm">Thứ 2 - Thứ 7: 7:00 - 17:00<br/>Chủ nhật: 7:00 - 12:00</span>
+                <span className="text-green-100 text-sm">Thứ 2 - Thứ 6: 7:00 - 17:00</span>
               </li>
             </ul>
           </div>
@@ -99,7 +99,7 @@ export default function HospitalFooter() {
         {/* Copyright */}
         <div className="border-t border-green-800 mt-8 pt-6 text-center">
           <p className="text-green-200 text-sm">
-            © 2025 Bệnh Viện Da Liễu. Tất cả quyền được bảo lưu.
+            © 2025 Phòng khám Da Liễu. Tất cả quyền được bảo lưu.
           </p>
         </div>
       </div>

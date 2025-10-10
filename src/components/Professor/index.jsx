@@ -1,9 +1,9 @@
 import React from 'react';
 import Btn from '../Button';
 
-const Professor = ({ image, name, introdution, position, degree, userId }) => {
+const Professor = ({ image, name, introdution, position, userId }) => {
   return (
-    <div className="border-b-1 border-green-900">
+    <div className="shadow-md p-4 hover:shadow-xl transition-shadow duration-300 rounded-lg">
       <div className="flex items-center gap-10 p-2">
         {/* Image Section */}
         <div className="flex-shrink-0 overflow-hidden max-w-6xl mx-auto">
