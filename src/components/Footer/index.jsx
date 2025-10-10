@@ -24,7 +24,7 @@ export default function HospitalFooter() {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <FaMapMarkerAlt className="text-green-300 mt-1 mr-3 flex-shrink-0" />
-                <span className="text-green-100 text-sm">192, Nguyễn Lương Bằng, Tp. Đà Nẵng</span>
+                <span className="text-green-100 text-sm">193, Nguyễn Lương Bằng, Tp. Đà Nẵng</span>
               </li>
               <li className="flex items-center">
                 <FaPhone className="text-green-300 mr-3 flex-shrink-0" />
