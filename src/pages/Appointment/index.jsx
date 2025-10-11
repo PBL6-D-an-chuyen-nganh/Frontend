@@ -34,8 +34,8 @@ function AppointmentPage() {
   const [timeInput, setTimeInput] = useState('')
 
   const departmentOptions = [
-    { id: 2, label: 'Khoa Khám da' },
-    { id: 1, label: 'Khoa Thẩm mỹ da liễu' }
+    { id: 1, label: 'Khoa Thẩm mỹ da liễu' },
+    { id: 2, label: 'Khoa Khám da' }
   ];
 
   const purposeOptions = [
@@ -94,6 +94,7 @@ function AppointmentPage() {
           const response = await getBusyTime(dateInput);
           const specialtyKey = String(formData.specialtyId);
           const rawSlots = response?.[specialtyKey] || [];
+          console.log('Fetched busy slots:', rawSlots);
 
           const formatted = rawSlots.map(s => {
             const part = s.includes('T') ? s.split('T')[1] : s;

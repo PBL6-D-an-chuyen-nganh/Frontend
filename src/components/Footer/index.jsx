@@ -32,7 +32,7 @@ export default function HospitalFooter() {
               </li>
               <li className="flex items-center">
                 <FaEnvelope className="text-green-300 mr-3 flex-shrink-0" />
-                <span className="text-green-100 text-sm">info@benhviendalieu.vn</span>
+                <span className="text-green-100 text-sm">info@phongkhamdalieu.vn</span>
               </li>
               <li className="flex items-start">
                 <FaClock className="text-green-300 mt-1 mr-3 flex-shrink-0" />
