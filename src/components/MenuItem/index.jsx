@@ -11,7 +11,7 @@ const MenuItem = ({ title, icon, path = "#", onClick }) => {
       onClick={onClick}
       className={({ isActive }) =>
         `flex items-center text-base gap-2 my-2 p-3 rounded-md cursor-pointer transition-all duration-300
-        ${isActive ? "text-green-900 font-semibold" : "text-gray-600 hover:text-green-900"}`
+        ${isActive ? "text-green-900 font-normal" : "text-gray-500 hover:text-green-900"}`
       }
     >
       <div className="inherit">
