@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Calendar, Clock, User, Mail, Phone, FileText, Sparkles, Heart, CheckCircle } from 'lucide-react'
 import pageimg from '../../assets/img/book.webp'
 import Btn from '../../components/Button'
 import Dropdown from '../../components/Dropdown'
@@ -317,7 +318,7 @@ function AppointmentPage() {
   };
 
   return (
-    <div className='min-h-screen bg-gray-50'>
+    <div className='min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50'>
       {toast && (
         <Toast 
           message={toast.message} 
@@ -326,95 +327,113 @@ function AppointmentPage() {
         />
       )}
 
-      <div className='w-full overflow-hidden'>
+      {/* Hero Image with Overlay */}
+      <div className='relative w-full h-72 overflow-hidden'>
         <img src={pageimg} alt="homepage" className='w-full h-full object-cover'/>
       </div>
 
-      <div className='max-w-6xl mx-auto px-4 py-8'>
-        <div className='bg-white rounded-2xl shadow-sm p-8'>
-          <div className='mb-8'>
-            <h2 className='text-2xl font-bold text-green-900 mb-6'>NỘI DUNG CHI TIẾT ĐẶT LỊCH HẸN</h2>
-
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-              <div className='md:col-span-2'>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>
-                  Chọn chuyên khoa <span className='text-red-500'>*</span>
-                </label>
-                <Dropdown
-                  options={departmentOptions}
-                  selected={getSelectedLabel(departmentOptions, formData.specialtyId, 'Chọn chuyên khoa')}
-                  onSelect={handleDropdownSelect('department')}
-                />
-                <p className='text-xs text-gray-500 mt-1'>
-                  Vui lòng chọn chuyên khoa trước để xem lịch trống
-                </p>
-              </div>
-
-              <div>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>
-                  Chọn ngày <span className='text-red-500'>*</span>
-                </label>
-                <input
-                  type='date'
-                  name='date'
-                  value={dateInput}
-                  onChange={handleInputChange}
-                  min={getMinDate()}
-                  disabled={!formData.specialtyId}
-                  className='w-full px-4 py-3 bg-gray-100 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 disabled:opacity-50 disabled:cursor-not-allowed'
-                  placeholder='dd/mm/yyyy'
-                />
-                {busyDates.length > 0 && formData.specialtyId && (
-                  <p className='text-xs text-red-500 mt-1'>
-                    Một số ngày đã hết lịch hẹn
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>
-                  Chọn giờ <span className='text-red-500'>*</span>
-                </label>
-                <div className='relative'>
-                  <Dropdown
-                    options={getAvailableTimeOptions()}
-                    selected={getSelectedTimeLabel()}
-                    onSelect={handleDropdownSelect('time')}
-                    disabled={!dateInput}
-                  />
-                </div>
-                {busySlots.length > 0 && dateInput && (
-                  <p className='text-xs text-orange-500 mt-1'>
-                    Một số khung giờ đã hết chỗ
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <p className='text-sm text-gray-600 mt-3'>
-              *Lưu ý: Thời gian trên chi là thời gian dự kiến, tổng đài sẽ liên hệ xác nhận thời gian chính xác tới quý khách sau khi quý khách đặt hẹn.
-            </p>
-
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mt-6'>
-              <div>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>
-                  Mục đích đặt lịch <span className='text-red-500'>*</span>
-                </label>
-                <Dropdown
-                  options={purposeOptions}
-                  selected={getSelectedLabel(purposeOptions, formData.purpose, 'Khám lần đầu')}
-                  onSelect={handleDropdownSelect('purpose')}
-                />
-              </div>
+      <div className='max-w-6xl mx-auto px-4 py-12'>
+        {/* Appointment Details Card */}
+        <div className='bg-white min-h-124 rounded-3xl shadow-2xl overflow-hidden mb-6 transform hover:scale-[1.01] transition-transform duration-300'>
+          <div className='bg-green-900 p-6'>
+            <div className='flex items-center gap-3'>
+              <Calendar className='w-8 h-8 text-white' />
+              <h2 className='text-2xl font-bold text-white'>CHI TIẾT LỊCH HẸN</h2>
             </div>
           </div>
 
-          <div className='mb-8'>
-            <h2 className='text-2xl font-bold text-green-900 mb-6'>THÔNG TIN BỆNH NHÂN</h2>
-            
+          <div className='p-8'>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+              {/* Department Selection */}
+              <div className='md:col-span-2'>
+                <label className='flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3'>
+                  <Heart className='w-5 h-5 text-rose-500' />
+                  Chuyên khoa <span className='text-red-500'>*</span>
+                </label>
+                <div className='relative group'>
+                  <div className='relative'>
+                    <Dropdown
+                      options={departmentOptions}
+                      selected={getSelectedLabel(departmentOptions, formData.specialtyId, 'Chọn chuyên khoa')}
+                      onSelect={handleDropdownSelect('department')}
+                    />
+                  </div>
+                </div>
+                <p className='text-xs text-green-900 mt-2 flex items-center gap-1'>
+                  <CheckCircle className='w-3 h-3' />
+                  Vui lòng chọn chuyên khoa để xem lịch trống
+                </p>
+              </div>
+
+              {/* Date Selection */}
               <div>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>
+                <label className='flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3'>
+                  <Calendar className='w-5 h-5 text-green-900'/>
+                  Ngày khám <span className='text-red-500'>*</span>
+                </label>
+                <div className='relative group'>
+                  <input
+                    type='date'
+                    name='date'
+                    value={dateInput}
+                    onChange={handleInputChange}
+                    min={getMinDate()}
+                    disabled={!formData.specialtyId}
+                    className='relative w-full px-4 py-3 bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300'
+                  />
+                </div>
+                {busyDates.length > 0 && formData.specialtyId && (
+                  <p className='text-xs text-orange-600 mt-2 font-medium'>
+                    Một số ngày đã hết lịch
+                  </p>
+                )}
+              </div>
+
+              {/* Time Selection */}
+              <div>
+                <label className='flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3'>
+                  <Clock className='w-5 h-5 text-green-900' />
+                  Giờ khám <span className='text-red-500'>*</span>
+                </label>
+                <div className='relative'>                
+                    <Dropdown
+                      options={getAvailableTimeOptions()}
+                      selected={getSelectedTimeLabel()}
+                      onSelect={handleDropdownSelect('time')}
+                      disabled={!dateInput}
+                    />
+                </div>
+                {busySlots.length > 0 && dateInput && (
+                  <p className='text-xs text-orange-600 mt-2 font-medium'>
+                    Một số khung giờ đã kín
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <div className='mt-6 p-4 bg-gradient-to-r from-green-50 to-cyan-50 rounded-xl border border-green-800'>
+              <p className='text-sm text-green-900'>
+                <strong>Lưu ý:</strong> Thời gian trên chỉ là dự kiến. Tổng đài sẽ liên hệ xác nhận thời gian chính xác sau khi bạn đặt hẹn.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Patient Info Card */}
+        <div className='bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-[1.01] transition-transform duration-300'>
+          <div className='bg-green-900 p-6'>
+            <div className='flex items-center gap-3'>
+              <User className='w-8 h-8 text-white' />
+              <h2 className='text-2xl font-bold text-white'>THÔNG TIN BỆNH NHÂN</h2>
+            </div>
+          </div>
+
+          <div className='p-8'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+              {/* Name */}
+              <div>
+                <label className='flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3'>
+                  <User className='w-4 h-4 text-green-900'/>
                   Họ và tên <span className='text-red-500'>*</span>
                 </label>
                 <input
@@ -422,13 +441,15 @@ function AppointmentPage() {
                   name='name'
                   value={formData.patientInfo.name}
                   onChange={handleInputChange}
-                  className='w-full px-4 py-3 bg-gray-100 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300'
-                  placeholder='Họ và tên'
+                  className='w-full px-4 py-3 bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300'
+                  placeholder='Nhập họ và tên'
                 />
               </div>
 
+              {/* Email */}
               <div>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>
+                <label className='flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3'>
+                  <Mail className='w-4 h-4 text-green-900' />
                   Email <span className='text-red-500'>*</span>
                 </label>
                 <input
@@ -436,14 +457,16 @@ function AppointmentPage() {
                   name='email'
                   value={formData.patientInfo.email}
                   onChange={handleInputChange}
-                  className='w-full px-4 py-3 bg-gray-100 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300'
-                  placeholder='Email'
+                  className='w-full px-4 py-3 bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300'
+                  placeholder='Nhập địa chỉ email'
                 />
               </div>
 
+              {/* Gender */}
               <div>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>
-                  Chọn giới tính <span className='text-red-500'>*</span>
+                <label className='flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3'>
+                  <User className='w-4 h-4 text-green-900' />
+                  Giới tính <span className='text-red-500'>*</span>
                 </label>
                 <Dropdown
                   options={genderOptions}
@@ -452,22 +475,25 @@ function AppointmentPage() {
                 />
               </div>
 
+              {/* Date of Birth */}
               <div>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>
-                  Ngày tháng năm sinh <span className='text-red-500'>*</span>
+                <label className='flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3'>
+                  <Calendar className='w-4 h-4 text-green-900' />
+                  Ngày sinh <span className='text-red-500'>*</span>
                 </label>
                 <input
                   type='date'
                   name='dateOfBirth'
                   value={formData.patientInfo.dateOfBirth}
                   onChange={handleInputChange}
-                  className='w-full px-4 py-3 bg-gray-100 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300'
-                  placeholder='dd/mm/yyyy'
+                  className='w-full px-4 py-3 bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300'
                 />
               </div>
 
+              {/* Phone */}
               <div className='md:col-span-2'>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>
+                <label className='flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3'>
+                  <Phone className='w-4 h-4 text-green-900' />
                   Số điện thoại <span className='text-red-500'>*</span>
                 </label>
                 <input
@@ -475,13 +501,15 @@ function AppointmentPage() {
                   name='phone'
                   value={formData.patientInfo.phoneNumber}
                   onChange={handleInputChange}
-                  className='w-full px-4 py-3 bg-gray-100 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300'
-                  placeholder='Số điện thoại'
+                  className='w-full px-4 py-3 bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-grray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300'
+                  placeholder='Nhập số điện thoại'
                 />
               </div>
 
+              {/* Reason */}
               <div className='md:col-span-2'>
-                <label className='block text-sm font-medium text-gray-700 mb-2'>
+                <label className='flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3'>
+                  <FileText className='w-4 h-4 text-green-900' />
                   Lý do khám <span className='text-red-500'>*</span>
                 </label>
                 <textarea
@@ -489,16 +517,23 @@ function AppointmentPage() {
                   value={formData.note}
                   onChange={handleInputChange}
                   rows={4}
-                  className='w-full px-4 py-3 bg-gray-100 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200 resize-none'
-                  placeholder='Tình trạng sức khỏe của bạn, các vấn đề cần khám hoặc câu hỏi dành cho bác sĩ'
+                  className='w-full px-4 py-3 bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 resize-none transition-all duration-300'
+                  placeholder='Mô tả tình trạng sức khỏe, triệu chứng hoặc câu hỏi cho bác sĩ...'
                 />
               </div>
             </div>
-          </div>
 
-          <div className='flex justify-center'>
-            <div onClick={handleSubmit}>
-              <Btn title="ĐẶT LỊCH HẸN" />
+            {/* Submit Button */}
+            <div className='mt-8 flex justify-center'>
+              <div 
+                onClick={handleSubmit}
+                className='relative group cursor-pointer'
+              >
+                <div className='absolute -inset-1 rounded-2xl blur opacity-70 group-hover:opacity-100 transition duration-300 animate-pulse'></div>
+                <div className='relative'>
+                  <Btn title="ĐẶT LỊCH HẸN NGAY" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
