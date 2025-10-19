@@ -98,7 +98,7 @@ function ProfessorPage() {
   };
 
   return (
-    <div>
+    <div className='min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50'>
       <div className='w-full overflow-hidden mb-8'>
         <img src={pageimg} alt="homepage" className='w-full h-min object-cover'/>
       </div>
@@ -130,7 +130,7 @@ function ProfessorPage() {
         />
       </div>
 
-      <div className="max-w-6xl mx-auto mt-6 space-y-6">
+      <div className="max-w-6xl mx-auto mt-6 space-y-6 bg-w">
         {loading && <div className="text-gray-500 text-center">Đang tải…</div>}
 
         {!loading && professors.map(doctor => (

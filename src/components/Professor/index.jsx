@@ -3,7 +3,7 @@ import Btn from '../Button';
 
 const Professor = ({ image, name, introdution, position, userId }) => {
   return (
-    <div className="shadow-md p-4 hover:shadow-xl transition-shadow duration-300 rounded-lg">
+    <div className="shadow-md p-4 hover:shadow-xl rounded-3xl overflow-hidden mb-6 transform hover:scale-[1.01] transition-transform duration-300 bg-white">
       <div className="flex items-center gap-10 p-2">
         {/* Image Section */}
         <div className="flex-shrink-0 overflow-hidden max-w-6xl mx-auto">
