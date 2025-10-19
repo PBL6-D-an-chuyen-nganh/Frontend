@@ -11,6 +11,7 @@ import ProfessorPage from "../pages/Professor";
 import ArticleDetail from "../pages/Article";
 import DoctorDetail from "../pages/Doctor";
 import AppoinmentPage from "../pages/Appointment";
+import AppointmentHistory from "../pages/AppointmentHistory";
 function PrivateRoute({ children }) {
   const token = useAuthStore((s) => s.token);
   return token ? children : <Navigate to="/accounts/login" replace />;
@@ -48,6 +49,11 @@ const router = createBrowserRouter([
       {
         path: "services",
         element: <AppoinmentPage />
+      }
+      ,
+      {
+        path: "appointments/:userId",
+        element: <AppointmentHistory />
       }
     ],
   },

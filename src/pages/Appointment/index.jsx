@@ -9,6 +9,7 @@ import Toast from '../../components/Notification'
 import { getDoctorBySpecialty } from '../../api/getDoctorBySpecialty' 
 import useDoctorStore from '../../store/useDoctorStore'
 import AvailableDatePicker from '../../components/Calendar'
+import { useAuthStore } from '../../store/useAuthStore'
 
 function AppointmentPage() {
   const axiosPrivate = useAxiosPrivate()
@@ -17,8 +18,8 @@ function AppointmentPage() {
   const [dateInput, setDateInput] = useState('')           
   const [timeInput, setTimeInput] = useState('')           
   const [availableSlots, setAvailableSlots] = useState({})
-
   const { doctorsBySpecialty, setDoctorsBySpecialty } = useDoctorStore()
+  const user = useAuthStore(state => state.user)
 
   const [formData, setFormData] = useState({
     patientInfo: {
@@ -30,7 +31,7 @@ function AppointmentPage() {
     },
     time: '',     
     note: '',
-    doctorId: ''  
+    doctorId: ''  ,
   })
 
   const departmentOptions = [
@@ -181,7 +182,7 @@ function AppointmentPage() {
       !formData.patientInfo.dateOfBirth ||
       !formData.time ||
       !formData.doctorId ||
-      !formData.note
+      !formData.note 
     ) {
       setToast({ message: 'Vui lòng điền đầy đủ thông tin bắt buộc', type: 'error' })
       return
@@ -204,7 +205,8 @@ function AppointmentPage() {
         },
         time: formData.time,
         note: formData.note,
-        doctorId: Number(formData.doctorId)
+        doctorId: Number(formData.doctorId),
+        creatorId: user?.userId ?? ''
     }
 
     console.log('Submitting appointment:', appointmentData)
@@ -221,7 +223,8 @@ function AppointmentPage() {
       patientInfo: { name: '', email: '', phoneNumber: '', gender: '', dateOfBirth: '' },
       time: '',
       note: '',
-      doctorId: ''
+      doctorId: '',
+      creatorId: ''
     })
     setSpecialtyId('')
     setDateInput('')
@@ -426,7 +429,7 @@ function AppointmentPage() {
               <div onClick={handleSubmit} className='relative group cursor-pointer'>
                 <div className='absolute -inset-1 rounded-2xl blur opacity-70 group-hover:opacity-100 transition duration-300 animate-pulse'></div>
                 <div className='relative'>
-                  <Btn title='ĐẶT LỊCH HẸN NGAY' />
+                  <Btn title='ĐẶT LỊCH HẸN' />
                 </div>
               </div>
             </div>
