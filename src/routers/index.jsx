@@ -12,6 +12,9 @@ import ArticleDetail from "../pages/Article";
 import DoctorDetail from "../pages/Doctor";
 import AppoinmentPage from "../pages/Appointment";
 import AppointmentHistory from "../pages/AppointmentHistory";
+import DoctorAppointments from '../pages/RoleDoctor/Appointment';
+import ScheduleRegister from '../pages/RoleDoctor/ScheduleRegister';
+
 function PrivateRoute({ children }) {
   const token = useAuthStore((s) => s.token);
   return token ? children : <Navigate to="/accounts/login" replace />;
@@ -31,30 +34,14 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      { 
-        index: true, 
-        element: <HomePage /> },
-      {
-        path: "articles/:articleID",
-        element: <ArticleDetail />
-      },
-      { 
-        path: "professor", 
-        element: <ProfessorPage /> 
-      },
-      {
-        path: "doctors/:userId",
-        element: <DoctorDetail />
-      },
-      {
-        path: "services",
-        element: <AppoinmentPage />
-      }
-      ,
-      {
-        path: "appointments/:userId",
-        element: <AppointmentHistory />
-      }
+      { index: true, element: <HomePage /> },
+      { path: "articles/:articleID", element: <ArticleDetail /> },
+      { path: "professor", element: <ProfessorPage /> },
+      { path: "doctors/:userId", element: <DoctorDetail /> },
+      { path: "services", element: <AppoinmentPage /> },
+      { path: "appointments/:userId", element: <AppointmentHistory /> },
+      { path: "doctor/:doctorId/appointments", element: <DoctorAppointments /> },
+      { path: "doctor/schedule/:doctorId", element: <ScheduleRegister /> }
     ],
   },
   {
@@ -65,26 +52,13 @@ const router = createBrowserRouter([
       </GuestRoute>
     ),
     children: [
-      { index: true, 
-        element: <GuestPage /> 
-      },
-      { 
-        path: "login", 
-        element: <LoginPage /> 
-      },
-      { path: "signup", 
-        element: <SignUpPage /> 
-      },
-      { 
-        path: "forget-password", 
-        element: <ForgetPassPage /> 
-      },
+      { index: true, element: <GuestPage /> },
+      { path: "login", element: <LoginPage /> },
+      { path: "signup", element: <SignUpPage /> },
+      { path: "forget-password", element: <ForgetPassPage /> },
     ],
   },
-  {
-    path: "*",
-    element: <Navigate to="/accounts/login" replace />,
-  },
+  { path: "*", element: <Navigate to="/accounts/login" replace /> },
 ]);
 
 export default router;
