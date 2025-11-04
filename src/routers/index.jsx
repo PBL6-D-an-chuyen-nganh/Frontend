@@ -12,9 +12,10 @@ import ArticleDetail from "../pages/Article";
 import DoctorDetail from "../pages/Doctor";
 import AppoinmentPage from "../pages/Appointment";
 import AppointmentHistory from "../pages/AppointmentHistory";
+
 function PrivateRoute({ children }) {
   const token = useAuthStore((s) => s.token);
-  return token ? children : <Navigate to="/accounts/login" replace />;
+  return token ? children : <Navigate to="/accounts" replace />;
 }
   
 function GuestRoute({ children }) {
@@ -58,7 +59,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "accounts",
+    path: "/accounts",
     element: (
       <GuestRoute>
         <GuestLayout />
@@ -83,7 +84,7 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <Navigate to="/accounts/login" replace />,
+    element: <Navigate to="/accounts" replace />,
   },
 ]);
 
