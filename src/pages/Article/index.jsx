@@ -44,11 +44,33 @@ function ArticleDetail() {
             <h2 className='text-green-900 text-2xl font-semibold'>{article?.category}</h2>
         </div>
         <div className='max-w-6xl mx-auto mb-10 flex justify-center my-4'>
-            <img src={article.imageUrl} alt='article' className='max-w-min max-h-min object-cover rounded-lg'/>
+            <img src={article?.imageUrl} alt='article' className='max-w-min max-h-min object-cover rounded-lg'/>
         </div>
         <div className='max-w-6xl mx-auto space-y-6 mb-20'>
+            <h2 className='text-green-900 text-2xl font-semibold'>Nguyên nhân</h2>
             <p className='text-gray-600 leading-relaxed'>
-                {article?.content}
+                {article?.cause}
+            </p>
+        </div>
+
+        <div className='max-w-6xl mx-auto space-y-6 mb-20'>
+            <h2 className='text-green-900 text-2xl font-semibold'>Biện pháp phòng ngừa</h2>
+            <p className='text-gray-600 leading-relaxed'>
+                {article?.prevention}
+            </p>
+        </div>
+
+         <div className='max-w-6xl mx-auto space-y-6 mb-20'>
+            <h2 className='text-green-900 text-2xl font-semibold'>Triệu chứng</h2>
+            <p className='text-gray-600 leading-relaxed'>
+                {article?.symptoms}
+            </p>
+        </div>
+
+         <div className='max-w-6xl mx-auto space-y-6 mb-20'>
+            <h2 className='text-green-900 text-2xl font-semibold'>Điều trị</h2>
+            <p className='text-gray-600 leading-relaxed'>
+                {article?.treatment}
             </p>
         </div>
     </div>

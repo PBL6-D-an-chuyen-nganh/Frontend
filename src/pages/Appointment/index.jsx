@@ -19,6 +19,7 @@ function AppointmentPage() {
   const [timeInput, setTimeInput] = useState('')           
   const [availableSlots, setAvailableSlots] = useState({})
   const { doctorsBySpecialty, setDoctorsBySpecialty } = useDoctorStore()
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const user = useAuthStore(state => state.user)
 
   const [formData, setFormData] = useState({
@@ -195,6 +196,8 @@ function AppointmentPage() {
       return
     }
 
+    setIsSubmitting(true)
+
     const appointmentData = {
         patientInfo: {
           name: formData.patientInfo.name,
@@ -234,7 +237,16 @@ function AppointmentPage() {
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50'>
-      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => {
+            setToast(null)
+            setIsSubmitting(false) 
+          }}
+        />
+      )}
 
       {/* Hero */}
       <div className='relative w-full h-72 overflow-hidden'>
@@ -426,10 +438,15 @@ function AppointmentPage() {
             </div>
 
             <div className='mt-8 flex justify-center'>
-              <div onClick={handleSubmit} className='relative group cursor-pointer'>
+              <div className='relative group cursor-pointer'>
                 <div className='absolute -inset-1 rounded-2xl blur opacity-70 group-hover:opacity-100 transition duration-300 animate-pulse'></div>
                 <div className='relative'>
-                  <Btn title='ĐẶT LỊCH HẸN' />
+                  <Btn 
+                    title='ĐẶT LỊCH HẸN' 
+                    disabled={isSubmitting} 
+                    onClick={handleSubmit} 
+                    variant='success'
+                  />
                 </div>
               </div>
             </div>

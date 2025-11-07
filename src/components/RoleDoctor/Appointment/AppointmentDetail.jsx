@@ -1,7 +1,7 @@
 import React from 'react'
 import { FiChevronUp, FiUser, FiMail, FiPhone, FiCalendar, FiCheck } from 'react-icons/fi'
 import AppointmentInfor from './AppointmentInfor'
-import Btn from '../Button'
+import Btn from '../../Button'
 
 const formatDateTime = (iso) => {
   if (!iso) return { date: '—', time: '—' }
@@ -40,7 +40,6 @@ const AppointmentDetail = ({ appointment, isOpen, onToggle, onRequestCancel }) =
       {isOpen && (
         <>
           <div className="px-6 space-y-1 mb-6 pb-6 border-t border-green-900 pt-6">
-            <AppointmentInfor icon={FiUser} label="Bác sĩ" degree={doctor.degree} name={doctor.name} position={doctor.position} />
             <AppointmentInfor icon={FiMail} label="Email" value={patient.email} />
             <AppointmentInfor icon={FiPhone} label="Số điện thoại" value={patient.phoneNumber} />
             <AppointmentInfor icon={FiCheck} label="Ghi chú" value={appointment.note} />
