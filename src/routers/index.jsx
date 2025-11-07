@@ -17,7 +17,7 @@ import ScheduleRegister from '../pages/RoleDoctor/ScheduleRegister';
 
 function PrivateRoute({ children }) {
   const token = useAuthStore((s) => s.token);
-  return token ? children : <Navigate to="/accounts/login" replace />;
+  return token ? children : <Navigate to="/accounts" replace />;
 }
   
 function GuestRoute({ children }) {
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "accounts",
+    path: "/accounts",
     element: (
       <GuestRoute>
         <GuestLayout />
@@ -58,7 +58,10 @@ const router = createBrowserRouter([
       { path: "forget-password", element: <ForgetPassPage /> },
     ],
   },
-  { path: "*", element: <Navigate to="/accounts/login" replace /> },
+  {
+    path: "*",
+    element: <Navigate to="/accounts" replace />,
+  },
 ]);
 
 export default router;
