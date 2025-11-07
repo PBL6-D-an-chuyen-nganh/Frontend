@@ -47,9 +47,6 @@ const AppointmentDetail = ({ appointment, isOpen, onToggle, onRequestCancel }) =
 
           {/* Actions */}
           <div className="px-6 pb-6 flex justify-end">
-            <span className="flex items-center text-gray-500 mr-4">
-              Bạn chỉ có thể huỷ lịch trước 24h trước giờ hẹn.
-            </span>
             <Btn
               title="Huỷ lịch"                
               disabled={appointment.status === "inactive"}                 

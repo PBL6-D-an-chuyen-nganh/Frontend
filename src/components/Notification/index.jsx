@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-export default function Toast({ message, type = 'success', duration = 1000, onClose }) {
+export default function Toast({ message, type = 'success', duration = 1500, onClose }) {
   useEffect(() => {
     if (duration && onClose) {
       const timer = setTimeout(() => {
@@ -12,8 +12,8 @@ export default function Toast({ message, type = 'success', duration = 1000, onCl
   }, [duration, onClose]);
 
   const styles = {
-    success: 'bg-green-500 text-white',
-    error: 'bg-red-500 text-white'
+    success: 'bg-white border-b-2 borber-green-600 text-green-900',
+    error: 'bg-white border-b-2 border-red-600 text-red-900'
   };
 
   return (
