@@ -11,7 +11,7 @@ function SubmitButton({ loading, onSubmit, disabled }) {
           className={`bg-green-900 text-white px-8 py-3 rounded-xl flex items-center gap-2 font-semibold transition-all duration-200 shadow-lg
             ${(loading || disabled)
               ? "opacity-60 cursor-not-allowed"
-              : "hover:bg-green-800 hover:shadow-xl"}
+              : "hover:bg-white hover:text-green-900 hover:shadow-xl"}
           `}
         >
           <FiSend className="w-5 h-5" />
