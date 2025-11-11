@@ -2,10 +2,8 @@ import React from "react";
 import { FiCalendar} from "react-icons/fi";
 
 function DateSelector({ weekDates = [], selections = [], setSelections }) {
-  // ✅ Khi click vào checkbox AM/PM
   const handleShiftChange = (workDate, shift) => {
     setSelections((prev) => {
-      // Tìm xem ngày này đã tồn tại chưa
       const existing = prev.find((s) => s.workDate === workDate);
 
       if (existing) {
@@ -22,7 +20,6 @@ function DateSelector({ weekDates = [], selections = [], setSelections }) {
         });
         return updated;
       } else {
-        // Nếu chưa có -> thêm mới
         return [...prev, { workDate, shifts: [shift] }];
       }
     });

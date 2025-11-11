@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { registerDoctorSchedule } from "../../api/registerDoctorSchedule";
 import DateSelector from "../../components/RoleDoctor/Schedule/DateSelector";
 import ShiftSelector from "../../components/RoleDoctor/Schedule/ShiftSelector";
@@ -8,7 +9,7 @@ import { getNextWeekDates } from "../../components/RoleDoctor/Schedule/GetNextWe
 import { FiCalendar, FiCheck } from "react-icons/fi";
 
 function ScheduleRegister() {
-    const [doctorId] = useState(33);
+    const { doctorId } = useParams();
     const [weekDates, setWeekDates] = useState([]);
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedShifts, setSelectedShifts] = useState([]);
@@ -16,7 +17,6 @@ function ScheduleRegister() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
 
-    // Initialize week dates on mount
     useEffect(() => {
         const dates = getNextWeekDates();
         setWeekDates(dates);
@@ -73,18 +73,18 @@ function ScheduleRegister() {
         setMessage("");
         try {
             const res = await registerDoctorSchedule({ doctorId, selections });
-            setMessage("✅ Đăng ký lịch làm việc thành công!");
+            setMessage("Đăng ký lịch làm việc thành công!");
             console.log(res);
             setSelections([]);
             setSelectedShifts([]);
             setTimeout(() => setMessage(""), 3000);
         } catch (err) {
             console.error(err);
-            setMessage("❌ Lỗi khi đăng ký lịch làm việc.");
+            setMessage("Lỗi khi đăng ký lịch làm việc.");
             setTimeout(() => setMessage(""), 3000);
         } finally {
             setLoading(false);
-        }
+        }   
     };
 
     return (
@@ -92,7 +92,7 @@ function ScheduleRegister() {
             <div className="max-w-6xl mx-auto">
                 <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
                     {/* Header */}
-                    <div className="bg-gradient-to-r from-green-900 to-green-700 px-8 py-6">
+                    <div className="bg-green-900 px-8 py-6">
                         <h2 className="text-3xl font-bold text-white flex items-center gap-3">
                             <FiCalendar className="w-8 h-8" />
                             Đăng ký lịch làm việc tuần tới

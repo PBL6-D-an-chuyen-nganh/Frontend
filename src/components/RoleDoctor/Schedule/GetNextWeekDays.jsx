@@ -1,17 +1,13 @@
-// Đây là helper function, không phải React component
-// Nên export như named export, không cần import React
-
 export const getNextWeekDates = () => {
   const today = new Date();
-  const currentDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+  const currentDay = today.getDay(); 
   
-  // Calculate days until next Monday
   let daysUntilNextMonday;
-  if (currentDay === 0) { // Sunday
+  if (currentDay === 0) { 
     daysUntilNextMonday = 1;
-  } else if (currentDay === 6) { // Saturday
+  } else if (currentDay === 6) {
     daysUntilNextMonday = 2;
-  } else { // Monday to Friday
+  } else { 
     daysUntilNextMonday = 8 - currentDay;
   }
   
