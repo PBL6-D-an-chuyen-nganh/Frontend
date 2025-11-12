@@ -14,6 +14,7 @@ import AppoinmentPage from "../pages/Appointment";
 import AppointmentHistory from "../pages/AppointmentHistory";
 import DoctorAppointments from '../pages/RoleDoctor/Appointment';
 import ScheduleRegister from '../pages/RoleDoctor/ScheduleRegister';
+import PatientList from "../pages/RoleDoctor/PatientList";
 
 function PrivateRoute({ children }) {
   const token = useAuthStore((s) => s.token);
@@ -41,7 +42,8 @@ const router = createBrowserRouter([
       { path: "services", element: <AppoinmentPage /> },
       { path: "appointments/:userId", element: <AppointmentHistory /> },
       { path: "doctor/:doctorId/appointments", element: <DoctorAppointments /> },
-      { path: "doctor/schedule/:doctorId", element: <ScheduleRegister /> }
+      { path: "doctor/schedule/:doctorId", element: <ScheduleRegister /> },
+      { path: "doctor/:doctorId/patients", element: <PatientList /> }
     ],
   },
   {
