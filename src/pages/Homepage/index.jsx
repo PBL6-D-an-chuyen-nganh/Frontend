@@ -8,43 +8,35 @@ import { GrArticle } from "react-icons/gr";
 import Article from '../../components/Home/Article';
 import { getAllArticles } from '../../api/GetAllArticles';
 import Pagination from '../../components/Home/Page'
-import Dropdown from '../../components/Dropdown';
-import { getArticleByCategory } from '../../api/getArticleByCategory';
+import SearchInput from '../../components/Search';
+import { searchArticles } from '../../api/searchArticles';
 function HomePage() {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [category, setCategory] = useState('Tất cả');
+    const [keyword, setKeyword] = useState('');
     const [sortBy, setSortBy] = useState('createdAt');
     const [sortDir, setSortDir] = useState('desc');
-
-    const handleCategoryChange = async (options) => {
-      const categoryID = options.id;
-      const label = options.label;
-      setCategory(label);
-
-      if (categoryID === 'all') {
-        load(1);
-      } else {
-        setLoading(true);
-        try {
-          const data = await getArticleByCategory(categoryID, 0, sortBy, sortDir);
-          setArticles(data?.content || []);
-          setTotalPages(Number(data?.totalPages || 1)); 
-        } finally {
-          setLoading(false);
-        }
-      }
-    };
-
 
     const load = async (p) => {
       setLoading(true);
       try {
         const data = await getAllArticles(p);
-        setArticles(data?.content || []);
+       setArticles(data.content || []);
         setTotalPages(Number(data?.totalPages || 1)); 
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const handleSearch = async(keyword) => {
+      setKeyword(keyword);
+      setLoading(true);
+      try {
+        const data = await searchArticles(keyword, sortBy, sortDir);
+        setArticles(data.content || []);
+        setTotalPages(Number(data.totalPages || 1));
       } finally {
         setLoading(false);
       }
@@ -107,12 +99,11 @@ function HomePage() {
           ))}
         </div>
       </div>
-      <div className='max-w-6xl mx-auto space-y-8 justify-end flex'>
-        <Dropdown 
-          options={options}
-          selected={category}
-          onSelect={handleCategoryChange}
-        /> 
+      <div className='max-w-6xl mx-auto mb-4 flex'>
+        <SearchInput
+          placeholder="Tìm kiếm bài viết..."
+          onSearch = {handleSearch}
+        />
       </div>
       <div className="flex items-center gap-2 max-w-6xl mx-auto border-b-1 border-green-900">
         <div className='w-6 h-6 text-green-900'>
