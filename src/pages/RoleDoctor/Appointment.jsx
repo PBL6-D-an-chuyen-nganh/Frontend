@@ -19,6 +19,7 @@ function DoctorAppointments() {
   const [pendingCancelId, setPendingCancelId] = useState(null);
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10)); 
 
+
   const formatDate = (dateStr) => {
     const [year, month, day] = dateStr.split("-");
     return `${day}/${month}/${year}`;

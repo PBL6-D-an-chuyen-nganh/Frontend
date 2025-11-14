@@ -2,12 +2,18 @@ import React from 'react'
 import UserMenu from '../UserMenu';
 import logo from '../../assets/Frame.svg'
 import MenuItem from '../MenuItem'
-function UserHeader() {
-   const menuItems = [
-        { id: "homepage", title: "Trang chủ", path: "/" },
-        { id: "professor", title: "Chuyên gia", path: "/professor" },
-        { id: "service", title: "Dịch vụ", path: "/services" },
+import { useAuthStore } from '../../store/useAuthStore';
+function DoctorHeader() {
+    const user = useAuthStore((state) => state.user);
+    const doctorId = user?.userId;
+
+    const menuItems = [
+        { id: "homepage", title: "Trang chủ", path: `/doctor/${doctorId}` },
+        { id: "appointments", title: "Lịch hẹn", path: `/doctor/${doctorId}/appointments` },
+        { id: "patients", title: "Bệnh nhân", path: `/doctor/${doctorId}/patients` },
+        { id: "schedule", title: "Lịch làm việc", path: `/doctor/schedule/${doctorId}` },
     ];
+
 
   return (
     <nav className='bg-white flex items-center justify-between px-8 py-6 shadow-md'>
@@ -16,7 +22,7 @@ function UserHeader() {
                 <h1 className='text-green-900 text-3xl font-medium cursor-pointer'>Skin+</h1>
             </div>
         <div className='w-3/4'>
-            <div className='w-full flex items-center max-w-lg mx-px'>
+            <div className='w-full flex items-center justify-center max-w-lg mx-px'>
                 {menuItems.map((item) => (
                     <MenuItem
                         key={item.id}
@@ -33,4 +39,4 @@ function UserHeader() {
   )
 }
 
-export default UserHeader
+export default DoctorHeader
