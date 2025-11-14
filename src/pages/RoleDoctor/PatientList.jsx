@@ -3,7 +3,7 @@ import PatientTable from '../../components/RoleDoctor/PatientList'
 import SearchInput from '../../components/Search';
 import Pagination from '../../components/Home/Page';
 import { getPatients } from '../../api/getPatients';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function PatientList() {
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10)); 
@@ -11,6 +11,7 @@ function PatientList() {
   const [total, setTotal] = useState(5);
   const [ patients, setPatients] = useState([]);
   const {doctorId} = useParams();
+
   const formatDate = (dateStr) => {
     const [year, month, day] = dateStr.split("-");
     return `${day}/${month}/${year}`;
@@ -26,12 +27,13 @@ function PatientList() {
       console.error("Error fetching patients:", error);
     }
   } 
-  console.log("date", date);
-  console.log("patients", patients);
 
   useEffect(() => {
     fetchPatients(doctorId, date);
   }, [doctorId, date]);
+
+  console.log("date", date);
+  console.log("patients", patients);
 
   if(!patients.length) {
     return  (
@@ -66,7 +68,9 @@ function PatientList() {
           className="mt-4 p-2 rounded-lg border border-gray-100 shadow-sm"
         />
         </div>
-        <PatientTable patients={patients} />
+        <PatientTable 
+          patients={patients} 
+        />
       </div>
       <Pagination
         current={current}
