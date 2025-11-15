@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useAuthStore } from "../store/useAuthStore";
+
 const BASE_URL = "http://localhost:8080";
 
 export default axios.create({
@@ -10,3 +12,19 @@ export const axiosPrivate = axios.create({
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
+
+axiosPrivate.interceptors.request.use(
+  (config) => {
+    const tokenObj = useAuthStore.getState().token; 
+    const token = typeof tokenObj === "string" ? tokenObj : tokenObj?.token;
+
+    console.log("INTERCEPTOR token type:", typeof token, token);
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
