@@ -16,6 +16,9 @@ function SignUp() {
   const [enterpassagain, setEnterPassAgain] = useState("");
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [ isSubmitting, setIsSubmitting ] = useState(false);
+  const [emptyFieldError, setEmptyFieldError] = useState("");
+
   const [error, setError] = useState({
     email: "",
     password: "",
@@ -25,14 +28,17 @@ function SignUp() {
   });
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const handleEmailBlur = async () => {
+  const handleEmailBlur = () => {
     if (!emailRegex.test(email)) {
       setError((prev) => ({
         ...prev,
         email: "Vui lòng nhập email hợp lệ.",
       }));
+    } else {
+      setError((prev) => ({ ...prev, email: "" }));
     }
   };
+
 
   const handleFullnameBlur = () => {
     if (name.length === 0) {
@@ -45,22 +51,28 @@ function SignUp() {
     }
   };
 
-   const handlePhoneNumberBlur = () => {
-    if (phoneNumber.length === 0) {
+  const handlePhoneNumberBlur = () => {
+    if (phoneNumber.trim() === "") {
       setError((prev) => ({
         ...prev,
         phoneNumber: "Vui lòng nhập số điện thoại.",
+      }));
+    } else if (!/^\d{10,15}$/.test(phoneNumber)) {
+      setError((prev) => ({
+        ...prev,
+        phoneNumber: "Số điện thoại không hợp lệ.",
       }));
     } else {
       setError((prev) => ({ ...prev, phoneNumber: "" }));
     }
   };
 
+
   const handlePasswordBlur = () => {
-    if (password.length != 8) {
+    if (password.length < 8) {
       setError((prev) => ({
         ...prev,
-        password: "Mật khẩu phải có chính xác 8 ký tự.",
+        password: "Mật khẩu phải có ít nhất 8 ký tự.",
       }));
     } else {
       setError((prev) => ({ ...prev, password: "" }));
@@ -68,6 +80,13 @@ function SignUp() {
   };
 
   const handleRegister = async () => {
+    if(isSubmitting) return;
+    if (!name.trim() || !email.trim() || !phoneNumber.trim() || !password.trim() || !enterpassagain.trim()) {
+      setEmptyFieldError("Vui lòng điền đầy đủ tất cả các trường.");
+      return;
+    }
+    setEmptyFieldError("");
+    setIsSubmitting(true);
     try {
       const user = await fetchRegister(name, email, phoneNumber, password);
       setIsModalOpen(true);
@@ -77,6 +96,8 @@ function SignUp() {
         ...prev,
         email: err.response?.data?.message || "Đăng ký thất bại"
       }));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -104,12 +125,16 @@ function SignUp() {
     }
   };
   const isRegisterDisabled =
-    name.trim() === "" ||
-    email.trim() === "" ||
-    phoneNumber.trim() === "" ||
-    password.length != 8 ||
-    enterpassagain != password ||
-    Object.values(error).some((e) => e !== "");
+    !name.trim() ||
+    !email.trim() ||
+    !phoneNumber.trim() ||
+    !password.trim() ||
+    !enterpassagain.trim() ||
+    password.length < 8 ||
+    enterpassagain !== password ||
+    Object.values(error).some((e) => e !== ""
+  );
+
 
   const handleReset = () => {
     setName("");
@@ -270,12 +295,17 @@ function SignUp() {
           >
             {showPassword ? <FaEyeSlash /> : <FaEye />}  
           </button>
+          {emptyFieldError && (
+            <div className="text-red-500 text-sm text-center mb-3">
+              {emptyFieldError}
+            </div>
+          )}
         </div>
          <div className='space-y-3'>
                   <button 
                     className='w-full p-3 rounded-lg bg-green-900 text-white cursor-pointer hover:bg-white hover:text-green-900'
                     onClick={handleRegister}
-                    disabled={isRegisterDisabled}
+                    disabled={isRegisterDisabled || isSubmitting}
                   >
                     Đăng ký
                   </button>
