@@ -189,6 +189,26 @@ function AppointmentPage() {
       return
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(formData.patientInfo.email)) {
+      setToast({ message: 'Email không đúng định dạng!', type: 'error' })
+      return
+    }
+
+    const phoneRegex = /^0\d{9}$/
+    if (!phoneRegex.test(formData.patientInfo.phoneNumber)) {
+      setToast({ message: 'Số điện thoại phải có 10 chữ số và bắt đầu bằng số 0!', type: 'error' })
+      return
+    }
+
+    const dobDate = new Date(formData.patientInfo.dateOfBirth)
+    const today = new Date()
+    if (dobDate > today) {
+      setToast({ message: 'Ngày sinh không hợp lệ (không được lớn hơn ngày hiện tại)!', type: 'error' })
+      return
+    }
+
+
     const validDate = availableDates.includes(dateInput)
     const validTime = (availableSlots[dateInput] || []).includes(timeInput)
     if (!validDate || !validTime) {

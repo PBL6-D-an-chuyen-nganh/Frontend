@@ -41,31 +41,48 @@ function SignUp() {
 
 
   const handleFullnameBlur = () => {
-    if (name.length === 0) {
-      setError((prev) => ({
-        ...prev,
-        name: "Vui lòng nhập tên đầy đủ.",
-      }));
+    const trimmed = name.trim();
+
+    const lettersOnly = /^[\p{L} ]+$/u;
+
+    if (trimmed.length === 0) {
+      setError(prev => ({ ...prev, name: "Vui lòng nhập tên đầy đủ." }));
+    } else if (trimmed.length > 100) {
+      setError(prev => ({ ...prev, name: "Tên không được vượt quá 100 ký tự." }));
+    } else if (!lettersOnly.test(trimmed)) {
+      setError(prev => ({ ...prev, name: "Chỉ được nhập chữ và khoảng trắng (không nhập số hoặc ký tự đặc biệt)." }));
     } else {
-      setError((prev) => ({ ...prev, name: "" }));
+      setError(prev => ({ ...prev, name: "" }));
     }
   };
 
+
   const handlePhoneNumberBlur = () => {
-    if (phoneNumber.trim() === "") {
+    const trimmed = phoneNumber.trim();
+
+    if (trimmed === "") {
       setError((prev) => ({
         ...prev,
         phoneNumber: "Vui lòng nhập số điện thoại.",
       }));
-    } else if (!/^\d{10,15}$/.test(phoneNumber)) {
+    } 
+    else if (!trimmed.startsWith("0")) {
+      setError((prev) => ({
+        ...prev,
+        phoneNumber: "Số điện thoại phải bắt đầu bằng số 0.",
+      }));
+    }
+    else if (!/^\d{10,15}$/.test(trimmed)) {
       setError((prev) => ({
         ...prev,
         phoneNumber: "Số điện thoại không hợp lệ.",
       }));
-    } else {
+    } 
+    else {
       setError((prev) => ({ ...prev, phoneNumber: "" }));
     }
   };
+
 
 
   const handlePasswordBlur = () => {
