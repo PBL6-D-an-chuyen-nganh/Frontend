@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AvatarDisplay from '../AvatarDisplay';
 import DoctorDropdown from '../DropdownMenu/DoctorDropdown';
 import { useAuthStore } from "../../store/useAuthStore";
@@ -32,7 +33,7 @@ const DoctorMenu = () => {
       console.log(res);
       if (res.message) {
         logout();
-        window.location.href = '/login';
+        navigate('/accounts/login', { replace: true });
       }
     } catch (err) {
       console.log(err);

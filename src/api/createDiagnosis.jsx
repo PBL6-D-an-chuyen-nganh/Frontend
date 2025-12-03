@@ -2,7 +2,7 @@ import { axiosPrivate } from "./axios";
 
 export const createDiagnosis = async (diagnosisData) => {
   try {
-    const response = await axiosPrivate.post("/api/diagnoses", diagnosisData);
+    const response = await axiosPrivate.post("/api/doctor/diagnoses/create", diagnosisData);
     const data = response.data; 
     return { message: data, error: null };
   } catch (error) {
