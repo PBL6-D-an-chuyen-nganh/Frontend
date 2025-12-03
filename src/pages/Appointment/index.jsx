@@ -19,6 +19,7 @@ function AppointmentPage() {
   const [timeInput, setTimeInput] = useState('')           
   const [availableSlots, setAvailableSlots] = useState({})
   const { doctorsBySpecialty, setDoctorsBySpecialty } = useDoctorStore()
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const user = useAuthStore(state => state.user)
 
   const [formData, setFormData] = useState({
@@ -188,12 +189,34 @@ function AppointmentPage() {
       return
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(formData.patientInfo.email)) {
+      setToast({ message: 'Email không đúng định dạng!', type: 'error' })
+      return
+    }
+
+    const phoneRegex = /^0\d{9}$/
+    if (!phoneRegex.test(formData.patientInfo.phoneNumber)) {
+      setToast({ message: 'Số điện thoại phải có 10 chữ số và bắt đầu bằng số 0!', type: 'error' })
+      return
+    }
+
+    const dobDate = new Date(formData.patientInfo.dateOfBirth)
+    const today = new Date()
+    if (dobDate > today) {
+      setToast({ message: 'Ngày sinh không hợp lệ (không được lớn hơn ngày hiện tại)!', type: 'error' })
+      return
+    }
+
+
     const validDate = availableDates.includes(dateInput)
     const validTime = (availableSlots[dateInput] || []).includes(timeInput)
     if (!validDate || !validTime) {
       setToast({ message: 'Ngày/giờ không còn trống, vui lòng chọn lại!', type: 'error' })
       return
     }
+
+    setIsSubmitting(true)
 
     const appointmentData = {
         patientInfo: {
@@ -234,7 +257,16 @@ function AppointmentPage() {
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50'>
-      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => {
+            setToast(null)
+            setIsSubmitting(false) 
+          }}
+        />
+      )}
 
       {/* Hero */}
       <div className='relative w-full h-72 overflow-hidden'>
@@ -426,10 +458,15 @@ function AppointmentPage() {
             </div>
 
             <div className='mt-8 flex justify-center'>
-              <div onClick={handleSubmit} className='relative group cursor-pointer'>
+              <div className='relative group cursor-pointer'>
                 <div className='absolute -inset-1 rounded-2xl blur opacity-70 group-hover:opacity-100 transition duration-300 animate-pulse'></div>
                 <div className='relative'>
-                  <Btn title='ĐẶT LỊCH HẸN' />
+                  <Btn 
+                    title='ĐẶT LỊCH HẸN' 
+                    disabled={isSubmitting} 
+                    onClick={handleSubmit} 
+                    variant='success'
+                  />
                 </div>
               </div>
             </div>

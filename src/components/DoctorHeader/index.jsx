@@ -1,20 +1,20 @@
 import React from 'react'
-import UserMenu from '../UserMenu';
+import DoctorMenu from '../DoctorMenu';
 import logo from '../../assets/Frame.svg'
 import MenuItem from '../MenuItem'
 import { useAuthStore } from '../../store/useAuthStore';
 import { Link } from 'react-router-dom';
-function UserHeader() {
+function DoctorHeader() {
     const user = useAuthStore((state) => state.user);
-    const userId = user?.userId;
+    const doctorId = user?.userId;
 
     const menuItems = [
-        { id: "homepage", title: "Trang chủ", path: "/" },
-        { id: "professor", title: "Chuyên gia", path: "/professor" },
-        { id: "service", title: "Dịch vụ", path: "/services" },
-        { id: "appoinments", title: "Lịch sử đặt lịch", path: `/appointments/${userId}` },
-        { id: "diagnosis", title: "Lịch sử khám bệnh", path: `/diagnosis/${userId}` },
+        { id: "homepage", title: "Trang chủ", path: `/doctor` },
+        { id: "appointments", title: "Lịch hẹn", path: `/doctor/${doctorId}/appointments` },
+        { id: "patients", title: "Bệnh nhân", path: `/doctor/${doctorId}/patients` },
+        { id: "schedule", title: "Lịch làm việc", path: `/doctor/schedule/${doctorId}` },
     ];
+
 
   return (
     <nav className='bg-white flex items-center justify-between px-8 py-6 shadow-md'>
@@ -24,7 +24,7 @@ function UserHeader() {
             </Link>
 
         <div className='w-3/4'>
-            <div className='w-full flex items-center justify-start ml-3'>
+            <div className='w-full flex items-center justify-start max-w-lg ml-3'>
                 {menuItems.map((item) => (
                     <MenuItem
                         key={item.id}
@@ -35,10 +35,10 @@ function UserHeader() {
             </div>
         </div>
         <div className='w-1/4 flex items-center gap-4'>
-                <UserMenu/>
+            <DoctorMenu />
         </div>
     </nav>
   )
 }
 
-export default UserHeader
+export default DoctorHeader

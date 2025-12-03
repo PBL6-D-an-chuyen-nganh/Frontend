@@ -10,7 +10,7 @@ import { getAllArticles } from '../../api/GetAllArticles';
 import Pagination from '../../components/Home/Page'
 import SearchInput from '../../components/Search';
 import { searchArticles } from '../../api/searchArticles';
-function HomePage() {
+function DoctorHomePage() {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [articles, setArticles] = useState([]);
@@ -133,4 +133,4 @@ function HomePage() {
   )
 }
 
-export default HomePage
+export default DoctorHomePage

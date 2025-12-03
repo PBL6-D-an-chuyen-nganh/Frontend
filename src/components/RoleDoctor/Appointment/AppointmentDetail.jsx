@@ -1,7 +1,9 @@
 import React from 'react'
 import { FiChevronUp, FiUser, FiMail, FiPhone, FiCalendar, FiCheck } from 'react-icons/fi'
 import AppointmentInfor from './AppointmentInfor'
-import Btn from '../Button'
+import Btn from '../../Button'
+import { useParams } from 'react-router-dom'
+import { useAppointmentStore } from '../../../store/useAppointmentStore'
 
 const formatDateTime = (iso) => {
   if (!iso) return { date: '—', time: '—' }
@@ -12,9 +14,16 @@ const formatDateTime = (iso) => {
 }
 
 const AppointmentDetail = ({ appointment, isOpen, onToggle, onRequestCancel }) => {
-  const doctor = appointment.doctor || {}
   const patient = appointment.patientInfo || {}
   const { date, time } = formatDateTime(appointment.time)
+  const { doctorId } = useParams()
+  const setAppointmentId = useAppointmentStore((state) => state.setAppointmentID);
+  console.log("Appointment ID in AppointmentDetail:", appointment.appointmentID)
+  console.log("Doctor ID in AppointmentDetail:", doctorId)
+
+    const goToCreateDiagnosis = () => {
+      setAppointmentId(appointment.appointmentID);
+  };
 
   return (
     <div className="bg-white rounded-3xl shadow-2xl mb-6">
@@ -40,14 +49,20 @@ const AppointmentDetail = ({ appointment, isOpen, onToggle, onRequestCancel }) =
       {isOpen && (
         <>
           <div className="px-6 space-y-1 mb-6 pb-6 border-t border-green-900 pt-6">
-            <AppointmentInfor icon={FiUser} label="Bác sĩ" degree={doctor.degree} name={doctor.name} position={doctor.position} />
             <AppointmentInfor icon={FiMail} label="Email" value={patient.email} />
             <AppointmentInfor icon={FiPhone} label="Số điện thoại" value={patient.phoneNumber} />
             <AppointmentInfor icon={FiCheck} label="Ghi chú" value={appointment.note} />
           </div>
 
           {/* Actions */}
-          <div className="px-6 pb-6 flex justify-end">
+          <div className="px-6 pb-6 flex justify-end gap-4">
+            <Btn
+              title="Tạo chẩn đoán"
+              onClick={goToCreateDiagnosis}
+              variant="primary"
+              path={`/doctor/${doctorId}/create-diagnosis`}
+             
+            />
             <Btn
               title="Huỷ lịch"                
               disabled={appointment.status === "inactive"}                 

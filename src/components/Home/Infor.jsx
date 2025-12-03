@@ -47,7 +47,7 @@ const Infor = ({title, p1, p2, p3, icon}) => {
             onClick={toggleExpanded}
             className="text-green-900 hover:text-green-700 bg-transparent border-none text-sm font-medium cursor-pointer"
           >
-            {isExpanded ? '<<thu gọn' : 'xem thêm>>'}
+            {isExpanded ? '<< Thu gọn' : 'Xem thêm >>'}
           </button>
         </div>
       </div>

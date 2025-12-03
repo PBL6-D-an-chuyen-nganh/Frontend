@@ -7,8 +7,6 @@ function Navbar() {
         { id: "guest", title: "Trang chủ", path: "/accounts" },
         { id: "professor", title: "Chuyên gia", path: "/professor" },
         { id: "service", title: "Dịch vụ", path: "/service" },
-        { id: "forum", title: "Diễn đàn", path: "/forum" },
-        { id: "analysis", title: "Phân tích", path: "/analysis" },
     ];
   return (
     <nav className='bg-white flex items-center justify-between px-8 py-6 shadow-md'>
@@ -20,7 +18,7 @@ function Navbar() {
         </Link>
         
         <div className='w-3/4'>
-            <div className='w-full flex items-center justify-center max-w-lg mx-px'>
+            <div className='w-full flex items-center justify-start max-w-lg ml-3'>
                 {menuItems.map((item) => (
                     <MenuItem
                         key={item.id}

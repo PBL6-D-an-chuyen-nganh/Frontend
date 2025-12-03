@@ -20,6 +20,7 @@ export const useAuthStore = create((set, get) => ({
   })(),
 
   login: ({ token, user }) => {
+    console.log("typeof token in store:", typeof token, token);
     set({ token, user });
     syncCookies(get());
   },

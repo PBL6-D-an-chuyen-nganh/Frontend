@@ -5,6 +5,7 @@ import { getAppointmentByCreator } from '../../api/getAppointmentByCreator'
 import { deleteAppointment } from '../../api/deleteAppointment'
 import ConfirmModal from '../../components/Modal/ConfirmModal'
 import { useParams } from 'react-router-dom'
+import Toast from '../../components/Notification'
 
 function AppointmentHistory() {
   const [toast, setToast] = useState(null)
@@ -43,12 +44,18 @@ function AppointmentHistory() {
     try {
       const { error: Error } = await deleteAppointment(pendingCancelId)
       if (!Error) {
+        setToast({
+            message: 'Huỷ lịch hẹn thành công.',
+            type: 'success'
+        })
+        console.log('huy lich hen thanh cong')
         setAppointments(prev => prev.filter(a => a.appointmentID !== pendingCancelId))
         setTotal(t => Math.max(0, t - 1))
       }
     } catch (err) {
       console.error(err)
       setError('Lỗi khi huỷ lịch hẹn.')
+      setToast({ message: 'Huỷ lịch hẹn không thành công.' , type: 'error' })
     } finally {
       setConfirmOpen(false)
       setPendingCancelId(null)
@@ -67,32 +74,36 @@ function AppointmentHistory() {
   }
 
   return (
-    <div className='max-w-6xl mx-auto px-6 py-12'>
-      <AppointmentCard total={total} />
-      <div>
-        {appointments.map((appointment) => (
-          <AppointmentDetail
-            key={appointment.appointmentID}
-            appointment={appointment}
-            isOpen={expandedId === appointment.appointmentID}
-            onToggle={() =>
-              setExpandedId(expandedId === appointment.appointmentID ? null : appointment.appointmentID)
-            }
-            onRequestCancel={openConfirm}
-          />
-        ))}
-      </div>
+    <div className='min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50'>
+       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
+      <div className='max-w-6xl mx-auto px-6 py-12'>
+        <AppointmentCard total={total} />
+        <div>
+          {appointments.map((appointment) => (
+            <AppointmentDetail
+              key={appointment.appointmentID}
+              appointment={appointment}
+              isOpen={expandedId === appointment.appointmentID}
+              onToggle={() =>
+                setExpandedId(expandedId === appointment.appointmentID ? null : appointment.appointmentID)
+              }
+              onRequestCancel={openConfirm}
+            />
+          ))}
+        </div>
 
-      <ConfirmModal
-        isOpen={confirmOpen}
-        label="Huỷ lịch hẹn"
-        question="Bạn có chắc muốn huỷ lịch hẹn này?"
-        confirmLabel="HUỶ LỊCH HẸN"
-        cancelLabel="Đóng"
-        onConfirm={handleConfirmCancel}
-        onCancel={() => { setConfirmOpen(false); setPendingCancelId(null); }}
-      />
+        <ConfirmModal
+          isOpen={confirmOpen}
+          label="Huỷ lịch hẹn"
+          question="Bạn có chắc muốn huỷ lịch hẹn này?"
+          confirmLabel="Huỷ lịch hẹn"
+          cancelLabel="Đóng"
+          onConfirm={handleConfirmCancel}
+          onCancel={() => { setConfirmOpen(false); setPendingCancelId(null); }}
+        />
+      </div>
     </div>
+
   )
 }
 
