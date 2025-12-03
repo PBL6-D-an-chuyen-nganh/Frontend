@@ -28,15 +28,12 @@ function PrivateRoute({ children }) {
 function GuestRoute({ children }) {
   const token = useAuthStore((s) => s.token);
   const user = useAuthStore((s) => s.user);
-
   if (!token) {
     return children;
   }
-  
   if (user?.role === 'ROLE_DOCTOR') {
     return <Navigate to="/doctor" replace />;
   }
-  
   return <Navigate to="/" replace />;
 }
 
@@ -102,10 +99,10 @@ const router = createBrowserRouter([
       { path: "forget-password", element: <ForgetPassPage /> },
     ],
   },
-  {
-    path: "*",
-    element: <Navigate to="/accounts" replace />,
-  },
+  // {
+  //   path: "*",
+  //   element: <Navigate to="/accounts" replace />,
+  // },
 ]);
 
 export default router;

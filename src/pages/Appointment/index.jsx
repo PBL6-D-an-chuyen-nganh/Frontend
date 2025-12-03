@@ -275,7 +275,7 @@ function AppointmentPage() {
 
       <div className='max-w-6xl mx-auto px-4 py-12'>
         {/* Appointment Details */}
-        <div className='bg-white min-h-124 rounded-3xl shadow-2xl overflow-hidden mb-6 transform hover:scale-[1.01] transition-transform duration-300'>
+        <div className='bg-white min-h-124 rounded-xl shadow-xl overflow-hidden mb-6'>
           <div className='bg-green-900 p-6'>
             <div className='flex items-center gap-3'>
               <Calendar className='w-8 h-8 text-white' />
@@ -361,7 +361,7 @@ function AppointmentPage() {
         </div>
 
         {/* Patient Info */}
-        <div className='bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-[1.01] transition-transform duration-300'>
+        <div className='bg-white rounded-xl shadow-xl overflow-hidden '>
           <div className='bg-green-900 p-6'>
             <div className='flex items-center gap-3'>
               <User className='w-8 h-8 text-white' />

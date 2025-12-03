@@ -3,7 +3,7 @@ import PatientTable from '../../components/RoleDoctor/PatientList'
 import SearchInput from '../../components/Search';
 import Pagination from '../../components/Home/Page';
 import { getPatients } from '../../api/getPatients';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 function PatientList() {
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10)); 

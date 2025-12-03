@@ -88,7 +88,7 @@ function DoctorDetail() {
         <div className='flex justify-center mb-4 mr-4'>
         <Btn
           title="ĐẶT LỊCH HẸN"
-          path={`/appointments/new?doctorId=${doctor?.userId}`}
+          path={`/services`}
         />            
       </div>
     </div>
