@@ -17,9 +17,6 @@ axiosPrivate.interceptors.request.use(
   (config) => {
     const tokenObj = useAuthStore.getState().token; 
     const token = typeof tokenObj === "string" ? tokenObj : tokenObj?.token;
-
-    console.log("INTERCEPTOR token type:", typeof token, token);
-
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

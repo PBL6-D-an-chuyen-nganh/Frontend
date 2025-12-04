@@ -30,7 +30,7 @@ function SelectedList({ selections, removeSelection, weekDates = [] }) {
             >
               <div className="flex-1">
                 <div className="flex items-center gap-2">
-                  <FiCheck className="w-5 h-5 text-green-600" />
+                  <FiCheck className="w-5 h-5 text-green-900" />
                   <p className="font-semibold text-gray-900">
                     {getDayName(sel.workDate)}
                   </p>

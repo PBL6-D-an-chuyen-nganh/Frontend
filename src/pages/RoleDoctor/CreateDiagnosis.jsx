@@ -6,7 +6,7 @@ import Toast from '../../components/Notification';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useAppointmentStore } from '../../store/useAppointmentStore';
 import { createDiagnosis } from '../../api/createDiagnosis';
-import { getAppointmentById } from '../../api/getAppointmentById';
+import { getAppointmentByIdDoctor } from '../../api/getAppointmentByIdDoctor';
 
 function CreateDiagnosis() {
     const user = useAuthStore((state) => state.user);
@@ -24,6 +24,7 @@ function CreateDiagnosis() {
         disease: '',
         dateOfDiagnosis: new Date().toISOString().slice(0, 10),
         doctorNotes: '',
+        treatmentPlan: ''
     };
 
     const [formData, setFormData] = useState(initialFormData);
@@ -39,10 +40,8 @@ function CreateDiagnosis() {
     useEffect(() => {
     const fetchDetail = async () => {
         if (!appointmentID) return;
-
-        const data = await getAppointmentById(appointmentID);
+        const data = await getAppointmentByIdDoctor(appointmentID);
         console.log("DATA APPOINTMENT:", data);
-
         if (data) {
         setFormPatientData(prev => ({
             ...prev,
@@ -74,9 +73,9 @@ function CreateDiagnosis() {
             doctorUserId: doctorId,
             disease: formData.description,        
             dateOfDiagnosis: today,
-            doctorNotes: formData.conclusion    
+            doctorNotes: formData.conclusion,
+            treatmentPlan: formData.treatmentPlan
         };
-
         console.log("PAYLOAD GỬI LÊN:", diagnosisData);
 
         try {
@@ -122,7 +121,8 @@ function CreateDiagnosis() {
             description: '',
             conclusion: '',
             dateOfDiagnosis: new Date().toISOString().slice(0, 10),
-            doctorUserId: ''
+            doctorUserId: '',
+            treatmentPlan: ''
         });
     };
 
@@ -178,7 +178,7 @@ function CreateDiagnosis() {
                 name="patientName"
                 value={formPatientData.patientName}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300"
+                className="w-full px-4 py-2 from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300"
                 placeholder="Nhập tên bệnh nhân"
               />
             </div>
@@ -205,7 +205,7 @@ function CreateDiagnosis() {
                 name="patientId"
                 value={formPatientData.patientId}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300"
+                className="w-full px-4 py-2 from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300"
                 placeholder="Nhập mã bệnh nhân"
               />
             </div>
@@ -220,7 +220,7 @@ function CreateDiagnosis() {
                 name="doctorName"
                 value={formPatientData.doctorName}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300"
+                className="w-full px-4 py-2 from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300"
                 placeholder="Nhập tên bác sĩ"
               />
             </div>
@@ -266,6 +266,20 @@ function CreateDiagnosis() {
               rows="4"
               className="w-full px-4 py-2 bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300 resize-none"
               placeholder="Nhập kết luận..."
+            />
+          </div>
+        </div>
+
+        <div className="mb-8">
+          <h2 className="text-xl font-bold mb-4">ĐIỀU TRỊ</h2>
+          <div className="bg-green-50 border-l-4 border-green-900 p-4 rounded">
+            <textarea
+              name="treatmentPlan"
+              value={formData.treatmentPlan}
+              onChange={handleChange}
+              rows="4"
+              className="w-full px-4 py-2 bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300 resize-none"
+              placeholder="Nhập hướng dẫn..."
             />
           </div>
         </div>

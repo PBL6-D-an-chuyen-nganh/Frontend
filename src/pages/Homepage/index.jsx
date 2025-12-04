@@ -13,12 +13,12 @@ import { searchArticles } from '../../api/searchArticles';
 function HomePage() {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [sortBy, setSortBy] = useState('createdAt');
+    const [sortDir, setSortDir] = useState('desc');
     const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(false);
     const [keyword, setKeyword] = useState('');
-    const [sortBy, setSortBy] = useState('createdAt');
-    const [sortDir, setSortDir] = useState('desc');
-
+   
     const load = async (p) => {
       setLoading(true);
       try {

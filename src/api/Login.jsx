@@ -18,5 +18,5 @@ export const fetchLogin = async (email, password) => {
     }
 
     throw error; 
-  }
+  } 
 };

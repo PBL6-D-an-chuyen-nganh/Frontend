@@ -1,20 +1,17 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { FaUserMd, FaUser, FaVenusMars, FaIdCard, FaHospital } from 'react-icons/fa';
 import Btn from '../../components/Button';
 import { getDiagnosisDetail } from '../../api/getDiagnosisDetail';
 import { useAuthStore} from '../../store/useAuthStore';
+import { useReactToPrint } from 'react-to-print';
 export default function MedicalReport() {
     const { diagnosisId } = useParams();
     const user = useAuthStore((state) => state.user);
     const doctorId = user?.userId;
-
-    console.log("Doctor ID:", doctorId);
-
-    console.log("Diagnosis ID:", diagnosisId);
-
     const [diagnosisDetail, setDiagnosisDetail] = useState(null);
+    const printRef = useRef(null);
 
     useEffect(() => {
         const fetchDiagnosisDetail = async () => {
@@ -25,16 +22,29 @@ export default function MedicalReport() {
                 console.error("Error fetching diagnosis detail:", error);
             }
         };
-
         fetchDiagnosisDetail();
     }, [diagnosisId]);
 
-    if (!diagnosisDetail) {
-        return <div>Loading...</div>;
-    }   
+      const handlePrint = useReactToPrint({
+      contentRef: printRef,
+      documentTitle: `phieu-chan-doan-${diagnosisId}`,
+    });
+
+  if (!diagnosisDetail) {
+    return (
+      <div className="flex flex-col justify-center items-center h-full gap-2">
+        <p className="text-gray-500">Đang tải dữ liệu...</p>
+      </div>
+    );
+  }
+
+  
   return (
     <div className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-lg p-8">
+      <div 
+        ref={printRef}
+        className="max-w-6xl mx-auto bg-white shadow-lg rounded-lg p-8"
+      >
         <h1 className="text-3xl font-bold text-center text-green-900 mb-8">
           PHIẾU KẾT QUÁ CHẨN ĐOÁN 
         </h1>
@@ -118,7 +128,8 @@ export default function MedicalReport() {
             />
 
             <Btn
-                title={"In phiếu kết quả"}
+              title={"In phiếu kết quả"}
+              onClick={() => handlePrint()} 
             />
         </div>
       </div>

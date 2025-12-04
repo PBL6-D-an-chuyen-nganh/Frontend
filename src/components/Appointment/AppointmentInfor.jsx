@@ -4,7 +4,7 @@ function AppointmentInfor({ icon: Icon, label, degree, name, position, value }) 
 
   return (
     <div className="flex items-start gap-4 py-3">
-      {Icon && <Icon className="w-5 h-5 text-green-900 flex-shrink-0 mt-1" />}
+      {Icon && <Icon className="w-5 h-5 text-green-900 mt-1" />}
       <div className="flex-1">
         {label && (
           <p className="text-xs text-gray-500 uppercase font-semibold tracking-wide">{label}</p>

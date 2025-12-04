@@ -10,6 +10,7 @@ const DoctorMenu = () => {
     const [active, setActive] = useState(false);
     const avatarRef = useRef(null);
     const axiosPrivate = useAxiosPrivate();
+    const navigate = useNavigate();
 
     const user = useAuthStore(state => state.user);
     const username = user?.name;

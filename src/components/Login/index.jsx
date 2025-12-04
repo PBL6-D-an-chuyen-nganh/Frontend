@@ -25,7 +25,6 @@ function Login() {
         return;
       }
       login({ token, user });
-      setToken({ token });
       navigate("/home");
     } catch (err) {
       const status = err?.response?.status;

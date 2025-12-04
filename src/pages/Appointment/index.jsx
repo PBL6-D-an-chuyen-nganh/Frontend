@@ -256,7 +256,7 @@ function AppointmentPage() {
   }
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50'>
+    <div className='min-h-screen'>
       {toast && (
         <Toast
           message={toast.message}
@@ -352,7 +352,7 @@ function AppointmentPage() {
               </div>
             </div>
 
-            <div className='mt-6 p-4 bg-gradient-to-r from-green-50 to-cyan-50 rounded-xl border border-green-800'>
+            <div className='mt-6 p-4'>
               <p className='text-sm text-green-900'>
                 <strong>Lưu ý:</strong> Thời gian trên chỉ là dự kiến. Tổng đài sẽ liên hệ xác nhận thời gian chính xác sau khi bạn đặt hẹn.
               </p>
@@ -380,7 +380,7 @@ function AppointmentPage() {
                   name='name'
                   value={formData.patientInfo.name}
                   onChange={handleInputChange}
-                  className='w-full px-4 py-3 bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300'
+                  className='w-full px-4 py-3 from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300'
                   placeholder='Nhập họ và tên'
                 />
               </div>
@@ -395,7 +395,7 @@ function AppointmentPage() {
                   name='email'
                   value={formData.patientInfo.email}
                   onChange={handleInputChange}
-                  className='w-full px-4 py-3 bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300'
+                  className='w-full px-4 py-3 from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300'
                   placeholder='Nhập địa chỉ email'
                 />
               </div>
@@ -422,7 +422,7 @@ function AppointmentPage() {
                   name='dateOfBirth'
                   value={formData.patientInfo.dateOfBirth}
                   onChange={handleInputChange}
-                  className='w-full px-4 py-3 bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300'
+                  className='w-full px-4 py-3 from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300'
                 />
               </div>
 
@@ -436,7 +436,7 @@ function AppointmentPage() {
                   name='phone'
                   value={formData.patientInfo.phoneNumber}
                   onChange={handleInputChange}
-                  className='w-full px-4 py-3 bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300'
+                  className='w-full px-4 py-3 from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 transition-all duration-300'
                   placeholder='Nhập số điện thoại'
                 />
               </div>
@@ -451,7 +451,7 @@ function AppointmentPage() {
                   value={formData.note}
                   onChange={handleInputChange}
                   rows={4}
-                  className='w-full px-4 py-3 bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 resize-none transition-all duration-300'
+                  className='w-full px-4 py-3 from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-100 resize-none transition-all duration-300'
                   placeholder='Mô tả tình trạng sức khỏe, triệu chứng hoặc câu hỏi cho bác sĩ...'
                 />
               </div>

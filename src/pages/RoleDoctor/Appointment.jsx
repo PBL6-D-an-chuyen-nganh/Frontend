@@ -19,7 +19,6 @@ function DoctorAppointments() {
   const [pendingCancelId, setPendingCancelId] = useState(null);
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10)); 
 
-
   const formatDate = (dateStr) => {
     const [year, month, day] = dateStr.split("-");
     return `${day}/${month}/${year}`;
@@ -37,8 +36,8 @@ function DoctorAppointments() {
       try {
         setLoading(true);
         const data = await getAppointmentByDoctor(doctorId, date);
-        setAppointments(Array.isArray(data?.appointments) ? data.appointments : []);
-        setTotal(typeof data?.total === 'number' ? data.total : (data?.appointments?.length || 0));
+        setAppointments(data.appointments);
+        setTotal(data.total);
       } catch (err) {
         console.error(err);
         setError('Lỗi khi tải lịch hẹn.');
@@ -47,54 +46,62 @@ function DoctorAppointments() {
       }
     };
 
-    fetchAppointments();
+    if (doctorId) {
+      fetchAppointments();
+    }
   }, [doctorId, date]);
 
   const handleConfirmCancel = async () => {
-      if (!pendingCancelId) return
-      try {
-        const { error: Error } = await deleteAppointmentByDoctor(pendingCancelId)
-        if (!Error) {
-          setAppointments(prev => prev.filter(a => a.appointmentID !== pendingCancelId))
-          setTotal(t => Math.max(0, t - 1))
-          setConfirmOpen(false)
-          setToast({
-            message: 'Huỷ lịch hẹn thành công.',
-            type: 'success'
-          })
-        }
-      } catch (err) {
+    if (!pendingCancelId) return;
+    try {
+      const { error: Error } = await deleteAppointmentByDoctor(pendingCancelId);
+      if (!Error) {
+        setAppointments(prev => prev.filter(a => a.appointmentID !== pendingCancelId));
+        setTotal(t => Math.max(0, t - 1));
+        setConfirmOpen(false);
         setToast({
-          message: 'Huỷ lịch hẹn không thành công. ',
-          type: 'error'
-        })
-        console.error(err)
-        setError('Lỗi khi huỷ lịch hẹn.')
-      } finally {
-        setPendingCancelId(null)
+          message: 'Huỷ lịch hẹn thành công.',
+          type: 'success'
+        });
       }
+    } catch (err) {
+      setToast({
+        message: 'Huỷ lịch hẹn không thành công.',
+        type: 'error'
+      });
+      console.error(err);
+      setError('Lỗi khi huỷ lịch hẹn.');
+    } finally {
+      setPendingCancelId(null);
     }
-  
+  };
 
   if (loading) return <div className='max-w-6xl mx-auto gap-3 mb-6 text-center mt-10'>Đang tải...</div>;
   if (error) return <div className="max-w-6xl mx-auto px-6 py-12 text-red-600">{error}</div>;
 
   if (!appointments.length) {
     return (
-      <div className="bg-white rounded-lg p-6 flex flex-col items-center">
-        <p className="text-base font-semibold text-gray-600">Không có lịch hẹn nào trong ngày {formattedDate}.</p>
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          className="mt-4 p-2 border rounded"
-        />
+      <div className="min-h-screen">
+        {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
+        <div className="max-w-6xl mx-auto px-6 py-12">
+          <div className="bg-white rounded-lg p-6 flex flex-col items-center">
+            <p className="text-base font-semibold text-gray-600">
+              Không có lịch hẹn nào trong ngày {formattedDate}.
+            </p>
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="mt-4 p-2 border rounded"
+            />
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50'>
+    <div className='min-h-screen'>
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
       <div className='max-w-6xl mx-auto px-6 py-12'>
         <div className="flex justify-between items-center mb-4">
@@ -106,7 +113,9 @@ function DoctorAppointments() {
             className="p-2 border rounded"
           />
         </div>
+
         <AppointmentCard total={total} />
+
         <div>
           {appointments.map((appointment) => (
             <AppointmentDetail
@@ -114,12 +123,17 @@ function DoctorAppointments() {
               appointment={appointment}
               isOpen={expandedId === appointment.appointmentID}
               onToggle={() =>
-                setExpandedId(expandedId === appointment.appointmentID ? null : appointment.appointmentID)
+                setExpandedId(
+                  expandedId === appointment.appointmentID
+                    ? null
+                    : appointment.appointmentID
+                )
               }
               onRequestCancel={openConfirm} 
             />
           ))}
         </div>
+
         <ConfirmModal
           isOpen={confirmOpen}
           label="Huỷ lịch hẹn"
@@ -130,8 +144,7 @@ function DoctorAppointments() {
           onCancel={() => { setConfirmOpen(false); setPendingCancelId(null); }}
         />
       </div>
-  </div>
-  
+    </div>
   );
 }
 
