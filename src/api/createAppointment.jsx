@@ -1,6 +1,6 @@
 export const createAppointment = async (axiosPrivate, appointmentData) => {
   try {
-    const response = await axiosPrivate.post("/api/appointments/create", appointmentData);
+    const response = await axiosPrivate.post("/api/user/appointments/create", appointmentData);
     const data = response.data; 
     return { message: data, error: null };
   } catch (error) {

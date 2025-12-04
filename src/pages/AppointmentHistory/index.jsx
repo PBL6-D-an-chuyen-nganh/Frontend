@@ -6,6 +6,7 @@ import { deleteAppointment } from '../../api/deleteAppointment'
 import ConfirmModal from '../../components/Modal/ConfirmModal'
 import { useParams } from 'react-router-dom'
 import Toast from '../../components/Notification'
+import Pagination from '../../components/Home/Page'
 
 function AppointmentHistory() {
   const [toast, setToast] = useState(null)
@@ -17,6 +18,9 @@ function AppointmentHistory() {
   const [expandedId, setExpandedId] = useState(null)
   const [confirmOpen, setConfirmOpen] = useState(false)
   const [pendingCancelId, setPendingCancelId] = useState(null)
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const pageSize = 8   
 
   const openConfirm = (appointmentID) => {
     setPendingCancelId(appointmentID)
@@ -25,10 +29,15 @@ function AppointmentHistory() {
 
   useEffect(() => {
     const fetchAppointments = async () => {
+      setLoading(true)
+      setError(null)
       try {
-        const data = await getAppointmentByCreator(userId)
-        setAppointments(Array.isArray(data?.appointments) ? data.appointments : [])
-        setTotal(typeof data?.total === 'number' ? data.total : (data?.appointments?.length || 0))
+        const data = await getAppointmentByCreator(userId, page, pageSize)
+        console.log("getAppointmentByCreator data:", data)
+
+        setAppointments(data.appointments)
+        setTotal(data.totalElements)
+        setTotalPages(data.totalPages)
       } catch (err) {
         console.error(err)
         setError('Lỗi khi tải lịch hẹn.')
@@ -36,8 +45,11 @@ function AppointmentHistory() {
         setLoading(false)
       }
     }
-    fetchAppointments()
-  }, [userId])
+
+    if (userId) {
+      fetchAppointments()
+    }
+  }, [userId, page]) 
 
   const handleConfirmCancel = async () => {
     if (!pendingCancelId) return
@@ -45,10 +57,10 @@ function AppointmentHistory() {
       const { error: Error } = await deleteAppointment(pendingCancelId)
       if (!Error) {
         setToast({
-            message: 'Huỷ lịch hẹn thành công.',
-            type: 'success'
+          message: 'Huỷ lịch hẹn thành công.',
+          type: 'success'
         })
-        console.log('huy lich hen thanh cong')
+
         setAppointments(prev => prev.filter(a => a.appointmentID !== pendingCancelId))
         setTotal(t => Math.max(0, t - 1))
       }
@@ -67,15 +79,22 @@ function AppointmentHistory() {
 
   if (!appointments.length) {
     return (
-      <div className="bg-white rounded-lg p-6 flex flex-col items-center">
-        <p className="text-base font-semibold text-gray-600">Chưa có lịch hẹn nào.</p>
+      <div className="min-h-screen ">
+        {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
+        <div className="max-w-6xl mx-auto px-6 py-12">
+          <AppointmentCard total={total} />
+          <div className="bg-white rounded-lg p-6 flex flex-col items-center">
+            <p className="text-base font-semibold text-gray-600">Chưa có lịch hẹn nào.</p>
+          </div>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50'>
-       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
+    <div className='min-h-screen'>
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
+
       <div className='max-w-6xl mx-auto px-6 py-12'>
         <AppointmentCard total={total} />
         <div>
@@ -85,7 +104,11 @@ function AppointmentHistory() {
               appointment={appointment}
               isOpen={expandedId === appointment.appointmentID}
               onToggle={() =>
-                setExpandedId(expandedId === appointment.appointmentID ? null : appointment.appointmentID)
+                setExpandedId(
+                  expandedId === appointment.appointmentID
+                    ? null
+                    : appointment.appointmentID
+                )
               }
               onRequestCancel={openConfirm}
             />
@@ -102,8 +125,13 @@ function AppointmentHistory() {
           onCancel={() => { setConfirmOpen(false); setPendingCancelId(null); }}
         />
       </div>
-    </div>
 
+      <Pagination
+        current={page}
+        total={totalPages}
+        onChange={(p) => setPage(p)}
+      />
+    </div>
   )
 }
 

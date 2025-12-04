@@ -17,7 +17,7 @@ const AppointmentDetail = ({ appointment, isOpen, onToggle, onRequestCancel }) =
   const { date, time } = formatDateTime(appointment.time)
 
   return (
-    <div className="bg-white rounded-3xl shadow-2xl mb-6">
+    <div className="bg-white rounded-xl shadow-lg mb-6">
       {/* Header */}
       <div className="flex items-center justify-between px-6 py-6">
         <div>

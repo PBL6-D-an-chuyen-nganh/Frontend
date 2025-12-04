@@ -98,7 +98,7 @@ function ProfessorPage() {
   };
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50'>
+    <div className='min-h-screen'>
       <div className='w-full overflow-hidden mb-8'>
         <img src={pageimg} alt="homepage" className='w-full h-min object-cover'/>
       </div>

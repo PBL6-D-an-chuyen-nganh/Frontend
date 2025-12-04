@@ -6,7 +6,7 @@ import ShiftSelector from "../../components/RoleDoctor/Schedule/ShiftSelector";
 import SelectedList from "../../components/RoleDoctor/Schedule/SelectedList";
 import SubmitButton from "../../components/RoleDoctor/Schedule/SubmitButton";
 import { getNextWeekDates } from "../../components/RoleDoctor/Schedule/GetNextWeekDays";
-import { FiCalendar, FiCheck } from "react-icons/fi";
+import { FiCalendar} from "react-icons/fi";
 
 function ScheduleRegister() {
     const { doctorId } = useParams();
@@ -88,9 +88,9 @@ function ScheduleRegister() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 py-10 px-4">
+        <div className="min-h-screen py-10 px-4">
             <div className="max-w-6xl mx-auto">
-                <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+                <div className="bg-white rounded-xl shadow-xl overflow-hidden">
                     {/* Header */}
                     <div className="bg-green-900 px-8 py-6">
                         <h2 className="text-3xl font-bold text-white flex items-center gap-3">
@@ -112,7 +112,7 @@ function ScheduleRegister() {
                         {/* Message */}
                         {message && (
                             <div
-                                className={`px-4 py-3 rounded-xl text-center font-medium ${message.includes("✅")
+                                className={`px-4 py-3 rounded-xl text-center font-medium ${message.includes("thành công")
                                     ? "bg-green-100 text-green-800"
                                     : "bg-red-100 text-red-800"
                                     }`}

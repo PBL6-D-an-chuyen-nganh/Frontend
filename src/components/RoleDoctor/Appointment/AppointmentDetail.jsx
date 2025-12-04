@@ -1,5 +1,5 @@
 import React from 'react'
-import { FiChevronUp, FiUser, FiMail, FiPhone, FiCalendar, FiCheck } from 'react-icons/fi'
+import { FiChevronUp, FiMail, FiPhone, FiCalendar, FiCheck } from 'react-icons/fi'
 import AppointmentInfor from './AppointmentInfor'
 import Btn from '../../Button'
 import { useParams } from 'react-router-dom'
@@ -21,7 +21,7 @@ const AppointmentDetail = ({ appointment, isOpen, onToggle, onRequestCancel }) =
   console.log("Appointment ID in AppointmentDetail:", appointment.appointmentID)
   console.log("Doctor ID in AppointmentDetail:", doctorId)
 
-    const goToCreateDiagnosis = () => {
+  const goToCreateDiagnosis = () => {
       setAppointmentId(appointment.appointmentID);
   };
 
@@ -61,7 +61,7 @@ const AppointmentDetail = ({ appointment, isOpen, onToggle, onRequestCancel }) =
               onClick={goToCreateDiagnosis}
               variant="primary"
               path={`/doctor/${doctorId}/create-diagnosis`}
-             
+              disabled={appointment.hasDiagnosis === true}
             />
             <Btn
               title="Huỷ lịch"                

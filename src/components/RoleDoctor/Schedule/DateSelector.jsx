@@ -39,7 +39,7 @@ function DateSelector({ weekDates = [], selections = [], setSelections }) {
           return (
             <div
               key={day.date}
-              className="p-4 border-2 rounded-xl text-center transition-all duration-200 hover:shadow-md bg-white"
+              className="p-4 border-2 border-green-900 rounded-md text-center transition-all duration-200 hover:shadow-md bg-white"
             >
               <div className="font-semibold text-green-900 mb-1">
                 {day.dayName}
@@ -50,7 +50,7 @@ function DateSelector({ weekDates = [], selections = [], setSelections }) {
                 <label className="flex items-center justify-center gap-2 cursor-pointer">
                   <input
                     type="checkbox"
-                    className="accent-green-700"
+                    className="accent-green-900"
                     checked={selected?.shifts?.includes("AM") || false}
                     onChange={() => handleShiftChange(day.date, "AM")}
                   />
