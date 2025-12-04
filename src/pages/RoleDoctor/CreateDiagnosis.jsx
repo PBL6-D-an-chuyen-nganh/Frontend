@@ -24,7 +24,8 @@ function CreateDiagnosis() {
         disease: '',
         dateOfDiagnosis: new Date().toISOString().slice(0, 10),
         doctorNotes: '',
-        treatmentPlan: ''
+        treatmentPlan: '',
+        appointmentId: ''
     };
 
     const [formData, setFormData] = useState(initialFormData);
@@ -74,7 +75,8 @@ function CreateDiagnosis() {
             disease: formData.description,        
             dateOfDiagnosis: today,
             doctorNotes: formData.conclusion,
-            treatmentPlan: formData.treatmentPlan
+            treatmentPlan: formData.treatmentPlan,
+            appointmentId: formPatientData.patientId
         };
         console.log("PAYLOAD GỬI LÊN:", diagnosisData);
 
