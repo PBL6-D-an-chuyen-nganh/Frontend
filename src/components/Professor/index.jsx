@@ -1,7 +1,18 @@
 import React from 'react';
 import Btn from '../Button';
+import { useAuthStore } from '../../store/useAuthStore';
+import { useNavigate } from 'react-router-dom';
 
 const Professor = ({ image, name, introdution, position, userId }) => {
+  const { token} = useAuthStore();
+  const navigate = useNavigate();
+  const handleClick = () => {
+    if (!token) {
+      navigate(`/accounts/doctors/${userId}`);
+    } else {
+      navigate(`/doctors/${userId}`);
+    }
+  };
   return (
     <div className="shadow-md p-4 hover:shadow-xl rounded-3xl overflow-hidden mb-6 transform hover:scale-[1.01] transition-transform duration-300 bg-white">
       <div className="flex items-center gap-10 p-2">
@@ -42,7 +53,7 @@ const Professor = ({ image, name, introdution, position, userId }) => {
               <div className="flex justify-end mb-4 mr-4">
         <Btn
           title="XEM CHI TIẾT"
-          path={`/doctors/${userId}`}
+          onClick={handleClick}
         />            
       </div>                     
         </div>
