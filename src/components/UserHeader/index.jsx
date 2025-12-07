@@ -13,7 +13,7 @@ function UserHeader() {
         { id: "professor", title: "Chuyên gia", path: "/professor" },
         { id: "service", title: "Dịch vụ", path: "/services" },
         { id: "appoinments", title: "Lịch sử đặt lịch", path: `/appointments/${userId}` },
-        { id: "diagnosis", title: "Lịch sử khám bệnh", path: `/diagnosis/${userId}` },
+        { id: "diagnosis", title: "Lịch sử khám bệnh", path: `/diagnosis-history/${userId}` },
     ];
 
   return (

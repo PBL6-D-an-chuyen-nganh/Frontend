@@ -4,9 +4,9 @@ import MenuItem from '../MenuItem'
 
 function Navbar() {
     const menuItems = [
-        { id: "guest", title: "Trang chủ", path: "/accounts" },
-        { id: "professor", title: "Chuyên gia", path: "/professor" },
-        { id: "service", title: "Dịch vụ", path: "/service" },
+        { id: "guest", title: "Trang chủ", path: "/accounts/home" },
+        { id: "professor", title: "Chuyên gia", path: "/accounts/professor" },
+        // { id: "service", title: "Dịch vụ", path: "/service" },
     ];
   return (
     <nav className='bg-white flex items-center justify-between px-8 py-6 shadow-md'>

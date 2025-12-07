@@ -19,7 +19,10 @@ import PatientList from "../pages/RoleDoctor/PatientList";
 import MedicalReport from "../pages/RoleDoctor/DiagnosisDetail";
 import CreateDiagnosis from "../pages/RoleDoctor/CreateDiagnosis";
 import DoctorHomepage from "../pages/RoleDoctor/DoctorHomepage";
-
+import GuestHome from "../pages/Guest/GuestHome";
+import GuestProfessor from "../pages/Guest/GuestProfessor";
+import DiagnosisHistory from "../pages/DiagnosisHistory";
+import DiagnosisDetail from "../pages/DiagnosisHistory/DiagnosisDetail";
 function RoleRoute({ children, allowedRoles = [] }) {
   const { token, user, loading } = useAuthStore();
   if (loading) return <div>Loading...</div>;
@@ -62,6 +65,8 @@ const router = createBrowserRouter([
       { path: "doctors/:userId", element: <DoctorDetail /> },
       { path: "services", element: <AppoinmentPage /> },
       { path: "appointments/:userId", element: <AppointmentHistory /> },
+      { path: "diagnosis-history/:userId", element: <DiagnosisHistory /> },
+      { path: "diagnoses/:diagnosisId/detail", element: <DiagnosisDetail /> },
     ],
   },
 
@@ -74,6 +79,7 @@ const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <DoctorHomepage /> },
+      { path: "articles/:articleID", element: <ArticleDetail /> },
       { path: ":doctorId/appointments", element: <DoctorAppointments /> },
       { path: "schedule/:doctorId", element: <ScheduleRegister /> },
       { path: ":doctorId/patients", element: <PatientList /> },
@@ -91,6 +97,10 @@ const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <GuestPage /> },
+      { path: "home", element: <GuestHome /> },
+      { path: "articles/:articleID", element: <ArticleDetail /> },
+      { path: "professor", element: <GuestProfessor /> },
+      { path: "doctors/:userId", element: <DoctorDetail /> },
       { path: "login", element: <LoginPage /> },
       { path: "signup", element: <SignUpPage /> },
       { path: "forget-password", element: <ForgetPassPage /> },

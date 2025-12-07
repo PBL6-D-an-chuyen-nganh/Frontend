@@ -1,11 +1,19 @@
 import React from 'react';
 import { CiShare2 } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../../store/useAuthStore';
 
 const Article = ({ image, title, description, articleID }) => {
+  const { token, user } = useAuthStore();
   const navigate = useNavigate();
   const handleClick = () => {
-        navigate(`articles/${articleID}`);
+    if (!token) {
+      navigate(`/accounts/articles/${articleID}`);
+    } else if (user?.role === "ROLE_DOCTOR") {
+      navigate(`/doctor/articles/${articleID}`);
+    } else {
+      navigate(`/articles/${articleID}`);
+    }
   };
 
   return (
