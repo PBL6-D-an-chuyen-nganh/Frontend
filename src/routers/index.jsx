@@ -23,6 +23,10 @@ import GuestHome from "../pages/Guest/GuestHome";
 import GuestProfessor from "../pages/Guest/GuestProfessor";
 import DiagnosisHistory from "../pages/DiagnosisHistory";
 import DiagnosisDetail from "../pages/DiagnosisHistory/DiagnosisDetail";
+import Dashboard from "../pages/RoleAdmin/Dashboard";
+import DoctorList from "../pages/RoleAdmin/DoctorList";
+import AdminLayout from "../layouts/DefaultAdmin";
+
 function RoleRoute({ children, allowedRoles = [] }) {
   const { token, user, loading } = useAuthStore();
   if (loading) return <div>Loading...</div>;
@@ -47,6 +51,7 @@ function GuestRoute({ children }) {
   if (!token) return children;
   if (user?.role === "ROLE_DOCTOR") return <Navigate to="/doctor" replace />;
   if (user?.role === "ROLE_USER") return <Navigate to="/" replace />;
+  if ( user?.role === "ROLE_ADMIN") return <Navigate to="/admin" replace />;
   return <Navigate to="/accounts" replace />;
 }
 
@@ -106,7 +111,19 @@ const router = createBrowserRouter([
       { path: "forget-password", element: <ForgetPassPage /> },
     ],
   },
-
+  {
+    path: "/admin",
+    element: (
+      <RoleRoute allowedRoles={["ROLE_ADMIN"]}>
+        <AdminLayout />
+      </RoleRoute>
+    ),
+    children: 
+      [
+          { index: true, element: <Dashboard /> },
+          { path: "doctors", element: <DoctorList /> },
+      ],
+  },
   {
     path: "*",
     element: <Navigate to="/accounts" replace />,
