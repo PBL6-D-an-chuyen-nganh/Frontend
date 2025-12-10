@@ -1,22 +1,68 @@
 import React, { useState } from 'react';
 import { FaEdit, FaTrash, FaUserMd } from 'react-icons/fa';
 import EditModal from './EditModal';
-import { editDoctorInfor } from '../../api/editDoctorInfor';
+import { editDoctorInfor } from '../../api/getDoctorInforToEdit';
+import { editDoctor } from '../../api/editDoctorInfor';
+import { deleteDoctor } from '../../api/deleteDoctor';
+import ConfirmModal from '../Modal/ConfirmModal';
 
-const DoctorTable = ({ doctors}) => {
+const DoctorTable = ({ doctors, setToast, onDataChange }) => { 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [doctorToDelete, setDoctorToDelete] = useState(null); 
 
   const getDoctorData = async (doctorId) => {
     try {
       const data = await editDoctorInfor(doctorId);
-        setSelectedDoctor(data);
-        setIsModalOpen(true);
+      setSelectedDoctor(data);
+      setIsModalOpen(true);
     } catch (error) {
       console.error('Lỗi khi lấy thông tin bác sĩ:', error);
-    } finally {
+      setToast({ type: 'error', message: 'Lỗi khi lấy thông tin bác sĩ' });
     }
+  };
+
+  const onEdit = async (updatedDoctor) => {
+    setLoading(true);
+    const { message, error } = await editDoctor(updatedDoctor.userId, updatedDoctor);
+    setLoading(false);
+    
+    if (error) {
+      setToast({ type: 'error', message: `Cập nhật thông tin bác sĩ thất bại!` });
+    } else {
+      setToast({ type: 'success', message: 'Cập nhật thông tin bác sĩ thành công!' });
+      onDataChange(); 
+    }
+  };
+
+  const onDelete = async () => {
+    if (!doctorToDelete) return;
+    
+    setLoading(true);
+    const { message, error } = await deleteDoctor(doctorToDelete.userId);
+    setLoading(false);
+    
+    if (error) {
+      setToast({ type: 'error', message: `Xóa bác sĩ thất bại: ${error}` });
+    } else {
+      setToast({ type: 'success', message: 'Xóa bác sĩ thành công!' });
+      onDataChange();
+    }
+    
+    setIsConfirmOpen(false);
+    setDoctorToDelete(null);
+  };
+
+  const handleDeleteClick = (doctor) => {
+    setDoctorToDelete(doctor);
+    setIsConfirmOpen(true);
+  };
+
+  const handleCancelDelete = () => {
+    setIsConfirmOpen(false);
+    setDoctorToDelete(null);
   };
 
   const handleEditClick = (doctorId) => {
@@ -52,6 +98,9 @@ const DoctorTable = ({ doctors}) => {
               <th className="px-6 py-3 text-left text-xs font-medium text-green-900 uppercase tracking-wider">
                 Chuyên khoa
               </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-green-900 uppercase tracking-wider">
+                Trạng thái
+              </th>
               <th className="px-6 py-3 text-center text-xs font-medium text-green-900 uppercase tracking-wider">
                 Thao tác
               </th>
@@ -72,6 +121,9 @@ const DoctorTable = ({ doctors}) => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-700">{doctor.specialty}</div>
                 </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-700">{doctor.status}</div>
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">
                   <div className="flex justify-center space-x-3">
                     <button
@@ -83,8 +135,9 @@ const DoctorTable = ({ doctors}) => {
                       <FaEdit size={18} />
                     </button>
                     <button
-                      onClick={() => onDelete(doctor.userId)}
-                      className="text-red-700 hover:text-red-800 cursor-pointer transition-colors"
+                      onClick={() => handleDeleteClick(doctor)}
+                      disabled={loading}
+                      className="text-red-700 hover:text-red-800 cursor-pointer transition-colors disabled:opacity-50"
                       title="Xóa"
                     >
                       <FaTrash size={18} />
@@ -97,12 +150,14 @@ const DoctorTable = ({ doctors}) => {
         </table>
       </div>
 
+      {/* Loading Overlay */}
       {loading && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0flex items-center justify-center z-50">
           <div className="bg-white p-4 rounded-lg">Đang tải...</div>
         </div>
       )}
 
+      {/* Edit Modal */}
       {selectedDoctor && (
         <EditModal
           isOpen={isModalOpen}
@@ -111,6 +166,17 @@ const DoctorTable = ({ doctors}) => {
           onSave={handleSaveDoctor}
         />
       )}
+
+      {/* Confirm Delete Modal */}
+      <ConfirmModal
+        isOpen={isConfirmOpen}
+        onConfirm={onDelete}
+        onCancel={handleCancelDelete}
+        label={"XOÁ BÁC SĨ"}
+        question={`Bạn có chắc chắn muốn xóa bác sĩ "${doctorToDelete?.name}"? Hành động này không thể hoàn tác.`}
+        confirmLabel="Xóa"
+        cancelLabel="Hủy"
+      />
     </>
   );
 };

@@ -7,7 +7,6 @@ const Dropdown = ({ options, selected, onSelect, disabled = false }) => {
 
   const handleSelect = (option) => {
     if (option.disabled) return;
-    
     if (onSelect) onSelect(option);
     setIsOpen(false);
   };
