@@ -1,20 +1,50 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { FiUser, FiMail, FiPhone, FiBriefcase, FiAward } from 'react-icons/fi';
 import { MdLocalHospital } from 'react-icons/md';
+import Dropdown from '../Dropdown';
 
 const EditModal = ({ isOpen, onClose, doctorData, onSave }) => {
+  const degreeOptions = [
+    { id: 6, label: "GS" },
+    { id: 5, label: "PGS" },
+    { id: 4, label: "TS" },
+    { id: 3, label: "ThS" },
+    { id: 2, label: "CKII" },
+    { id: 1, label: "CKI" }
+  ];
+
+  const specialtyOptions = [
+    { id: 1, label: "Khoa khám da" },
+    { id: 2, label: "Khoa thẩm mỹ" }
+  ];
+
   const [formData, setFormData] = useState({
-    userId: doctorData?.userId || '',
-    name: doctorData?.name || '',
-    email: doctorData?.email || '',
-    phoneNumber: doctorData?.phoneNumber || '',
-    position: doctorData?.position || '',
-    degree: doctorData?.degree || '',
-    specialty: doctorData?.specialty || ''
+    userId: '',
+    name: '',
+    email: '',
+    phoneNumber: '',
+    position: '',
+    degree: '',
+    specialty: ''
   });
 
   const [errors, setErrors] = useState({});
+
+  // Cập nhật formData khi doctorData thay đổi
+  useEffect(() => {
+    if (doctorData) {
+      setFormData({
+        userId: doctorData.userId || '',
+        name: doctorData.name || '',
+        email: doctorData.email || '',
+        phoneNumber: doctorData.phoneNumber || '',
+        position: doctorData.position || '',
+        degree: doctorData.degree || '',
+        specialty: doctorData.specialty || ''
+      });
+    }
+  }, [doctorData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,7 +83,19 @@ const EditModal = ({ isOpen, onClose, doctorData, onSave }) => {
 
   const handleSubmit = () => {
     if (validate()) {
-      onSave(formData);
+      // Tạo payload đúng format như Postman
+      const payload = {
+        userId: formData.userId,
+        name: formData.name,
+        email: formData.email,
+        phoneNumber: formData.phoneNumber,
+        position: formData.position,
+        degree: formData.degree,
+        specialty: formData.specialty
+      };
+      
+      console.log('Payload gửi đi:', payload); // Debug
+      onSave(payload);
       onClose();
     }
   };
@@ -61,8 +103,8 @@ const EditModal = ({ isOpen, onClose, doctorData, onSave }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 bg-opacity-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-screen overflow-y-auto">
         <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
           <h2 className="text-xl font-semibold text-gray-800">Chỉnh sửa thông tin bác sĩ</h2>
           <button
@@ -147,40 +189,48 @@ const EditModal = ({ isOpen, onClose, doctorData, onSave }) => {
               {errors.position && <p className="text-red-500 text-sm mt-1">{errors.position}</p>}
             </div>
 
-            <div>
-              <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
-                <FiAward className="mr-2 text-gray-500" />
-                Học vị <span className="text-red-500 ml-1">*</span>
-              </label>
-              <input
-                type="text"
-                name="degree"
-                value={formData.degree}
-                onChange={handleChange}
-                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200 ${
-                  errors.degree ? 'border-red-500' : 'border-gray-300'
-                }`}
-                placeholder="Nhập học vị"
-              />
-              {errors.degree && <p className="text-red-500 text-sm mt-1">{errors.degree}</p>}
-            </div>
+            <div className="grid grid-cols-1 gap-6">
+              {/* Học vị */}
+              <div>
+                <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
+                  <FiAward className="mr-2 text-gray-500" />
+                  Học vị <span className="text-red-500 ml-1">*</span>
+                </label>
+                <Dropdown
+                  options={degreeOptions}
+                  selected={formData.degree || "Chọn học vị"}
+                  onSelect={(opt) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      degree: opt.label
+                    }))
+                  }
+                />
+                {errors.degree && (
+                  <p className="text-red-500 text-sm mt-1">{errors.degree}</p>
+                )}
+              </div>
 
-            <div>
-              <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
-                <MdLocalHospital className="mr-2 text-gray-500" />
-                Chuyên khoa <span className="text-red-500 ml-1">*</span>
-              </label>
-              <input
-                type="text"
-                name="specialty"
-                value={formData.specialty}
-                onChange={handleChange}
-                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200${
-                  errors.specialty ? 'border-red-500' : 'border-gray-300'
-                }`}
-                placeholder="Nhập chuyên khoa"
-              />
-              {errors.specialty && <p className="text-red-500 text-sm mt-1">{errors.specialty}</p>}
+              {/* Chuyên khoa */}
+              <div>
+                <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
+                  <MdLocalHospital className="mr-2 text-gray-500" />
+                  Chuyên khoa <span className="text-red-500 ml-1">*</span>
+                </label>
+                <Dropdown
+                  options={specialtyOptions}
+                  selected={formData.specialty || "Chọn chuyên khoa"}
+                  onSelect={(opt) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      specialty: opt.label
+                    }))
+                  }
+                />
+                {errors.specialty && (
+                  <p className="text-red-500 text-sm mt-1">{errors.specialty}</p>
+                )}
+              </div>
             </div>
           </div>
 
@@ -193,7 +243,7 @@ const EditModal = ({ isOpen, onClose, doctorData, onSave }) => {
             </button>
             <button
               onClick={handleSubmit}
-              className="px-5 py-2 bg-green-900 text-white rounded-lg hover:bg-white hover:text-green-900 cursor-pointer transition-colors font-medium"
+              className="px-5 py-2 bg-green-900 text-white rounded-lg hover:bg-white hover:text-green-900 border-2 border-green-900 transition-colors font-medium"
             >
               Lưu thay đổi
             </button>
