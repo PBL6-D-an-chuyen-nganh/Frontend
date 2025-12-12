@@ -27,6 +27,7 @@ import Dashboard from "../pages/RoleAdmin/Dashboard";
 import DoctorList from "../pages/RoleAdmin/DoctorList";
 import AdminLayout from "../layouts/DefaultAdmin";
 import CreateDoctor from "../pages/RoleAdmin/CreateDoctor";
+import UserManagement from "../pages/RoleAdmin/UserList";
 
 function RoleRoute({ children, allowedRoles = [] }) {
   const { token, user, loading } = useAuthStore();
@@ -124,6 +125,7 @@ const router = createBrowserRouter([
           { index: true, element: <Dashboard /> },
           { path: "doctors", element: <DoctorList /> },
           { path: "doctors/create", element: <CreateDoctor /> },
+          { path: "users", element: <UserManagement /> },
       ],
   },
   {

@@ -121,9 +121,17 @@ const DoctorTable = ({ doctors, setToast, onDataChange }) => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-700">{doctor.specialty}</div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-700">{doctor.status}</div>
-                </td>
+                <td className="px-6 py-4 text-sm">
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-medium ${
+                        doctor.status === 'ACTIVE'
+                          ? 'bg-green-100 text-green-800'
+                          : 'bg-red-100 text-red-800'
+                      }`}
+                    >
+                      {doctor.status === 'ACTIVE' ? 'ACTIVE' : 'DELETED'}
+                    </span>
+                  </td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">
                   <div className="flex justify-center space-x-3">
                     <button
