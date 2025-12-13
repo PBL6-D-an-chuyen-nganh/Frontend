@@ -38,7 +38,6 @@ export default function DiagnosisDetail() {
     );
   }
 
-  
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div 
@@ -121,7 +120,8 @@ export default function DiagnosisDetail() {
             <p className="text-lg font-bold text-gray-800 mt-16">{diagnosisDetail.doctorName}</p>
           </div>
         </div>
-        <div className="mt-8 flex gap-4 justify-end">
+      </div>
+      <div className="mt-8 mr-32 flex gap-4 justify-end">
             <Btn
               title={"Quay lại"}
               path={`/diagnosis-history/${user?.userId}`}
@@ -132,7 +132,6 @@ export default function DiagnosisDetail() {
               onClick={() => handlePrint()} 
             />
         </div>
-      </div>
     </div>
   );
 }

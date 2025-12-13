@@ -56,7 +56,7 @@ function Modal({ isOpen, onClose, email, onVerify }) {
             value={otp}
             onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
             placeholder="000000"
-            className="w-full h-14 text-center text-2xl font-mono tracking-widest border-2 border-green-200 rounded-2xl focus:ring-4 focus:ring-green-100 focus:outline-none transition-all"
+            className="w-full h-14 text-center text-2xl font-mono tracking-widest border-2 border-gray-50 rounded-2xl focus:ring-4 focus:ring-gray-200 focus:outline-none transition-all"
             disabled={isLoading}
           />
 
@@ -65,7 +65,7 @@ function Modal({ isOpen, onClose, email, onVerify }) {
             disabled={otp.length !== 6 || isLoading}
             className={`w-full py-4 rounded-2xl font-semibold text-white transition-all flex items-center justify-center gap-2 ${
               otp.length === 6 && !isLoading
-                ? "bg-gradient-to-r from-green-900 to-green-600 hover:from-green-600 hover:to-green-500 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 cursor-pointer"
+                ? "bg-green-900 hover:bg-white hover:text-green-900 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 cursor-pointer"
                 : "bg-gray-300 cursor-not-allowed"
             }`}
           >

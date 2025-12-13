@@ -43,7 +43,7 @@ export default function MedicalReport() {
     <div className="min-h-screen bg-gray-50 p-8">
       <div 
         ref={printRef}
-        className="max-w-6xl mx-auto bg-white shadow-lg rounded-lg p-8"
+        className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-8"
       >
         <h1 className="text-3xl font-bold text-center text-green-900 mb-8">
           PHIẾU KẾT QUÁ CHẨN ĐOÁN 
@@ -113,26 +113,28 @@ export default function MedicalReport() {
           </div>
         </div>
 
-        {/* Doctor Signature */}
-        <div className="mt-12">
-          <p className="text-green-900 font-bold text-lg mb-1 text-right mr-28">BÁC SĨ</p>
-          <div className='flex items-end justify-end gap-2'>
-            <p className='text-lg font-bold text-gray-800 mt-16'>{diagnosisDetail.degree}</p>
-            <p className="text-lg font-bold text-gray-800 mt-16">{diagnosisDetail.doctorName}</p>
+       {/* Doctor Signature */}
+        <div className="mt-12 flex justify-end pr-16"> 
+          <div className="flex flex-col items-center"> 
+            <p className="text-green-900 font-bold text-lg mb-1">BÁC SĨ</p> 
+            
+            <div className='flex items-center gap-2 mt-16'> 
+              <p className='text-lg font-bold text-gray-800'>{diagnosisDetail.degree}</p>
+              <p className="text-lg font-bold text-gray-800">{diagnosisDetail.doctorName}</p>
+            </div>
           </div>
         </div>
-        <div className="mt-8 flex gap-4 justify-end">
+      </div>
+      <div className="mr-32 mt-8 flex gap-4 justify-end">
             <Btn
               title={"Quay lại"}
               path={`/doctor/${doctorId}/patients`}
             />
-
             <Btn
               title={"In phiếu kết quả"}
               onClick={() => handlePrint()} 
             />
         </div>
-      </div>
     </div>
   );
 }
