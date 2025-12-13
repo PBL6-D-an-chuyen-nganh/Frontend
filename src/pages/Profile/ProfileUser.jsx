@@ -165,7 +165,7 @@ export default function UserProfile() {
 
                 <div className="pt-20 pb-8 px-8">
                     {/* Name Section */}
-                    <div className="flex items-center justify-center gap-3 mb-2 min-h-[48px]">
+                    <div className="flex items-center justify-center gap-3 mb-2 min-h-12">
                         {editingField === 'name' ? (
                             <>
                                 <input
