@@ -71,9 +71,7 @@ export const ChangePasswordModal = ({ isOpen, onClose, onSave }) => {
       newErrors.confirmPassword = 'Mật khẩu không khớp';
     }
 
-    // Kiểm tra thêm lần nữa lúc bấm nút (phòng hờ)
     if (formData.newPassword === formData.oldPassword) {
-       // Có thể setErrors cho newPassword ở đây nếu muốn hiển thị lỗi cứng
        return; 
     }
 

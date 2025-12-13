@@ -29,6 +29,7 @@ import AdminLayout from "../layouts/DefaultAdmin";
 import CreateDoctor from "../pages/RoleAdmin/CreateDoctor";
 import UserManagement from "../pages/RoleAdmin/UserList";
 import UserProfile from "../pages/Profile/ProfileUser";
+import DoctorProfile from "../pages/Profile/ProfileDoctor";
 function RoleRoute({ children, allowedRoles = [] }) {
   const { token, user, loading } = useAuthStore();
   if (loading) return <div>Loading...</div>;
@@ -93,6 +94,7 @@ const router = createBrowserRouter([
       { path: ":doctorId/patients", element: <PatientList /> },
       { path: "diagnosis/:diagnosisId", element: <MedicalReport /> },
       { path: ":doctorId/create-diagnosis", element: <CreateDiagnosis /> },
+      { path: "profile", element: <DoctorProfile /> },
     ],
   },
 
