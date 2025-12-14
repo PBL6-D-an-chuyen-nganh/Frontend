@@ -113,6 +113,15 @@ export default function MedicalReport() {
           </div>
         </div>
 
+         <div className="mb-8">
+          <h2 className="text-xl font-bold text-green-900 mb-4">ĐIỀU TRỊ</h2>
+          <div className="bg-green-50 p-4 rounded-lg border-l-4 border-green-900">
+            <div className="space-y-3">
+              <p className="text-gray-800 font-semibold">{diagnosisDetail.treatmentPlan}</p>
+            </div>
+          </div>
+        </div>
+
        {/* Doctor Signature */}
         <div className="mt-12 flex justify-end pr-16"> 
           <div className="flex flex-col items-center"> 

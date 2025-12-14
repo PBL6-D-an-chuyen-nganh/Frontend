@@ -1,12 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const MenuItem = ({ title, icon, path, onClick }) => {
+const MenuItem = ({ title, icon, path, onClick, end }) => {
   const commonClasses = "flex items-center text-base gap-2 mx-2 px-2 py-2 rounded-md cursor-pointer transition-all duration-300";
   if (path && path !== "#") {
     return (
       <NavLink
         to={path}
+        end={end}
         className={({ isActive }) => `
           ${commonClasses}
           ${isActive 

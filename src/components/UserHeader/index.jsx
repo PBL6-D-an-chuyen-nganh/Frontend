@@ -11,7 +11,7 @@ function UserHeader() {
     const menuItems = [
         { id: "homepage", title: "Trang chủ", path: "/" },
         { id: "professor", title: "Chuyên gia", path: "/professor" },
-        { id: "service", title: "Dịch vụ", path: "/services" },
+        { id: "service", title: "Đặt lịch hẹn", path: "/services" },
         { id: "appoinments", title: "Lịch sử đặt lịch", path: `/appointments/${userId}` },
         { id: "diagnosis", title: "Lịch sử khám bệnh", path: `/diagnosis-history/${userId}` },
     ];

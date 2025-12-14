@@ -259,6 +259,7 @@ function AppointmentPage() {
     <div className='min-h-screen'>
       {toast && (
         <Toast
+          duration={3000}
           message={toast.message}
           type={toast.type}
           onClose={() => {

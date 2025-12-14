@@ -9,7 +9,7 @@ function DoctorHeader() {
     const doctorId = user?.userId;
 
     const menuItems = [
-        { id: "homepage", title: "Trang chủ", path: `/doctor` },
+        { id: "homepage", title: "Trang chủ", path: `/doctor`, end: true },
         { id: "appointments", title: "Lịch hẹn", path: `/doctor/${doctorId}/appointments` },
         { id: "patients", title: "Bệnh nhân", path: `/doctor/${doctorId}/patients` },
         { id: "schedule", title: "Lịch làm việc", path: `/doctor/schedule/${doctorId}` },
@@ -30,6 +30,7 @@ function DoctorHeader() {
                         key={item.id}
                         path={item.path}
                         title={item.title}
+                        end={item.end}
                     />
                 ))}
             </div>

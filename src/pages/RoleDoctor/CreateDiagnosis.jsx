@@ -286,32 +286,38 @@ function CreateDiagnosis() {
           </div>
         </div>
 
-        <div className="mt-12">
-          <p className="text-green-900 font-bold text-lg mb-1 text-right mr-28">BÁC SĨ</p>
-          <div className='flex items-end justify-end gap-2'>
-            <p className='text-lg font-bold text-gray-800 mt-16'></p>
-            <p className="text-lg font-bold text-gray-800 mt-16">{formData.doctorName}</p>
-          </div>
-        </div>
+        {/* --- Phần đã chỉnh sửa --- */}
+        {/* Container cha dùng justify-end để đẩy cả khối sang phải */}
+        <div className="mt-12 flex justify-end">
+            {/* Container con dùng flex-col items-center để căn giữa chữ Bác sĩ và nhóm nút */}
+            <div className="flex flex-col items-center">
+                
+                {/* Phần ký tên */}
+                <div className="flex flex-col items-center mb-8">
+                    <p className="text-green-900 font-bold text-lg mb-16">BÁC SĨ</p>
+                    <p className="text-lg font-bold text-gray-800">{formPatientData.doctorName}</p>
+                </div>
 
-        <div>
-            <div className="mt-8 flex gap-4 justify-end">
-                <Btn
-                  title={"Đặt lại"}
-                  onClick={handleReset}
-                />
-                <Btn
-                  title={"Hủy"}
-                  path={`/doctor/${doctorId}/appointments`}
-                  disabled={isSubmitting}
-                />
-                <Btn
-                  title={"Lưu"}
-                  onClick={handleSave}
-                  path={`/doctor/${doctorId}/patients`}
-                />
+                {/* Phần các nút bấm */}
+                <div className="flex gap-4">
+                    <Btn
+                        title={"Đặt lại"}
+                        onClick={handleReset}
+                    />
+                    <Btn
+                        title={"Hủy"}
+                        path={`/doctor/${doctorId}/appointments`}
+                        disabled={isSubmitting}
+                    />
+                    <Btn
+                        title={"Lưu"}
+                        onClick={handleSave}
+                        path={`/doctor/${doctorId}/patients`}
+                    />
+                </div>
             </div>
         </div>
+        {/* ------------------------- */}
       </div>
     </div>
   )

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { registerDoctorSchedule } from "../../api/registerDoctorSchedule";
 import DateSelector from "../../components/RoleDoctor/Schedule/DateSelector";
-import ShiftSelector from "../../components/RoleDoctor/Schedule/ShiftSelector";
 import SelectedList from "../../components/RoleDoctor/Schedule/SelectedList";
 import SubmitButton from "../../components/RoleDoctor/Schedule/SubmitButton";
 import { getNextWeekDates } from "../../components/RoleDoctor/Schedule/GetNextWeekDays";
