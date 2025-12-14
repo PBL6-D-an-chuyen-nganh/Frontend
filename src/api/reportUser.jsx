@@ -1,3 +1,5 @@
+import { axiosPrivate } from "./axios";
+
 export const reportUser = async (userId) => {
     try {
         const response = await axiosPrivate.delete(`/api/admin/users?id=${userId}`);

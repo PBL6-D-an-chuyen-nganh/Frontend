@@ -44,22 +44,26 @@ function Dashboard() {
   }, []);
 
   const handleReportUser = async (userId) => {
-    try {
-      await reportUser(userId);
-      setToast({ type: "success", message: "Đã báo cáo người dùng thành công!" });
-      const updatedUsersRes = await GetUsetToReport();
-      if (Array.isArray(updatedUsersRes)) {
-        setUsers(updatedUsersRes);
-      } else if (updatedUsersRes && Array.isArray(updatedUsersRes.data)) {
-        setUsers(updatedUsersRes.data);
-      } else {
-        setUsers([]);
-      }
-    } catch (error) {
-      console.error(error);
-      setToast({ type: "error", message: "Lỗi khi báo cáo người dùng!" });
+    const result = await reportUser(userId);
+    if (result.error) {
+        console.error("Lỗi từ API:", result.error);
+        setToast({ type: "error", message: "Lỗi khi báo cáo người dùng: " + (result.error.message || "Không xác định") });
+        return; 
     }
-  };
+    setToast({ type: "success", message: "Đã báo cáo người dùng thành công!" });
+    try {
+        const updatedUsersRes = await GetUsetToReport();
+        if (Array.isArray(updatedUsersRes)) {
+            setUsers(updatedUsersRes);
+        } else if (updatedUsersRes && Array.isArray(updatedUsersRes.data)) {
+            setUsers(updatedUsersRes.data);
+        } else {
+            setUsers([]);
+        }
+    } catch (fetchError) {
+        console.error("Lỗi khi load lại danh sách:", fetchError);
+    }
+};
 
   return (
     <div className="bg-gray-100 min-h-screen p-4">
