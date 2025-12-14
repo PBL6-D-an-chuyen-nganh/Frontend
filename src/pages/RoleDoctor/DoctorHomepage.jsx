@@ -1,12 +1,12 @@
 import React,  { useState, useEffect, use } from 'react';
 import pageimg from '../../assets/img/pageimg.png'
-import Infor from '../../components/Home/infor'
+import Infor from '../../components/Home/Infor'
 import { CiEdit } from "react-icons/ci";
 import { MdDisplaySettings } from "react-icons/md";
 import { FaUserDoctor } from "react-icons/fa6";
 import { GrArticle } from "react-icons/gr";
 import Article from '../../components/Home/Article';
-import { getAllArticles } from '../../api/GetAllArticles';
+import { getAllArticles } from '../../api/getAllArticles';
 import Pagination from '../../components/Home/Page'
 import SearchInput from '../../components/Search';
 import { searchArticles } from '../../api/searchArticles';
