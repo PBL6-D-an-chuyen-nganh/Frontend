@@ -1,6 +1,6 @@
 import React,  { useState, useEffect, use } from 'react';
 import pageimg from '../../assets/img/pageimg.png'
-import Infor from '../../components/Home/infor'
+import Infor from '../../components/Home/Infor'
 import { CiEdit } from "react-icons/ci";
 import { MdDisplaySettings } from "react-icons/md";
 import { FaUserDoctor } from "react-icons/fa6";
