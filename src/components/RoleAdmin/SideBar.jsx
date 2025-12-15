@@ -32,10 +32,10 @@ export default function Sidebar() {
       : "dashboard";
 
   const menuItems = [
-    { id: 'dashboard', icon: FaTachometerAlt, label: 'Dashboard', path: '/admin' },
-    { id: 'doctors', icon: FaUserMd, label: 'Doctors Management', path: '/admin/doctors' },
-    { id: 'patients', icon: FaUserInjured, label: 'Patient Management', path: '/admin/users' },
-    { id: 'logout', icon: FaSignOutAlt, label: 'Logout', path: '/logout' }
+    { id: 'dashboard', icon: FaTachometerAlt, label: 'Bảng điều khiển', path: '/admin' },
+    { id: 'doctors', icon: FaUserMd, label: 'Quản lý bác sĩ', path: '/admin/doctors' },
+    { id: 'patients', icon: FaUserInjured, label: 'Quản lý người dùng', path: '/admin/users' },
+    { id: 'logout', icon: FaSignOutAlt, label: 'Đăng xuất', path: '/logout' }
   ];
 
   const handleClick = (item) => {
