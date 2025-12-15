@@ -74,7 +74,7 @@ function Dashboard() {
 
         {loading ? (
           <div className="flex justify-center items-center h-64">
-            <p className="text-gray-500">Đang tải dữ liệu...</p>
+            <p className="text-gray-500">Đang tải..</p>
           </div>
         ) : (
           <>

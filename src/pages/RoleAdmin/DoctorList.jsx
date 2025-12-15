@@ -68,7 +68,9 @@ const DoctorList = () => {
 
         {/* Main */}
         {loading ? (
-          <div className='max-w-6xl mx-auto gap-3 mb-6 text-center mt-10'>Đang tải...</div>
+          <div className="flex justify-center items-center h-64">
+            <p className="text-gray-500">Đang tải..</p>
+          </div>
         ) : (
           <>
             <DoctorTable 

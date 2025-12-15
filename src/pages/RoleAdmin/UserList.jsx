@@ -37,8 +37,8 @@ export default function UserManagement() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-xl text-gray-600">Loading...</div>
+      <div className="flex justify-center items-center h-64">
+            <p className="text-gray-500">Đang tải..</p>
       </div>
     );
   }
