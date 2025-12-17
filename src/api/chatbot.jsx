@@ -1,6 +1,8 @@
 // src/api/chatbot.js
 import { useAuthStore } from '../store/useAuthStore';
 
+const CHATBOT_API = import.meta.env.VITE_CHATBOT_API_URL || 'http://localhost:8081';
+
 export async function chatSend(message, sessionId) {
   // Lấy token + user từ Zustand (không dùng hook trong module này → dùng getState)
   const { token, user } = useAuthStore.getState();
@@ -13,7 +15,7 @@ export async function chatSend(message, sessionId) {
   if (token) headers['Authorization'] = `Bearer ${token}`;
   if (creatorId) headers['X-User-Id'] = String(creatorId);
 
-  const res = await fetch('/api/chat', {
+  const res = await fetch(`${CHATBOT_API}/api/chat`, {
     method: 'POST',
     headers,
     body: JSON.stringify({
@@ -31,11 +33,28 @@ export async function chatSend(message, sessionId) {
 }
 
 export async function chatReset(sessionId) {
-  const res = await fetch('/api/reset', {
+  const res = await fetch(`${CHATBOT_API}/api/reset`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ session_id: sessionId }),
   });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text || res.statusText);
+  }
+  return res.json();
+}
+
+export async function uoloadImageDiagnosis(file, sessionId){
+  const fd = new FormData();
+  fd.append('image', file);
+  fd.append('session_id', sessionId);
+
+  const res = await fetch(`${CHATBOT_API}/api/diagnose-image`, {
+    method: 'POST',
+    body: fd,
+  });
+
   if (!res.ok) {
     const text = await res.text();
     throw new Error(text || res.statusText);
