@@ -1,7 +1,7 @@
 // src/api/chatbot.js
 import { useAuthStore } from '../store/useAuthStore';
 
-const CHATBOT_API = import.meta.env.VITE_CHATBOT_API_URL;
+const CHATBOT_API = import.meta.env.VITE_AI_API_URL;
 
 export async function chatSend(message, sessionId) {
   // Lấy token + user từ Zustand (không dùng hook trong module này → dùng getState)
