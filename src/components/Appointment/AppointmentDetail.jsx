@@ -50,7 +50,7 @@ const AppointmentDetail = ({ appointment, isOpen, onToggle, onRequestCancel }) =
           <div className="px-6 pb-6 flex justify-end">
             <Btn
               title="Huỷ lịch"                
-              ddisabled={appointment.status === "inactive" || appointment.status === "completed"}                 
+              disabled={appointment.status === "inactive" || appointment.status === "completed"}                 
               onClick={() => onRequestCancel?.(appointment.appointmentID)}
               variant="danger"
             />
