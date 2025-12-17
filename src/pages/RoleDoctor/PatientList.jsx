@@ -52,7 +52,7 @@ function PatientList() {
     <div className="min-h-screen">
       <h1 className="text-3xl font-bold text-center py-6 text-green-900">
         DANH SÁCH BỆNH NHÂN
-      </h1>
+      </h1> 
       <div>
         <SearchInput placeholder="Tìm kiếm bệnh nhân theo tên, ID..." />
         <div className='flex items-center justify-center'>

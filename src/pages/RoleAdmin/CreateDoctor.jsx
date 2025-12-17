@@ -26,7 +26,6 @@ export default function CreateDoctor() {
 
   const [formData, setFormData] = useState({
     name: "",
-    password: "",
     email: "",
     position: "",
     specialty: ""
@@ -56,8 +55,6 @@ export default function CreateDoctor() {
     const newErrors = {};
 
     if (!formData.name.trim()) newErrors.name = "Vui lòng nhập họ và tên";
-    if (!formData.password.trim()) newErrors.password = "Vui lòng nhập mật khẩu";
-
     if (!formData.email.trim()) {
       newErrors.email = "Vui lòng nhập email";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
@@ -78,7 +75,6 @@ export default function CreateDoctor() {
     }
     setFormData({
       name: "",
-      password: "",
       email: "",
       position: "",
       specialty: ""
@@ -88,7 +84,6 @@ export default function CreateDoctor() {
   const handleCancel = () => {
     setFormData({
       name: "",
-      password: "",
       email: "",
       position: "",
       specialty: ""
@@ -130,7 +125,7 @@ export default function CreateDoctor() {
             </div>
 
             {/* Password */}
-            <div>
+            {/* <div>
               <label className="block text-gray-700 font-medium mb-2">
                 Mật khẩu <span className="text-red-500">*</span>
               </label>
@@ -148,7 +143,7 @@ export default function CreateDoctor() {
                 />
               </div>
               {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
-            </div>
+            </div> */}
 
             {/* Email */}
             <div>
