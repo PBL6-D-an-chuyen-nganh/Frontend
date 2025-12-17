@@ -21,7 +21,7 @@ function DiagnosisHistory() {
     };
 
     fetchPatients();
-  }, [userId]);
+  }, []);
 
   if (loading) {
     return <div className='min-h-screen p-6 flex justify-center'>Đang tải...</div>;
