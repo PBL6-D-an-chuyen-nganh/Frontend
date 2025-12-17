@@ -4,7 +4,6 @@ import DiagnosistTable from '../../components/DiagnosisTable';
 import { getPatientDiagnosisHistory } from '../../api/getPatientDiagnosisHistory';
 
 function DiagnosisHistory() {
-  const { userId } = useParams();
   const [loading, setLoading] = useState(false);
   const [patients, setPatients] = useState([]);
 
@@ -12,7 +11,7 @@ function DiagnosisHistory() {
     const fetchPatients = async () => {
       setLoading(true);
       try {
-        const data = await getPatientDiagnosisHistory(userId);
+        const data = await getPatientDiagnosisHistory();
         setPatients(data);
       } catch (error) {
         console.error("Error fetching patients:", error);

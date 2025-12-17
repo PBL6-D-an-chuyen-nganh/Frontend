@@ -44,20 +44,3 @@ export async function chatReset(sessionId) {
   }
   return res.json();
 }
-
-export async function uoloadImageDiagnosis(file, sessionId){
-  const fd = new FormData();
-  fd.append('image', file);
-  fd.append('session_id', sessionId);
-
-  const res = await fetch(`${CHATBOT_API}/api/diagnose-image`, {
-    method: 'POST',
-    body: fd,
-  });
-
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(text || res.statusText);
-  }
-  return res.json();
-}

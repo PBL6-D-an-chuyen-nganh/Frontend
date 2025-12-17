@@ -10,6 +10,7 @@ import { getAllArticles } from '../../api/getAllArticles';
 import Pagination from '../../components/Home/Page'
 import SearchInput from '../../components/Search';
 import { searchArticles } from '../../api/searchArticles';
+
 function GuestHome() {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);

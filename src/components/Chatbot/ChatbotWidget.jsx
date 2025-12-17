@@ -7,6 +7,7 @@ import ChatInputBar from './ChatInputBar';
 import FloatingButton from './FloatingButton';
 import { FaTimes } from 'react-icons/fa';
 
+const CHATBOT_API = import.meta.env.VITE_AI_API_URL;
 export default function ChatbotWidget() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -105,7 +106,7 @@ export default function ChatbotWidget() {
           form.append('segment', 'false');
           if (sessionId) form.append('session_id', sessionId);
 
-          const res = await fetch('/api/diagnose-image', { method: 'POST', body: form });
+          const res = await fetch(`${CHATBOT_API}/api/diagnose-image`, { method: 'POST', body: form });
           if (!res.ok) {
             const text = await res.text();
             throw new Error(text || res.statusText);

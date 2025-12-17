@@ -6,7 +6,7 @@ import { getAllDoctors } from '../../api/getAllDoctors'
 import { searchDoctors } from '../../api/searchDoctors'
 import SearchInput from '../../components/Search'
 import Dropdown from '../../components/Dropdown'
-
+import Toast from '../../components/Notification'
 function GuestProfessor() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
