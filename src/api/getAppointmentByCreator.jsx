@@ -1,3 +1,5 @@
+import { axiosPrivate } from "./axios";
+
 export const getAppointmentByCreator = async (creatorId, page = 1, size = 8) => {
   const response = await axiosPrivate.get(
     `/api/user/appointments/creator/${creatorId}`,
