@@ -90,10 +90,10 @@ function DoctorAppointments() {
               onChange={(e) => setDate(e.target.value)}
               className="mt-4 p-2 rounded-lg border border-gray-100 shadow-sm"
             />
-            <p className="flex justify-center items-center py-6 text-base font-semibold text-gray-600">
+          </div>
+           <p className="flex justify-center items-center py-6 text-base font-semibold text-gray-600">
               Không có lịch hẹn nào trong ngày {formattedDate}.
             </p>
-          </div>
         </div>
     );
   }
