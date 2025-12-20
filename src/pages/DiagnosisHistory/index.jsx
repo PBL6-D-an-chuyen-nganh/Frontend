@@ -24,7 +24,7 @@ function DiagnosisHistory() {
   }, []);
 
   if (loading) {
-    return <div className='min-h-screen p-6 flex justify-center'>Đang tải...</div>;
+    return <div className='max-w-6xl mx-auto gap-3 mb-6 text-center text-gray-500 mt-10'>Đang tải...</div>;
   }
 
   if (!patients.length) {

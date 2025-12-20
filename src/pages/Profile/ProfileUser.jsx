@@ -15,6 +15,7 @@ export default function UserProfile() {
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
     const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [isFetching, setIsFetching] = useState(true);
     const navigate = useNavigate();
     
     const [userData, setUserData] = useState({
@@ -36,22 +37,26 @@ export default function UserProfile() {
 
     useEffect(() => {
         const fetchProfile = async () => {
-            const { profile, error } = await GetProfileUser();
-            if (error) {
-                setToast({ type: 'error', message: error });
-            } else if (profile) {
-                setUserData({
-                    userId: profile.userId,
-                    name: profile.name,
-                    email: profile.email,
-                    phoneNumber: profile.phoneNumber,
-                    role: profile.role,
-                    authStatus: profile.authStatus
-                });
-                setEditValues({
-                    name: profile.name || '',
-                    phoneNumber: profile.phoneNumber || '',
-                });
+            try {
+                const { profile, error } = await GetProfileUser();
+                if (error) {
+                    setToast({ type: 'error', message: error });
+                } else if (profile) {
+                    setUserData({
+                        userId: profile.userId,
+                        name: profile.name,
+                        email: profile.email,
+                        phoneNumber: profile.phoneNumber,
+                        role: profile.role,
+                        authStatus: profile.authStatus
+                    });
+                    setEditValues({
+                        name: profile.name || '',
+                        phoneNumber: profile.phoneNumber || '',
+                    });
+                }
+            } finally {
+                setIsFetching(false);
             }
         };
         fetchProfile();
@@ -150,6 +155,14 @@ export default function UserProfile() {
         setIsConfirmOpen(false);
     };
 
+    if (isFetching) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <span className="text-gray-500 text-lg font-medium">Đang tải...</span>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen flex items-center justify-center p-4">
             <div className="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-xl w-full">
@@ -164,7 +177,6 @@ export default function UserProfile() {
                 </div>
 
                 <div className="pt-20 pb-8 px-8">
-                    {/* Name Section */}
                     <div className="flex items-center justify-center gap-3 mb-2 min-h-12">
                         {editingField === 'name' ? (
                             <>
@@ -207,7 +219,6 @@ export default function UserProfile() {
                             </div>
                         </div>
 
-                        {/* Phone Section */}
                         <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
                             <div className="w-12 h-12 bg-green-900 rounded-full flex items-center justify-center">
                                 <FaPhone className="text-white text-lg" />
@@ -255,7 +266,6 @@ export default function UserProfile() {
                             {loading ? 'Đang lưu...' : 'Lưu chỉnh sửa'}
                         </button>
                         
-                        {/* Nút mở Modal đổi mật khẩu */}
                         <Btn
                             title="Đổi mật khẩu"
                             onClick={() => setIsPasswordModalOpen(true)}
@@ -270,7 +280,6 @@ export default function UserProfile() {
                     </div>
                 </div>
 
-                {/* Confirm Delete Modal */}
                 <ConfirmModal
                     isOpen={isConfirmOpen}
                     onConfirm={onDelete}
@@ -281,7 +290,6 @@ export default function UserProfile() {
                     cancelLabel="Hủy"
                 />
 
-                {/* Change Password Modal */}
                 <ChangePasswordModal
                     isOpen={isPasswordModalOpen}
                     onClose={() => setIsPasswordModalOpen(false)}

@@ -115,7 +115,7 @@ function GuestHome() {
         </h2>
         </div>    
           <div className="max-w-6xl mx-auto mt-6 space-y-6">
-            {loading && <div className="text-gray-500">Đang tải…</div>}
+            {loading && <div className="max-w-6xl mx-auto gap-3 mb-6 text-center text-gray-600 mt-10">Đang tải…</div>}
             {!loading && articles.map(a => (
               <Article
                 key={a.articleID}    

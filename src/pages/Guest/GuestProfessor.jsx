@@ -131,7 +131,7 @@ function GuestProfessor() {
       </div>
 
       <div className="max-w-6xl mx-auto mt-6 space-y-6 bg-w">
-        {loading && <div className="text-gray-500 text-center">Đang tải…</div>}
+        {loading && <div className="max-w-6xl mx-auto gap-3 mb-6 text-center text-gray-600 mt-10">Đang tải…</div>}
 
         {!loading && professors.map(doctor => (
           <Professor

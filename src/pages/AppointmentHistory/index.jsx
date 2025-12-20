@@ -74,7 +74,7 @@ function AppointmentHistory() {
     }
   }
 
-  if (loading) return <div className='max-w-6xl mx-auto gap-3 mb-6 text-center mt-10'>Đang tải...</div>
+  if (loading) return <div className='max-w-6xl mx-auto gap-3 mb-6 text-center text-gray-00 mt-10'>Đang tải...</div>
   if (error) return <div className="max-w-6xl mx-auto px-6 py-12 text-red-600">{error}</div>
 
   if (!appointments.length) {

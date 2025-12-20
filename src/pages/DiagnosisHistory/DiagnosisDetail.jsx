@@ -33,7 +33,7 @@ export default function DiagnosisDetail() {
   if (!diagnosisDetail) {
     return (
       <div className="flex flex-col justify-center items-center h-full gap-2">
-        <p className="text-gray-500">Đang tải...</p>
+        <p className="max-w-6xl mx-auto gap-3 mb-6 text-center text-gray-500 mt-10">Đang tải...</p>
       </div>
     );
   }
