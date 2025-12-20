@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useAuthStore } from "../../store/useAuthStore";
 import { registerDoctorSchedule } from "../../api/registerDoctorSchedule";
 import DateSelector from "../../components/RoleDoctor/Schedule/DateSelector";
 import SelectedList from "../../components/RoleDoctor/Schedule/SelectedList";
@@ -8,13 +8,13 @@ import { getNextWeekDates } from "../../components/RoleDoctor/Schedule/GetNextWe
 import { FiCalendar} from "react-icons/fi";
 
 function ScheduleRegister() {
-    const { doctorId } = useParams();
     const [weekDates, setWeekDates] = useState([]);
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedShifts, setSelectedShifts] = useState([]);
     const [selections, setSelections] = useState([]);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
+    const doctorId = useAuthStore((state) => state.userId);
 
     useEffect(() => {
         const dates = getNextWeekDates();
