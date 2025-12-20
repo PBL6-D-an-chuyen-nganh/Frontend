@@ -2,27 +2,12 @@ import React, { useState } from 'react';
 import Btn from '../Button';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
-import Toast from '../Notification';
-
 const Professor = ({ image, name, introdution, position, userId }) => {
   const { token } = useAuthStore();
   const navigate = useNavigate();
   const [toast, setToast] = useState(null);
 
   const handleClick = () => {
-    if (!token) {
-      setToast({
-        type: "warning",
-        message: "Vui lòng đăng nhập để thực hiện chức năng đặt lịch!"
-      });
-
-      setTimeout(() => {
-        navigate('/accounts/login');
-      }, 3000);
-
-      return;
-    }
-
     navigate(`/doctors/${userId}`);
   };
 
@@ -66,16 +51,6 @@ const Professor = ({ image, name, introdution, position, userId }) => {
           </div>
         </div>
       </div>
-
-      {/* Toast */}
-      {toast && (
-        <Toast
-          type={toast.type}
-          message={toast.message}
-          onClose={() => setToast(null)}
-          duration={3000}
-        />
-      )}
     </>
   );
 };

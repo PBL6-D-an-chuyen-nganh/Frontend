@@ -74,7 +74,7 @@ function AppointmentHistory() {
     }
   }
 
-  if (loading) return <div className='max-w-6xl mx-auto gap-3 mb-6 text-center text-gray-00 mt-10'>Đang tải...</div>
+  if (loading) return <div className='max-w-6xl mx-auto gap-3 mb-6 text-center text-gray-500 mt-10'>Đang tải...</div>
   if (error) return <div className="max-w-6xl mx-auto px-6 py-12 text-red-600">{error}</div>
 
   if (!appointments.length) {
@@ -84,7 +84,7 @@ function AppointmentHistory() {
         <div className="max-w-6xl mx-auto px-6 py-12">
           <AppointmentCard total={total} />
           <div className="bg-white rounded-lg p-6 flex flex-col items-center">
-            <p className="text-base font-semibold text-gray-600">Chưa có lịch hẹn nào.</p>
+            <p className="text-base font-semibold text-gray-500">Chưa có lịch hẹn nào.</p>
           </div>
         </div>
       </div>

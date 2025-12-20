@@ -2,13 +2,18 @@ import React, {useEffect, useState} from 'react'
 import { getDoctorByID } from '../../api/getDoctorByID';
 import { MdOutlineAttachEmail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../../store/useAuthStore';
 import Btn from '../../components/Button';
+import Toast from '../../components/Notification';
 function DoctorDetail() {
     const { userId } = useParams();
     const [doctor, setDoctor] = useState(null);
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const token = useAuthStore((state) => state.token);
+    const [toast, setToast] = useState(null);
     
     useEffect(() => {
         const fetchDoctor = async () => {
@@ -23,6 +28,18 @@ function DoctorDetail() {
         };
         fetchDoctor();
     }, [userId]);
+
+    const handleNavigate = () => {
+        if (!token) {
+            setToast({
+                type: "error",
+                message: "Vui lòng đăng nhập để thực hiện chức năng đặt lịch!"
+            });
+            navigate('/accounts/login');
+        } else {
+            navigate('/services');
+        }
+    };
 
     if (loading) {
         return <div className='max-w-6xl mx-auto gap-3 mb-6 text-center mt-10'>Đang tải...</div>;
@@ -88,9 +105,17 @@ function DoctorDetail() {
         <div className='flex justify-center mb-4 mr-4'>
         <Btn
           title="ĐẶT LỊCH HẸN"
-          path={`/services`}
+          onClick={handleNavigate}
         />            
       </div>
+        {toast && ( 
+            <Toast
+                type={toast.type}
+                message={toast.message} 
+                onClose={() => setToast(null)}
+                duration={3000}
+            />
+      )}    
     </div>
   )
 }
