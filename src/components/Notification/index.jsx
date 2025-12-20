@@ -12,7 +12,7 @@ export default function Toast({ message, type = 'success', duration = 1500, onCl
   }, [duration, onClose]);
 
   const styles = {
-    success: 'bg-white border-b-2 borber-green-600 text-green-900',
+    success: 'bg-white border-b-2 border-green-600 text-green-900',
     error: 'bg-white border-b-2 border-red-600 text-red-900'
   };
 

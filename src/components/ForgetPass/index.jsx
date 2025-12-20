@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Toast from '../Toast/Toast';
 import { PasswordModal } from './PasswordModal';
 import { forgotPass } from '../../api/forgotPass';
 import { resetPass } from '../../api/resetPass';
@@ -14,6 +15,7 @@ function ForgotPassword() {
   const [otpError, setOtpError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [toast, setToast] = useState({ message: '', type: '' });
 
   const handleSendEmail = async () => {
     setEmailError('');
@@ -40,12 +42,12 @@ function ForgotPassword() {
       setOtpError("Vui lòng nhập mã xác thực!");
       return;
     }
-    console.log("Xác thực OTP:", otp);
     setModalStep('RESET_PASSWORD');
   };
 
-  const handleResetPassword = () => {
+  const handleResetPassword = async () => {
     setPasswordError('');
+    
     if (!newPassword || !confirmPassword) {
         setPasswordError("Vui lòng nhập đầy đủ mật khẩu.");
         return;
@@ -55,9 +57,21 @@ function ForgotPassword() {
       setPasswordError("Mật khẩu xác nhận không khớp!");
       return;
     }
-    resetPass(email, otp, newPassword);
-    console.log("Đổi mật khẩu thành công:", newPassword);
-    setModalStep('NONE'); 
+
+    try {
+      await resetPass(email, otp, newPassword);
+      setToast({ message: 'Đổi mật khẩu thành công!', type: 'success' });
+      setModalStep('NONE'); 
+      setEmail('');
+      setOtp('');
+      setNewPassword('');
+      setConfirmPassword('');
+
+    } catch (error) {
+      console.error(error);
+      const errorMsg = error.response?.data?.message || "Đổi mật khẩu thất bại. Vui lòng thử lại.";
+      setToast({ message: errorMsg, type: 'error' });
+    }
   };
 
   return (
@@ -80,7 +94,6 @@ function ForgotPassword() {
                 }}
                 placeholder='Nhập email của bạn' 
             />
-            {/* Hiển thị lỗi Email ngay dưới input */}
             {emailError && (
                 <p className="text-red-500 text-sm mt-1 text-left">{emailError}</p>
             )}
@@ -181,6 +194,16 @@ function ForgotPassword() {
             </button>
           </div>
         </PasswordModal>
+
+        {/* Chỉ hiển thị Toast khi có message */}
+        {toast.message && (
+            <Toast  
+            message={toast.message} 
+            type={toast.type} 
+            duration={3000}
+            onClose={() => setToast({ message: '', type: '' })} 
+            />
+        )}
     </div>
   )
 }
