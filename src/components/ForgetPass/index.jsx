@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Toast from '../Toast/Toast';
+import Toast from '../Notification/index.jsx';
 import { PasswordModal } from './PasswordModal';
 import { forgotPass } from '../../api/forgotPass';
 import { resetPass } from '../../api/resetPass';
