@@ -81,10 +81,9 @@ function DoctorAppointments() {
 
   if (!appointments.length) {
     return (
-      <div className="min-h-screen">
+      <div className="min-h-screen p-6">
         {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
-        <div className="max-w-6xl mx-auto px-6 py-12">
-          <div className="p-6 flex flex-col items-center">
+          <div className="flex items-center justify-center">
             <input
               type="date"
               value={date}
@@ -96,7 +95,6 @@ function DoctorAppointments() {
             </p>
           </div>
         </div>
-      </div>
     );
   }
 
