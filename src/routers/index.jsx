@@ -90,7 +90,7 @@ const router = createBrowserRouter([
       { index: true, element: <DoctorHomepage /> },
       { path: "articles/:articleID", element: <ArticleDetail /> },
       { path: ":doctorId/appointments", element: <DoctorAppointments /> },
-      { path: "schedule/:doctorId", element: <ScheduleRegister /> },
+      { path: "schedule", element: <ScheduleRegister /> },
       { path: ":doctorId/patients", element: <PatientList /> },
       { path: "diagnosis/:diagnosisId", element: <MedicalReport /> },
       { path: ":doctorId/create-diagnosis", element: <CreateDiagnosis /> },
