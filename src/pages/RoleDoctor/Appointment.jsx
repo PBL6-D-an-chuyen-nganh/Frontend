@@ -83,7 +83,7 @@ function DoctorAppointments() {
     return (
       <div className="min-h-screen p-6">
         {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
-          <div className="flex items-center justify-center">
+          <div className="flex-col items-center justify-center">
             <input
               type="date"
               value={date}
