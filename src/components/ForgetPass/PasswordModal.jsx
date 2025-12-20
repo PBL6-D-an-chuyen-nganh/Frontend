@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 
 export const PasswordModal = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
@@ -7,7 +6,6 @@ export const PasswordModal = ({ isOpen, onClose, title, children }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md overflow-hidden animate-fade-in-up">
-        {/* Header Modal */}
         <div className="flex justify-between items-center p-4 border-b border-gray-100">
           <h3 className="text-lg font-semibold text-green-950">{title}</h3>
           <button 

@@ -1,6 +1,8 @@
-import React, { useState } from 'react'   
-import { Link } from 'react-router-dom' 
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { PasswordModal } from './PasswordModal';
+import { forgotPass } from '../../api/forgotPass';
+import { resetPass } from '../../api/resetPass';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -8,18 +10,34 @@ function ForgotPassword() {
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const handleSendEmail = () => {
+  const [emailError, setEmailError] = useState('');
+  const [otpError, setOtpError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSendEmail = async () => {
+    setEmailError('');
     if (!email) {
-      alert("Vui lòng nhập email!");
+      setEmailError("Vui lòng nhập email!");
       return;
     }
-    console.log("Đang gửi OTP đến:", email);
-    setModalStep('OTP');
+
+    setIsLoading(true);
+    try {
+      await forgotPass(email);
+      setModalStep('OTP');
+    } catch (error) {
+      console.error(error);
+      setEmailError(error.response?.data?.message || "Có lỗi xảy ra hoặc email không tồn tại.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleVerifyOtp = () => {
+    setOtpError('');
     if (!otp) {
-      alert("Vui lòng nhập mã xác thực!");
+      setOtpError("Vui lòng nhập mã xác thực!");
       return;
     }
     console.log("Xác thực OTP:", otp);
@@ -27,13 +45,18 @@ function ForgotPassword() {
   };
 
   const handleResetPassword = () => {
+    setPasswordError('');
+    if (!newPassword || !confirmPassword) {
+        setPasswordError("Vui lòng nhập đầy đủ mật khẩu.");
+        return;
+    }
+
     if (newPassword !== confirmPassword) {
-      alert("Mật khẩu xác nhận không khớp!");
+      setPasswordError("Mật khẩu xác nhận không khớp!");
       return;
     }
+    resetPass(email, otp, newPassword);
     console.log("Đổi mật khẩu thành công:", newPassword);
-
-    alert("Đổi mật khẩu thành công!");
     setModalStep('NONE'); 
   };
 
@@ -43,23 +66,37 @@ function ForgotPassword() {
             <h2 className='text-2xl font-normal mb-6 text-green-950'>Quên mật khẩu</h2>
             <p className='text-gray-500 text-sm font-light'>Vui lòng nhập thông tin tài khoản để lấy lại mật khẩu</p>
         </div>
+        
+        {/* Form nhập Email */}
         <div className='mb-8'>
             <input 
-                className='w-full p-3 bg-white rounded-lg font-light focus:outline-none focus:ring-2 focus:ring-green-900 focus:border-transparent' 
+                className={`w-full p-3 bg-white rounded-lg font-light focus:outline-none focus:ring-2 focus:border-transparent ${emailError ? 'ring-2 ring-red-500 border-red-500' : 'focus:ring-green-900'}`}
                 type='email' 
                 id='email' 
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                    setEmail(e.target.value);
+                    if(emailError) setEmailError(''); 
+                }}
                 placeholder='Nhập email của bạn' 
             />
+            {/* Hiển thị lỗi Email ngay dưới input */}
+            {emailError && (
+                <p className="text-red-500 text-sm mt-1 text-left">{emailError}</p>
+            )}
         </div>
 
         <div className='space-y-3'>
              <button 
                 onClick={handleSendEmail}
-                className='w-full p-3 border-1 border-green-900 rounded-lg bg-green-900 text-white cursor-pointer hover:bg-white hover:text-green-900 transition-all font-medium'
+                disabled={isLoading}
+                className={`w-full p-3 border-1 rounded-lg text-white font-medium transition-all ${
+                    isLoading 
+                    ? 'bg-gray-400 border-gray-400 cursor-not-allowed' 
+                    : 'bg-green-900 border-green-900 cursor-pointer hover:bg-white hover:text-green-900'
+                }`}
              >
-                Gửi mã xác thực
+                {isLoading ? "Đang gửi..." : "Gửi mã xác thực"}
              </button>
             <Link
                 to="/signup"
@@ -68,7 +105,9 @@ function ForgotPassword() {
                 Tạo tài khoản mới
             </Link>
         </div>
-        <Modal 
+
+        {/* Modal nhập OTP */}
+        <PasswordModal 
           isOpen={modalStep === 'OTP'} 
           onClose={() => setModalStep('NONE')}
           title="Nhập mã xác thực"
@@ -77,13 +116,20 @@ function ForgotPassword() {
             <p className="text-sm text-gray-600">
               Mã xác thực đã được gửi đến <strong>{email}</strong>. Vui lòng kiểm tra hộp thư.
             </p>
-            <input 
-              type="text" 
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-900 text-center tracking-widest text-lg"
-              placeholder="Nhập mã OTP"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-            />
+            <div>
+                <input 
+                type="text" 
+                className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 text-center tracking-widest text-lg ${otpError ? 'border-red-500 ring-red-500' : 'border-gray-300 focus:ring-green-900'}`}
+                placeholder="Nhập mã OTP"
+                value={otp}
+                onChange={(e) => {
+                    setOtp(e.target.value);
+                    if(otpError) setOtpError('');
+                }}
+                />
+                {otpError && <p className="text-red-500 text-sm mt-1 text-center">{otpError}</p>}
+            </div>
+            
             <button 
               onClick={handleVerifyOtp}
               className="w-full p-3 rounded-lg bg-green-900 text-white hover:bg-green-800 transition-colors"
@@ -94,10 +140,10 @@ function ForgotPassword() {
                 <button className="text-sm text-gray-500 hover:text-green-900 underline">Gửi lại mã?</button>
             </div>
           </div>
-        </Modal>
+        </PasswordModal>
 
-        {/* Bước 2: Modal Đặt lại mật khẩu */}
-        <Modal 
+        {/* Modal Đặt lại mật khẩu */}
+        <PasswordModal 
           isOpen={modalStep === 'RESET_PASSWORD'} 
           onClose={() => setModalStep('NONE')}
           title="Đặt lại mật khẩu"
@@ -117,11 +163,15 @@ function ForgotPassword() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Xác nhận mật khẩu</label>
               <input 
                 type="password" 
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-900"
+                className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 ${passwordError ? 'border-red-500 ring-red-500' : 'border-gray-300 focus:ring-green-900'}`}
                 placeholder="********"
                 value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    if(passwordError) setPasswordError('');
+                }}
               />
+               {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
             </div>
             <button 
               onClick={handleResetPassword}
@@ -130,9 +180,9 @@ function ForgotPassword() {
               Cập nhật mật khẩu
             </button>
           </div>
-        </Modal>
+        </PasswordModal>
     </div>
   )
 }
 
-export default ForgotPassword
+export default ForgotPassword;
