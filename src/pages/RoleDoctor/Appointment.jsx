@@ -84,16 +84,16 @@ function DoctorAppointments() {
       <div className="min-h-screen">
         {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
         <div className="max-w-6xl mx-auto px-6 py-12">
-          <div className="bg-white rounded-lg p-6 flex flex-col items-center">
-            <p className="text-base font-semibold text-gray-600">
-              Không có lịch hẹn nào trong ngày {formattedDate}.
-            </p>
+          <div className="p-6 flex flex-col items-center">
             <input
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="mt-4 p-2 border rounded"
+              className="mt-4 p-2 rounded-lg border border-gray-100 shadow-sm"
             />
+            <p className="text-base font-semibold text-gray-600">
+              Không có lịch hẹn nào trong ngày {formattedDate}.
+            </p>
           </div>
         </div>
       </div>
@@ -113,9 +113,7 @@ function DoctorAppointments() {
             className="p-2 border rounded"
           />
         </div>
-
         <AppointmentCard total={total} />
-
         <div>
           {appointments.map((appointment) => (
             <AppointmentDetail

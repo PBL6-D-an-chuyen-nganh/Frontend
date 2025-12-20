@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import PatientTable from '../../components/RoleDoctor/PatientList'
-import SearchInput from '../../components/Search';
 import { getPatients } from '../../api/getPatients';
 import { useParams } from 'react-router-dom';
 import { usePatientFilterStore } from '../../store/usePatientFilterStore';
@@ -34,7 +33,6 @@ function PatientList() {
   if(!patients.length) {
     return  (
       <div className='min-h-screen p-6'>
-        <SearchInput placeholder="Tìm kiếm bệnh nhân theo tên, ID..." />
         <div className='flex items-center justify-center'>
           <input
           type="date"

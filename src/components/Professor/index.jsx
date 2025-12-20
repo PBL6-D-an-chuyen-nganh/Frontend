@@ -5,7 +5,7 @@ const Professor = ({ image, name, introdution, position, userId }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/accounts/doctors/${userId}`);
+    navigate(`/doctors/${userId}`);
   };
 
   return (
