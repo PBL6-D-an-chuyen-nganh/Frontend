@@ -1,11 +1,8 @@
 import React, { useState } from 'react'; 
 import Btn from '../Button';
-import { useAuthStore } from '../../store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 const Professor = ({ image, name, introdution, position, userId }) => {
-  const { token } = useAuthStore();
   const navigate = useNavigate();
-  const [toast, setToast] = useState(null);
 
   const handleClick = () => {
     navigate(`/doctors/${userId}`);

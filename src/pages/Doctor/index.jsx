@@ -11,7 +11,6 @@ function DoctorDetail() {
     const [doctor, setDoctor] = useState(null);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const token = useAuthStore((state) => state.token);
     const [toast, setToast] = useState(null);
     
@@ -35,7 +34,9 @@ function DoctorDetail() {
                 type: "error",
                 message: "Vui lòng đăng nhập để thực hiện chức năng đặt lịch!"
             });
-            navigate('/accounts/login');
+            setTimeout(() => { 
+                navigate('/accounts/login');  
+            }, 3000);
         } else {
             navigate('/services');
         }
