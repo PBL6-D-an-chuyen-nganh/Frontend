@@ -126,7 +126,7 @@ function GuestHome() {
               />
             ))}
             {!loading && !articles.length && (
-              <div className="text-gray-500">Chưa có bài viết.</div>
+              <div className="max-w-6xl mx-auto gap-3 mb-6 text-center text-gray-600 mt-10">Chưa có bài viết.</div>
             )}
           </div>
          <Pagination current={page} total={totalPages} onChange={(p) => setPage(p)} />
