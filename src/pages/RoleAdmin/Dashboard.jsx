@@ -12,10 +12,8 @@ function Dashboard() {
   const [chartData, setChartData] = useState([]);
   const [users, setUsers] = useState([]);
   const [appointments, setAppointments] = useState([]);
-
   const [month, setMonth] = useState(now.getMonth()); 
   const [year, setYear] = useState(now.getFullYear());
-
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
   useEffect(() => {
@@ -75,7 +73,7 @@ function Dashboard() {
   return (
     <div className="bg-gray-100 min-h-screen p-4 md:p-6">
       {/* ===== CHART ===== */}
-      <div className="rounded-lg p-6 bg-white shadow-md mb-6">
+      <div className="">
         <h2 className="text-2xl font-semibold text-green-900 mb-4">
           THỐNG KÊ LỊCH HẸN
         </h2>
@@ -89,32 +87,25 @@ function Dashboard() {
         )}
       </div>
 
-      {/* ===== MONTH NAVIGATOR ===== */}
-      <div className="mb-6 flex justify-center">
-        <MonthNavigator
-          month={month}
-          year={year}
-          onChange={handleMonthChange}
-        />
-      </div>
-
       {/* ===== APPOINTMENTS TABLE ===== */}
-      <div className="rounded-lg bg-white shadow-md overflow-hidden">
-        <div className="p-6 border-b border-gray-200">
-          <h2 className="text-2xl font-semibold text-green-900">
-            THỐNG KÊ CUỘC HẸN BÁC SĨ
-          </h2>
-          <p className="text-sm text-gray-600 mt-1">
-            Tổng hợp số lượng cuộc hẹn của các bác sĩ trong tháng
-          </p>
+      <div className="p-6 border-b border-gray-200">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <h2 className="text-2xl font-semibold text-green-900">
+              THỐNG KÊ CUỘC HẸN BÁC SĨ
+            </h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Tổng hợp số lượng cuộc hẹn của các bác sĩ trong tháng
+            </p>
+          </div>
+          <MonthNavigator
+            month={month}
+            year={year}
+            onChange={handleMonthChange}
+          />
         </div>
-
-        <DoctorAppointmentsTable
-          data={appointments}
-          month={month + 1}
-          year={year}
-        />
       </div>
+
 
       {toast && (
         <Toast
