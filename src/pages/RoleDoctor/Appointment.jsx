@@ -4,11 +4,9 @@ import AppointmentDetail from '../../components/RoleDoctor/Appointment/Appointme
 import ConfirmModal from '../../components/Modal/ConfirmModal';
 import { getAppointmentByDoctor } from '../../api/getAppointmentByDoctor'; 
 import { deleteAppointmentByDoctor } from '../../api/deleteAppointmentByDoctor';
-import { useParams } from 'react-router-dom';
 import Toast from '../../components/Notification';
 
 function DoctorAppointments() {
-  const { doctorId } = useParams();
   const [appointments, setAppointments] = useState([]);
   const [toast, setToast] = useState(null);
   const [total, setTotal] = useState(0);
@@ -35,7 +33,7 @@ function DoctorAppointments() {
     const fetchAppointments = async () => {
       try {
         setLoading(true);
-        const data = await getAppointmentByDoctor(doctorId, date);
+        const data = await getAppointmentByDoctor(date);
         setAppointments(data.appointments);
         setTotal(data.total);
       } catch (err) {
@@ -45,11 +43,8 @@ function DoctorAppointments() {
         setLoading(false);
       }
     };
-
-    if (doctorId) {
-      fetchAppointments();
-    }
-  }, [doctorId, date]);
+    fetchAppointments();
+  }, [date]);
 
   const handleConfirmCancel = async () => {
     if (!pendingCancelId) return;

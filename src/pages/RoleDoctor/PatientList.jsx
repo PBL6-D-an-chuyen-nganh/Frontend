@@ -1,22 +1,19 @@
 import { useState, useEffect } from 'react'
 import PatientTable from '../../components/RoleDoctor/PatientList'
 import { getPatients } from '../../api/getPatients';
-import { useParams } from 'react-router-dom';
 import { usePatientFilterStore } from '../../store/usePatientFilterStore';
 
 function PatientList() {
   const { date, setDate, patients, setPatients } = usePatientFilterStore();
-  const {doctorId} = useParams();
-
   const formatDate = (dateStr) => {
     const [year, month, day] = dateStr.split("-");
     return `${day}/${month}/${year}`;
   };
 
   const formattedDate = formatDate(date);
-  const fetchPatients = async (doctorId, date) => {
+  const fetchPatients = async (date) => {
      try {
-      const data = await getPatients(doctorId, date);
+      const data = await getPatients(date);
       setPatients(data);
     } catch (error) {
       console.error("Error fetching patients:", error);
@@ -24,12 +21,12 @@ function PatientList() {
   } 
 
   useEffect(() => {
-    fetchPatients(doctorId, date);
-  }, [doctorId, date]);
+    fetchPatients(date);
+  }, [date]);
 
   console.log("date", date);
   console.log("patients", patients);
-
+  
   if(!patients.length) {
     return  (
       <div className='min-h-screen p-6'>

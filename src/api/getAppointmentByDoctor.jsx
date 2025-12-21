@@ -1,8 +1,8 @@
 import { axiosPrivate } from "./axios";
 
-export const getAppointmentByDoctor = async (doctorId, date) => {
+export const getAppointmentByDoctor = async (date) => {
   try {
-    const res = await axiosPrivate.get(`/api/doctor/appointments/${doctorId}`, {
+    const res = await axiosPrivate.get(`/api/doctor/appointments`, {
       params: { date }, 
     });
     const data = res.data;

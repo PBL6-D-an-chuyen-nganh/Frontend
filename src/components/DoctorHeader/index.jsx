@@ -10,8 +10,8 @@ function DoctorHeader() {
 
     const menuItems = [
         { id: "homepage", title: "Trang chủ", path: `/doctor`, end: true },
-        { id: "appointments", title: "Lịch hẹn", path: `/doctor/${doctorId}/appointments` },
-        { id: "patients", title: "Bệnh nhân", path: `/doctor/${doctorId}/patients` },
+        { id: "appointments", title: "Lịch hẹn", path: `/doctor/appointments` },
+        { id: "patients", title: "Bệnh nhân", path: `/doctor/patients` },
         { id: "schedule", title: "Lịch làm việc", path: `/doctor/schedules` },
     ];
 

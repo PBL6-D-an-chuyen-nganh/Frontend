@@ -4,13 +4,11 @@ import AppointmentDetail from '../../components/Appointment/AppointmentDetail'
 import { getAppointmentByCreator } from '../../api/getAppointmentByCreator'
 import { deleteAppointment } from '../../api/deleteAppointment'
 import ConfirmModal from '../../components/Modal/ConfirmModal'
-import { useParams } from 'react-router-dom'
 import Toast from '../../components/Notification'
 import Pagination from '../../components/Home/Page'
 
 function AppointmentHistory() {
   const [toast, setToast] = useState(null)
-  const { userId } = useParams()
   const [appointments, setAppointments] = useState([])
   const [total, setTotal] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -32,7 +30,7 @@ function AppointmentHistory() {
       setLoading(true)
       setError(null)
       try {
-        const data = await getAppointmentByCreator(userId, page, pageSize)
+        const data = await getAppointmentByCreator(page, pageSize)
         console.log("getAppointmentByCreator data:", data)
 
         setAppointments(data.appointments)
@@ -45,11 +43,8 @@ function AppointmentHistory() {
         setLoading(false)
       }
     }
-
-    if (userId) {
       fetchAppointments()
-    }
-  }, [userId, page]) 
+  }, [page]) 
 
   const handleConfirmCancel = async () => {
     if (!pendingCancelId) return
