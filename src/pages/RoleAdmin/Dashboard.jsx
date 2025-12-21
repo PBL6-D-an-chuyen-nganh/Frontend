@@ -1,3 +1,12 @@
+import React, { useState, useEffect } from "react";
+import { MonthlySalesChart } from "../../components/RoleAdmin/Chart";
+import Toast from "../../components/Notification";
+import { getChartData } from "../../api/getChartData";
+import { GetUsetToReport } from "../../api/getUserToReport";
+import MonthNavigator from "../../components/RoleAdmin/MonthNavigator";
+import DoctorAppointmentsTable from "../../components/RoleAdmin/AppointmentTable";
+import { getAppointmentOfDoctor } from "../../api/getAppointmentOfDoctor";
+
 function Dashboard() {
   const now = new Date();
   const [chartData, setChartData] = useState([]);
@@ -16,9 +25,7 @@ function Dashboard() {
           getChartData(),
           GetUsetToReport(),
         ]);
-
         setChartData(chartRes);
-
         if (Array.isArray(usersRes)) {
           setUsers(usersRes);
         } else if (usersRes?.data && Array.isArray(usersRes.data)) {
@@ -66,7 +73,6 @@ function Dashboard() {
       </div>
     );
   }
-
 
   return (
     <div className="bg-gray-100 min-h-screen p-4 md:p-6">
