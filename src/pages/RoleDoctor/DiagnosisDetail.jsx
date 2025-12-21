@@ -4,12 +4,9 @@ import { useEffect, useState } from 'react';
 import { FaUserMd, FaUser, FaVenusMars, FaIdCard, FaHospital } from 'react-icons/fa';
 import Btn from '../../components/Button';
 import { getDiagnosisDetail } from '../../api/getDiagnosisDetail';
-import { useAuthStore} from '../../store/useAuthStore';
 import { useReactToPrint } from 'react-to-print';
 export default function MedicalReport() {
     const { diagnosisId } = useParams();
-    const user = useAuthStore((state) => state.user);
-    const doctorId = user?.userId;
     const [diagnosisDetail, setDiagnosisDetail] = useState(null);
     const printRef = useRef(null);
 
@@ -32,8 +29,8 @@ export default function MedicalReport() {
 
   if (!diagnosisDetail) {
     return (
-      <div className="flex flex-col justify-center items-center h-full gap-2">
-        <p className="text-gray-500">Đang tải dữ liệu...</p>
+      <div className="flex flex-col justify-center items-center min-h-screen gap-2">
+        <p className="text-gray-500">Đang tải...</p>
       </div>
     );
   }
@@ -99,7 +96,7 @@ export default function MedicalReport() {
         <div className="mb-8">
           <h2 className="text-xl font-bold text-green-900 mb-4">MÔ TẢ</h2>
           <div className="bg-green-50 p-4 rounded-lg border-l-4 border-green-900">
-            <p className="text-gray-800 leading-relaxed">{diagnosisDetail.doctorNotes}</p>
+            <p className="text-gray- font-semibold leading-relaxed">{diagnosisDetail.doctorNotes}</p>
           </div>
         </div>
 
@@ -137,7 +134,7 @@ export default function MedicalReport() {
       <div className="mr-32 mt-8 flex gap-4 justify-end">
             <Btn
               title={"Quay lại"}
-              path={`/doctor/${doctorId}/patients`}
+              path={`/doctor/patients`}
             />
             <Btn
               title={"In phiếu kết quả"}

@@ -35,7 +35,7 @@ export default function DiagnosistTable({ patients}) {
                 <LuNotepadText 
                   size={24} 
                   className="inline text-green-900 hover:text-green-700 cursor-pointer" 
-                  onClick = {() => onViewDetail(p.diagnosisID)}
+                  onClick = {() => onViewDetail(p.diagnosisId)}
                 />
               </td>
             </tr>

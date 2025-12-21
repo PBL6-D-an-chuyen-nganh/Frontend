@@ -3,13 +3,11 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { FaUserMd, FaUser, FaVenusMars, FaIdCard, FaHospital } from 'react-icons/fa';
 import Btn from '../../components/Button';
-import { useAuthStore} from '../../store/useAuthStore';
 import { getDiagnosisDetailByUser } from '../../api/getDiagnosisDetailByUser';
 import { useReactToPrint } from 'react-to-print';
 
 export default function DiagnosisDetail() {
     const { diagnosisId } = useParams();
-    const user = useAuthStore((state) => state.user);
     const [diagnosisDetail, setDiagnosisDetail] = useState(null);
     const printRef = useRef(null);
 
@@ -98,7 +96,7 @@ export default function DiagnosisDetail() {
         <div className="mb-8">
           <h2 className="text-xl font-bold text-green-900 mb-4">MÔ TẢ</h2>
           <div className="bg-green-50 p-4 rounded-lg border-l-4 border-green-900">
-            <p className="text-gray-800 leading-relaxed">{diagnosisDetail.doctorNotes}</p>
+            <p className="text-gray-800 font-semibold leading-relaxed">{diagnosisDetail.doctorNotes}</p>
           </div>
         </div>
 
@@ -133,7 +131,7 @@ export default function DiagnosisDetail() {
       <div className="mt-8 mr-32 flex gap-4 justify-end">
             <Btn
               title={"Quay lại"}
-              path={`/diagnosis-history/${user?.userId}`}
+              path={`/diagnosis-history`}
             />
 
             <Btn
