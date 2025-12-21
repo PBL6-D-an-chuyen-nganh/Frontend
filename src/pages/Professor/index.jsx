@@ -52,7 +52,7 @@ function ProfessorPage() {
           filters.position,    
           currentPage,
         );
-      } else {
+      } else {  
         data = await getAllDoctors(currentPage);
       }
 
