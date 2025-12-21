@@ -73,7 +73,7 @@ const router = createBrowserRouter([
       { path: "doctors/:userId", element: <DoctorDetail /> },
       { path: "services", element: <AppoinmentPage /> },
       { path: "appointments", element: <AppointmentHistory /> },
-      { path: "diagnosis-history/:userId", element: <DiagnosisHistory /> },
+      { path: "diagnosis-history", element: <DiagnosisHistory /> },
       { path: "diagnoses/:diagnosisId/detail", element: <DiagnosisDetail /> },
       { path: "profile", element: <UserProfile /> },
     ],

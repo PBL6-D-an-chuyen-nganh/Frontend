@@ -12,8 +12,8 @@ function UserHeader() {
         { id: "homepage", title: "Trang chủ", path: "/" },
         { id: "professor", title: "Chuyên gia", path: "/professor" },
         { id: "service", title: "Đặt lịch hẹn", path: "/services" },
-        { id: "appoinments", title: "Lịch sử đặt lịch", path: `/appointments/${userId}` },
-        { id: "diagnosis", title: "Lịch sử khám bệnh", path: `/diagnosis-history/${userId}` },
+        { id: "appoinments", title: "Lịch sử đặt lịch", path: `/appointments` },
+        { id: "diagnosis", title: "Lịch sử khám bệnh", path: `/diagnosis-history` },
     ];
 
   return (
