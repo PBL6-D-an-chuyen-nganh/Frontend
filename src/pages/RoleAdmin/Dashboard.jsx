@@ -88,24 +88,33 @@ function Dashboard() {
       </div>
 
       {/* ===== APPOINTMENTS TABLE ===== */}
-      <div className="p-6 border-b border-gray-200">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div>
-            <h2 className="text-2xl font-semibold text-green-900">
-              THỐNG KÊ CUỘC HẸN BÁC SĨ
-            </h2>
-            <p className="text-sm text-gray-600 mt-1">
-              Tổng hợp số lượng cuộc hẹn của các bác sĩ trong tháng
-            </p>
-          </div>
-          <MonthNavigator
-            month={month}
-            year={year}
-            onChange={handleMonthChange}
-          />
-        </div>
-      </div>
+      <div className="rounded-lg bg-white shadow-md overflow-hidden">
+        <div className="p-6 border-b border-gray-200">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            {/* LEFT: Title + description */}
+            <div>
+              <h2 className="text-2xl font-semibold text-green-900">
+                THỐNG KÊ CUỘC HẸN BÁC SĨ
+              </h2>
+              <p className="text-sm text-gray-600 mt-1">
+                Tổng hợp số lượng cuộc hẹn của các bác sĩ trong tháng
+              </p>
+            </div>
 
+            {/* RIGHT: Month Navigator */}
+            <MonthNavigator
+              month={month}
+              year={year}
+              onChange={handleMonthChange}
+            />
+          </div>
+        </div>
+        <DoctorAppointmentsTable
+          data={appointments}
+          month={month + 1}
+          year={year}
+        />
+      </div>
 
       {toast && (
         <Toast
