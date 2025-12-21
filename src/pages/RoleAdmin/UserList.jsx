@@ -10,6 +10,7 @@ const UserList = () => {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [totalElements, setTotalElements] = useState(0);
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
   const [searchKey, setSearchKey] = useState("");
@@ -34,6 +35,7 @@ const UserList = () => {
 
       setUsers(res?.content || []);
       setTotalPages(res?.totalPages || 1);
+      setTotalElements(res?.totalElements || 0);
     } catch (error) {
       console.error(error);
       setToast({
@@ -85,7 +87,7 @@ const UserList = () => {
 
             <div className="mt-4 text-sm text-gray-600">
               Tổng số:{" "}
-              <span className="font-semibold">{users.length}</span> người dùng
+              <span className="font-semibold">{totalElements}</span> người dùng
             </div>
 
             <Pagination
