@@ -99,7 +99,7 @@ export default function MedicalReport() {
         <div className="mb-8">
           <h2 className="text-xl font-bold text-green-900 mb-4">MÔ TẢ</h2>
           <div className="bg-green-50 p-4 rounded-lg border-l-4 border-green-900">
-            <p className="text-gray-700 leading-relaxed">{diagnosisDetail.doctorNotes}</p>
+            <p className="text-gray-800 leading-relaxed">{diagnosisDetail.doctorNotes}</p>
           </div>
         </div>
 
