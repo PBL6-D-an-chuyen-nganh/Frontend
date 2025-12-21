@@ -27,7 +27,7 @@ export default function PatientTable({ patients}) {
               key={idx}
               className={`${idx % 2 === 0 ? "bg-white" : "bg-green-50"}`}
             >
-              <td className="px-4 py-2 font-medium text-gray-600">{p.patientName}</td>
+              <td className="px-4 py-2 font-medium text-gray-600">{p.name}</td>
               <td className="px-4 py-2 text-gray-600">{p.patientId}</td>
               <td className="px-4 py-2 text-gray-600">{p.gender}</td>
               <td className="px-4 py-2 text-gray-600">{p.dateOfDiagnosis}</td>
