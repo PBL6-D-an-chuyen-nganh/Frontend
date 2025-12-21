@@ -3,17 +3,27 @@ import { MonthlySalesChart } from "../../components/RoleAdmin/Chart";
 import Toast from "../../components/Notification";
 import { getChartData } from "../../api/getChartData";
 import { GetUsetToReport } from "../../api/getUserToReport";
-import { reportUser } from "../../api/reportUser";
-import UserTable from "../../components/RoleAdmin/UserTable";
+import MonthNavigator from "../../components/RoleAdmin/MonthNavigator";
+import DoctorAppointmentsTable from "../../components/RoleAdmin/AppointmentTable";
+import { getAppointmentOfDoctor } from "../../api/getAppointmentOfDoctor";
 
 function Dashboard() {
+  const now = new Date();
+
+  // ===== STATE =====
   const [chartData, setChartData] = useState([]);
   const [users, setUsers] = useState([]);
+  const [appointments, setAppointments] = useState([]);
+
+  const [month, setMonth] = useState(now.getMonth()); // 0-11
+  const [year, setYear] = useState(now.getFullYear());
+
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
 
+  // ===== LOAD CHART + USER (load 1 lần) =====
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchBaseData = async () => {
       setLoading(true);
       try {
         const [chartRes, usersRes] = await Promise.all([
@@ -25,69 +35,93 @@ function Dashboard() {
 
         if (Array.isArray(usersRes)) {
           setUsers(usersRes);
-        } else if (usersRes && Array.isArray(usersRes.data)) {
+        } else if (usersRes?.data && Array.isArray(usersRes.data)) {
           setUsers(usersRes.data);
         } else {
-          console.warn("API User trả về format không đúng chuẩn mảng:", usersRes);
           setUsers([]);
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
-        setUsers([]);
-        setToast({ type: "error", message: "Không thể tải dữ liệu!" });
+        console.error(error);
+        setToast({ type: "error", message: "Không thể tải dữ liệu dashboard" });
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    fetchBaseData();
   }, []);
 
-  const handleReportUser = async (userId) => {
-    const result = await reportUser(userId);
-    if (result.error) {
-        console.error("Lỗi từ API:", result.error);
-        setToast({ type: "error", message: "Lỗi khi báo cáo người dùng: " + (result.error.message || "Không xác định") });
-        return; 
-    }
-    setToast({ type: "success", message: "Đã báo cáo người dùng thành công!" });
-    try {
-        const updatedUsersRes = await GetUsetToReport();
-        if (Array.isArray(updatedUsersRes)) {
-            setUsers(updatedUsersRes);
-        } else if (updatedUsersRes && Array.isArray(updatedUsersRes.data)) {
-            setUsers(updatedUsersRes.data);
+  // ===== LOAD APPOINTMENTS THEO THÁNG / NĂM =====
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      try {
+        const res = await getAppointmentOfDoctor(month + 1, year); // API cần 1-12
+
+        if (res?.data) {
+          setAppointments(res.data);
         } else {
-            setUsers([]);
+          setAppointments([]);
         }
-    } catch (fetchError) {
-        console.error("Lỗi khi load lại danh sách:", fetchError);
-    }
-};
+      } catch (error) {
+        console.error(error);
+        setToast({
+          type: "error",
+          message: "Không thể tải thống kê lịch hẹn bác sĩ",
+        });
+      }
+    };
+
+    fetchAppointments();
+  }, [month, year]);
+
+  // ===== HANDLE CHANGE MONTH =====
+  const handleMonthChange = (newMonth, newYear) => {
+    setMonth(newMonth);
+    setYear(newYear);
+  };
 
   return (
-    <div className="bg-gray-100 min-h-screen p-4">
-      <div className="rounded-lg p-6 bg-white shadow-md">
+    <div className="bg-gray-100 min-h-screen p-4 md:p-6">
+      {/* ===== CHART ===== */}
+      <div className="rounded-lg p-6 bg-white shadow-md mb-6">
         <h2 className="text-2xl font-semibold text-green-900 mb-4">
           THỐNG KÊ LỊCH HẸN
         </h2>
 
         {loading ? (
           <div className="flex justify-center items-center h-64">
-            <p className="text-gray-500">Đang tải..</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-900" />
           </div>
         ) : (
-          <>
-            <MonthlySalesChart data={chartData} />
-            <div className="mt-10 pt-6 border-t border-gray-200">
-              <h2 className="text-2xl font-semibold text-green-900 mb-4">
-                DANH SÁCH NGƯỜI DÙNG
-              </h2>
-
-              <UserTable users={users} onReport={handleReportUser} />
-            </div>
-          </>
+          <MonthlySalesChart data={chartData} />
         )}
+      </div>
+
+      {/* ===== MONTH NAVIGATOR ===== */}
+      <div className="mb-6 flex justify-center">
+        <MonthNavigator
+          month={month}
+          year={year}
+          onChange={handleMonthChange}
+        />
+      </div>
+
+      {/* ===== APPOINTMENTS TABLE ===== */}
+      <div className="rounded-lg bg-white shadow-md overflow-hidden">
+        <div className="p-6 border-b border-gray-200">
+          <h2 className="text-2xl font-semibold text-green-900">
+            THỐNG KÊ CUỘC HẸN BÁC SĨ
+          </h2>
+          <p className="text-sm text-gray-600 mt-1">
+            Tổng hợp số lượng cuộc hẹn của các bác sĩ trong tháng
+          </p>
+        </div>
+
+        <DoctorAppointmentsTable
+          data={appointments}
+          month={month + 1}
+          year={year}
+        />
       </div>
 
       {toast && (
