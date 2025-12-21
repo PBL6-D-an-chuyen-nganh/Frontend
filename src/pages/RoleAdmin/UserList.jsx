@@ -3,9 +3,8 @@ import SearchInput from "../../components/Search";
 import Pagination from "../../components/Home/Page";
 import Toast from "../../components/Notification";
 import UserTable from "../../components/RoleAdmin/UserTable";
-
 import { searchUserByAdmin } from "../../api/searchUserByAdmin";
-import { getUserListByAdmin } from "../../api/getUserListByAdmin";
+import { GetUserList } from "../../api/getUserList";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -27,7 +26,7 @@ const UserList = () => {
           5
         );
       } else {
-        res = await getUserListByAdmin({
+        res = await getUserList({
           page: pageNumber - 1,
           size: 5,
         });
