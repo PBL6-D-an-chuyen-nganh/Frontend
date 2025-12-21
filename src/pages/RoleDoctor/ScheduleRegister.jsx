@@ -15,6 +15,7 @@ function ScheduleRegister() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const doctorId = useAuthStore((state) => state.userId);
+    console.log(doctorId);
 
     useEffect(() => {
         const dates = getNextWeekDates();

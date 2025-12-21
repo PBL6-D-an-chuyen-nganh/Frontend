@@ -44,7 +44,6 @@ const DoctorList = () => {
     { id: "BS", label: "Bác sĩ" },
   ];
 
-  // 👉 Kiểm tra có đang search / filter không
   const hasActiveFilters = () => {
     return (
       filters.name.trim() !== "" ||
@@ -59,7 +58,6 @@ const DoctorList = () => {
       let res;
 
       if (hasActiveFilters()) {
-        // 🔍 SEARCH / FILTER
         res = await searchDoctorByAdmin({
           page: pageNumber - 1,
           size: 10,
@@ -68,7 +66,6 @@ const DoctorList = () => {
           degree: filters.degree,
         });
       } else {
-        // 📄 NORMAL LIST
         res = await getDoctorListByAdmin({
           page: pageNumber - 1,
           size: 10,
