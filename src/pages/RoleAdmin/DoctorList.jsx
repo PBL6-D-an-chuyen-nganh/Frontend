@@ -45,7 +45,7 @@ const DoctorList = () => {
     setLoading(true);
     try {
       const res = await searchDoctorByAdmin({
-        page: pageNumber - 1,
+        page: pageNumber,
         size: 10,
         name: filters.name,
         position: filters.position,

@@ -1,6 +1,6 @@
 import { axiosPrivate } from "./axios";
 
-export const searchDoctorByAdmin = async (name = '', degree = '', position = '', page = 0, size = 5) => {
+export const searchDoctorByAdmin = async ({ name = '', degree = '', position = '', page, size }) => {
     const response = await axiosPrivate.get('/api/admin/doctors/search-filter', {
         params: {
             name,
