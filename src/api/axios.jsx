@@ -11,7 +11,6 @@ export default axios.create({
   baseURL: BASE_URL,
 });
 
-
 export const axiosPrivate = axios.create({
   baseURL: BASE_URL,
   headers: { "Content-Type": "application/json" },
@@ -40,4 +39,24 @@ axiosPrivate.interceptors.request.use(
 axiosAI.interceptors.request.use(
   (config) => attachToken(config),
   (error) => Promise.reject(error)
+);
+
+const handleSessionError = (error) => {
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+        useAuthStore.getState().logout();
+        if (window.location.pathname !== '/login') {
+            window.location.href = '/login';
+        }
+    }
+    return Promise.reject(error);
+};
+
+axiosPrivate.interceptors.response.use(
+    (response) => response,
+    (error) => handleSessionError(error)
+);
+
+axiosAI.interceptors.response.use(
+    (response) => response,
+    (error) => handleSessionError(error)
 );
