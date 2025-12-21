@@ -49,7 +49,6 @@ function PatientList() {
         DANH SÁCH BỆNH NHÂN
       </h1> 
       <div>
-        <SearchInput placeholder="Tìm kiếm bệnh nhân theo tên, ID..." />
         <div className='flex items-center justify-center'>
           <input
           type="date"

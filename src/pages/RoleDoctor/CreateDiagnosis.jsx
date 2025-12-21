@@ -15,9 +15,6 @@ function CreateDiagnosis() {
     const [toast, setToast] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    console.log("Doctor ID:", doctorId);
-    console.log("AppointmentID nhận được:", appointmentID);  
-
     const initialFormData = {
         patientId: '',
         doctorUserId: '',
@@ -312,7 +309,7 @@ function CreateDiagnosis() {
                     <Btn
                         title={"Lưu"}
                         onClick={handleSave}
-                        path={`/doctor/${doctorId}/patients`}
+                        path={`/doctor/patients`}
                     />
                 </div>
             </div>
