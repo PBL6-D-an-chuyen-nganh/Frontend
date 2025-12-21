@@ -8,7 +8,7 @@ const Infor = ({title, p1, p2, p3, icon}) => {
   };
 
   return (
-    <div className="bg-white border-none max-w-6xl mx-auto">
+    <div className="border-none max-w-6xl mx-auto">
       {/* Header */}
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
