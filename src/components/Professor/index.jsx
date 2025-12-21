@@ -1,11 +1,18 @@
 import React, { useState } from 'react'; 
 import Btn from '../Button';
 import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../../store/useAuthStore';
 const Professor = ({ image, name, introdution, position, userId }) => {
   const navigate = useNavigate();
-
+  const token = useAuthStore((state) => state.token);
   const handleClick = () => {
-    navigate(`/doctors/${userId}`);
+    if(token)
+    {
+      navigate(`/doctors/${userId}`);
+    }else{
+      navigate(`/accounts/doctors/${userId}`);
+    }
+    
   };
 
   return (
