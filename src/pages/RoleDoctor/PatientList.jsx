@@ -5,7 +5,6 @@ import { usePatientFilterStore } from '../../store/usePatientFilterStore';
 
 function PatientList() {
   const { date, setDate, patients, setPatients } = usePatientFilterStore();
-
   const formatDate = (dateStr) => {
     if (!dateStr) return "";
     const [year, month, day] = dateStr.split("-");

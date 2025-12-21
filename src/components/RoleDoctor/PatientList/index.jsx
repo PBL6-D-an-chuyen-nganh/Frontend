@@ -2,8 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { LuNotepadText } from "react-icons/lu";
 
-export default function PatientTable({ patients}) {
-
+export default function PatientTable({patients}) {
   const navigate = useNavigate();
   const onViewDetail = (diagnosisId) => {
     navigate(`/doctor/diagnosis/${diagnosisId}`);
@@ -35,7 +34,7 @@ export default function PatientTable({ patients}) {
                 <LuNotepadText 
                   size={24} 
                   className="inline text-green-900 hover:text-green-700 cursor-pointer" 
-                  onClick = {() => onViewDetail(p.diagnosisID)}
+                  onClick = {() => onViewDetail(p.diagnosisId)}
                 />
               </td>
             </tr>

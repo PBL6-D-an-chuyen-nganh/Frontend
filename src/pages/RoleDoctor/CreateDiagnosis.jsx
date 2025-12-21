@@ -69,9 +69,9 @@ function CreateDiagnosis() {
         const diagnosisData = {
             patientId: formPatientData.patientId,
             doctorUserId: doctorId,
-            disease: formData.description,        
+            disease: formData.conclusion,        
             dateOfDiagnosis: today,
-            doctorNotes: formData.conclusion,
+            doctorNotes: formData.description,
             treatmentPlan: formData.treatmentPlan,
             appointmentId: formPatientData.patientId
         };
