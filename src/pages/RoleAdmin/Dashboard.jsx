@@ -9,19 +9,15 @@ import { getAppointmentOfDoctor } from "../../api/getAppointmentOfDoctor";
 
 function Dashboard() {
   const now = new Date();
-
-  // ===== STATE =====
   const [chartData, setChartData] = useState([]);
   const [users, setUsers] = useState([]);
   const [appointments, setAppointments] = useState([]);
 
-  const [month, setMonth] = useState(now.getMonth()); // 0-11
+  const [month, setMonth] = useState(now.getMonth()); 
   const [year, setYear] = useState(now.getFullYear());
 
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
-
-  // ===== LOAD CHART + USER (load 1 lần) =====
   useEffect(() => {
     const fetchBaseData = async () => {
       setLoading(true);
@@ -50,13 +46,10 @@ function Dashboard() {
 
     fetchBaseData();
   }, []);
-
-  // ===== LOAD APPOINTMENTS THEO THÁNG / NĂM =====
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const res = await getAppointmentOfDoctor(month + 1, year); // API cần 1-12
-
+        const res = await getAppointmentOfDoctor(month + 1, year); 
         if (res?.data) {
           setAppointments(res.data);
         } else {
@@ -74,7 +67,6 @@ function Dashboard() {
     fetchAppointments();
   }, [month, year]);
 
-  // ===== HANDLE CHANGE MONTH =====
   const handleMonthChange = (newMonth, newYear) => {
     setMonth(newMonth);
     setYear(newYear);
