@@ -53,7 +53,7 @@ function ProfessorPage() {
           currentPage,
         );
       } else {
-        data = await getAllDoctors(currentPage - 1, 5);
+        data = await getAllDoctors(currentPage);
       }
 
       setProfessors(data?.content || []);
