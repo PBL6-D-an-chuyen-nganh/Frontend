@@ -45,14 +45,14 @@ const DoctorList = () => {
     setLoading(true);
     try {
       const res = await searchDoctorByAdmin({
-        page: pageNumber,
+        page: pageNumber - 1,
         size: 10,
         name: filters.name,
         position: filters.position,
         degree: filters.degree,
       });
 
-      setDoctors(res?.content || []);
+      setDoctors(res?.content || []); 
       setTotalPages(res?.totalPages || 1);
     } catch (error) {
       console.error(error);
