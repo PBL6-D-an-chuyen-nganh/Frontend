@@ -26,7 +26,7 @@ const UserList = () => {
           5
         );
       } else {
-        res = await getUserList({
+        res = await GetUserList({
           page: pageNumber - 1,
           size: 5,
         });
