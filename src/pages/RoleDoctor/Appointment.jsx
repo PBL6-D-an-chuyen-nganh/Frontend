@@ -15,7 +15,14 @@ function DoctorAppointments() {
   const [expandedId, setExpandedId] = useState(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [pendingCancelId, setPendingCancelId] = useState(null);
-  const [date, setDate] = useState(new Date().toISOString().slice(0, 10)); 
+  const getTodayLocal = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+  const [date, setDate] = useState(getTodayLocal());
 
   const formatDate = (dateStr) => {
     const [year, month, day] = dateStr.split("-");
