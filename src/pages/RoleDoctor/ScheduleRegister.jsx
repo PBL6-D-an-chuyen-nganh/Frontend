@@ -14,7 +14,7 @@ function ScheduleRegister() {
     const [selections, setSelections] = useState([]);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
-    const doctorId = useAuthStore((state) => state.userId);
+    const doctorId = useAuthStore((state) => state.user?.id);
     console.log(doctorId);
 
     useEffect(() => {
