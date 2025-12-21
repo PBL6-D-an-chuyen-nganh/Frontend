@@ -103,11 +103,10 @@ function ProfessorPage() {
       </div>
 
       <div>
-        <h1 className="text-3xl font-semibold text-green-900 text-center mt-6">
+        <h1 className="text-3xl font-semibold text-green-900 text-center m-6">
           CHUYÊN GIA - BÁC SĨ
         </h1>
       </div>
-
       <div>
         <SearchInput
           placeholder="Tìm bác sĩ..."
