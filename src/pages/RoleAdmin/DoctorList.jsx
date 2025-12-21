@@ -64,6 +64,7 @@ const DoctorTable = ({ doctors, setToast, onDataChange }) => {
     setIsConfirmOpen(false);
     setDoctorToAct(null);
   };
+
   const handleActionClick = (doctor) => {
     setDoctorToAct(doctor);
     setIsConfirmOpen(true);
@@ -135,7 +136,7 @@ const DoctorTable = ({ doctors, setToast, onDataChange }) => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {doctors.map((doctor) => (
+            {doctors?.content?.map((doctor) => (
               <tr key={doctor.userId} className="hover:bg-gray-50 transition-colors">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">{doctor.name}</div>
@@ -162,7 +163,6 @@ const DoctorTable = ({ doctors, setToast, onDataChange }) => {
                   </td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">
                   <div className="flex justify-center space-x-3">
-                    {/* Nút Edit - Chỉ hiện hoặc cho phép khi Active tuỳ nghiệp vụ, ở đây mình vẫn để hiện */}
                     <button
                       onClick={() => handleEditClick(doctor.userId)}
                       disabled={loading}
@@ -172,7 +172,6 @@ const DoctorTable = ({ doctors, setToast, onDataChange }) => {
                       <FaEdit size={18} />
                     </button>
 
-                    {/* Logic thay đổi icon dựa trên status */}
                     {doctor.status === 'ACTIVE' ? (
                         <button
                             onClick={() => handleActionClick(doctor)}
@@ -200,14 +199,12 @@ const DoctorTable = ({ doctors, setToast, onDataChange }) => {
         </table>
       </div>
 
-      {/* Loading Overlay */}
       {loading && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-10">
           <div className="bg-white p-4 rounded-lg shadow-lg">Đang xử lý...</div>
         </div>
       )}
 
-      {/* Edit Modal */}
       {selectedDoctor && (
         <EditModal
           isOpen={isModalOpen}
@@ -217,7 +214,6 @@ const DoctorTable = ({ doctors, setToast, onDataChange }) => {
         />
       )}
 
-      {/* Confirm Action Modal (Dùng chung cho cả Delete và Restore) */}
       <ConfirmModal
         isOpen={isConfirmOpen}
         onConfirm={onConfirmAction}
