@@ -1,230 +1,105 @@
-import React, { useState } from 'react';
-import { FaEdit, FaTrash, FaRedo } from 'react-icons/fa'; 
-import EditModal from '../../components/RoleAdmin/EditModal';
-import { editDoctorInfor } from '../../api/getDoctorInforToEdit';
-import { editDoctor } from '../../api/editDoctorInfor';
-import { deleteDoctor } from '../../api/deleteDoctor';
-import { reOpenDoctor } from '../../api/reopenDoctor';
-import ConfirmModal from '../../components/Modal/ConfirmModal';
+import React, { useState, useEffect } from 'react';
+import { FaUserMd } from 'react-icons/fa';
+import DoctorTable from '../../components/RoleAdmin/DoctorTable';
+import { getDoctorListByAdmin } from '../../api/getDoctorListByAdmin';
+import Pagination from '../../components/Home/Page';
+import SearchInput from '../../components/Search';
+import { useNavigate } from 'react-router-dom';
+import Btn from '../../components/Button';
+import Toast from '../../components/Notification';
 
-const DoctorTable = ({ doctors, setToast, onDataChange }) => { 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedDoctor, setSelectedDoctor] = useState(null);
+const DoctorList = () => {
+  const [doctors, setDoctors] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [sortBy, setSortBy] = useState('userId');
+  const [sortDir, setSortDir] = useState('asc');
   const [loading, setLoading] = useState(false);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const [doctorToAct, setDoctorToAct] = useState(null); 
+  const [toast, setToast] = useState(null); 
+  const navigate = useNavigate();
 
-  const getDoctorData = async (doctorId) => {
+  const loadDoctors = async (pageNumber) => {
+    setLoading(true);
     try {
-      const data = await editDoctorInfor(doctorId);
-      setSelectedDoctor(data);
-      setIsModalOpen(true);
-    } catch (error) {
-      console.error('Lỗi khi lấy thông tin bác sĩ:', error);
-      setToast({ type: 'error', message: 'Lỗi khi lấy thông tin bác sĩ' });
-    }
-  };
-
-  const onEdit = async (updatedDoctor) => {
-    setLoading(true);
-    const { message, error } = await editDoctor(updatedDoctor.userId, updatedDoctor);
-    setLoading(false);
-    
-    if (error) {
-      setToast({ type: 'error', message: `Cập nhật thông tin bác sĩ thất bại!` });
-    } else {
-      setToast({ type: 'success', message: 'Cập nhật thông tin bác sĩ thành công!' });
-      onDataChange(); 
-    }
-  };
-
-  const onConfirmAction = async () => {
-    if (!doctorToAct) return;
-    setLoading(true);
-    let result = { error: null, message: '' };
-    if (doctorToAct.status === 'ACTIVE') {
-        result = await deleteDoctor(doctorToAct.userId);
-    } else {
-        result = await reOpenDoctor(doctorToAct.userId); 
-    }
-    setLoading(false);
-    if (result.error) {
-      setToast({ 
-        type: 'error', 
-        message: `${doctorToAct.status === 'ACTIVE' ? 'Xóa' : 'Khôi phục'} thất bại: ${result.error}` 
+      const doctors = await getDoctorListByAdmin({
+        page: pageNumber - 1,
+        size: 10,
+        sortBy,
+        sortDir,
       });
-    } else {
-      setToast({ 
-        type: 'success', 
-        message: `${doctorToAct.status === 'ACTIVE' ? 'Xóa' : 'Khôi phục'} thành công!` 
-      });
-      onDataChange(); 
-    }
-    
-    setIsConfirmOpen(false);
-    setDoctorToAct(null);
-  };
-
-  const handleActionClick = (doctor) => {
-    setDoctorToAct(doctor);
-    setIsConfirmOpen(true);
-  };
-
-  const handleCancelConfirm = () => {
-    setIsConfirmOpen(false);
-    setDoctorToAct(null);
-  };
-
-  const handleEditClick = (doctorId) => {
-    getDoctorData(doctorId);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedDoctor(null);
-  };
-
-  const handleSaveDoctor = (updatedDoctor) => {
-    onEdit(updatedDoctor);
-    handleCloseModal();
-  };
-
-  const getModalContent = () => {
-    if (!doctorToAct) return { label: '', question: '', confirmLabel: '' };
-
-    if (doctorToAct.status === 'ACTIVE') {
-        return {
-            label: "XOÁ BÁC SĨ",
-            question: `Bạn có chắc chắn muốn xóa bác sĩ "${doctorToAct.name}"? Hành động này sẽ vô hiệu hóa tài khoản.`,
-            confirmLabel: "Xóa"
-        };
-    } else {
-        return {
-            label: "KHÔI PHỤC BÁC SĨ",
-            question: `Bạn có muốn cấp lại quyền hoạt động cho bác sĩ "${doctorToAct.name}"?`,
-            confirmLabel: "Khôi phục"
-        };
+      setDoctors(doctors.content || []);
+      setTotalPages(Number(doctors.totalPages || 1));
+    } finally {
+      setLoading(false);
     }
   };
 
-  const modalContent = getModalContent();
+  useEffect(() => {
+    loadDoctors(page);
+  }, [page, sortBy, sortDir]);
+  const handleDataChange = () => {
+    loadDoctors(page);
+  };
 
   return (
-    <>
-      <div className="overflow-x-auto bg-white rounded-lg shadow">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-green-900 uppercase tracking-wider">
-                Họ và Tên
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-green-900 uppercase tracking-wider">
-                Chức vụ
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-green-900 uppercase tracking-wider">
-                Học vị
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-green-900 uppercase tracking-wider">
-                Chuyên khoa
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-green-900 uppercase tracking-wider">
-                Trạng thái
-              </th>
-              <th className="px-6 py-3 text-center text-xs font-medium text-green-900 uppercase tracking-wider">
-                Thao tác
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {doctors?.content?.map((doctor) => (
-              <tr key={doctor.userId} className="hover:bg-gray-50 transition-colors">
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">{doctor.name}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-700">{doctor.position}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-700">{doctor.degree}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-700">{doctor.specialty}</div>
-                </td>
-                <td className="px-6 py-4 text-sm">
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        doctor.status === 'ACTIVE'
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-red-100 text-red-800'
-                      }`}
-                    >
-                      {doctor.status === 'ACTIVE' ? 'ACTIVE' : 'DELETED'}
-                    </span>
-                  </td>
-                <td className="px-6 py-4 whitespace-nowrap text-center">
-                  <div className="flex justify-center space-x-3">
-                    <button
-                      onClick={() => handleEditClick(doctor.userId)}
-                      disabled={loading}
-                      className="text-green-900 hover:text-green-800 cursor-pointer transition-colors disabled:opacity-50"
-                      title="Chỉnh sửa"
-                    >
-                      <FaEdit size={18} />
-                    </button>
+    <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <FaUserMd className="text-green-900 text-3xl" />
+              <h1 className="text-3xl font-bold text-gray-900">QUẢN LÍ BÁC SĨ</h1>
+            </div>
+            <Btn
+              path={'/admin/doctors/create'}
+              title={"Thêm bác sĩ"}
+            />
+          </div>
+          <p className="m-2 text-gray-600">Quản lý danh sách bác sĩ trong hệ thống</p>
 
-                    {doctor.status === 'ACTIVE' ? (
-                        <button
-                            onClick={() => handleActionClick(doctor)}
-                            disabled={loading}
-                            className="text-red-700 hover:text-red-800 cursor-pointer transition-colors disabled:opacity-50"
-                            title="Xóa"
-                        >
-                            <FaTrash size={18} />
-                        </button>
-                    ) : (
-                        <button
-                            onClick={() => handleActionClick(doctor)}
-                            disabled={loading}
-                            className="text-yellow-600 hover:text-yellow-700 cursor-pointer transition-colors disabled:opacity-50"
-                            title="Khôi phục / Cấp lại quyền"
-                        >
-                            <FaRedo size={18} />
-                        </button>
-                    )}
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+          <SearchInput
+            placeholder="Tìm kiếm bác sĩ..."
+            onSearch={(query) => {
+              alert(`Tìm kiếm bác sĩ với từ khóa: ${query}`);
+            }}
+          />
+        </div>
+
+        {/* Main */}
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <p className="text-gray-500">Đang tải..</p>
+          </div>
+        ) : (
+          <>
+            <DoctorTable 
+              doctors={doctors} 
+              setToast={setToast} 
+              onDataChange={handleDataChange}
+            />
+            <div className="mt-4 text-sm text-gray-600">
+              Tổng số: <span className="font-semibold">{doctors.length}</span> bác sĩ
+            </div>
+            <Pagination
+              current={page}
+              total={totalPages}
+              onChange={(p) => setPage(p)}
+            />
+          </>
+        )}
       </div>
 
-      {loading && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-10">
-          <div className="bg-white p-4 rounded-lg shadow-lg">Đang xử lý...</div>
-        </div>
-      )}
-
-      {selectedDoctor && (
-        <EditModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          doctorData={selectedDoctor}
-          onSave={handleSaveDoctor}
+      {/* Toast Notification */}
+      {toast && (
+        <Toast
+          type={toast.type}
+          message={toast.message}
+          onClose={() => setToast(null)}
         />
       )}
-
-      <ConfirmModal
-        isOpen={isConfirmOpen}
-        onConfirm={onConfirmAction}
-        onCancel={handleCancelConfirm}
-        label={modalContent.label}
-        question={modalContent.question}
-        confirmLabel={modalContent.confirmLabel}
-        cancelLabel="Hủy"
-      />
-    </>
+    </div>
   );
 };
 
-export default DoctorTable;
+export default DoctorList;
