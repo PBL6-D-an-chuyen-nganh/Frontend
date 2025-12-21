@@ -11,7 +11,14 @@ const CHATBOT_API = import.meta.env.VITE_AI_API_URL;
 export default function ChatbotWidget() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { role: 'assistant', content: 'Xin chào! Tôi là chatbot y tế. Bạn cần tư vấn gì?' },
+    { 
+        role: 'assistant', 
+        content: `Xin chào! Mình là chatbot y tế da liễu. Mình có thể giúp bạn:
+      - Chẩn đoán sơ bộ từ ảnh anh/ chị tải lên
+      - Tra cứu bệnh: triệu chứng / nguyên nhân / điều trị / phòng ngừa
+      - Gợi ý bệnh theo mô tả triệu chứng
+      - Đặt lịch khám với bác sĩ da liễu`
+    },
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
