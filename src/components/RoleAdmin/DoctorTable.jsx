@@ -41,7 +41,6 @@ const DoctorTable = ({ doctors, setToast, onDataChange }) => {
 
   const onDelete = async () => {
     if (!doctorToDelete) return;
-    
     setLoading(true);
     const { message, error } = await deleteDoctor(doctorToDelete.userId);
     setLoading(false);
@@ -61,9 +60,7 @@ const DoctorTable = ({ doctors, setToast, onDataChange }) => {
     if (!doctorToDelete) return;
     
     setLoading(true);
-    // Cập nhật status thành ACTIVE
-    const updatedDoctor = { ...doctorToDelete, status: 'ACTIVE' };
-    const { message, error } = await editDoctor(doctorToDelete.userId, updatedDoctor);
+    const { message, error } = await reOpenDoctor(doctorToDelete.userId);
     setLoading(false);
     
     if (error) {
@@ -186,7 +183,7 @@ const DoctorTable = ({ doctors, setToast, onDataChange }) => {
                       <button
                         onClick={() => handleReopenClick(doctor)}
                         disabled={loading}
-                        className="text-blue-700 hover:text-blue-800 cursor-pointer transition-colors disabled:opacity-50"
+                        className="text-green-900 hover:text-green-700 cursor-pointer transition-colors disabled:opacity-50"
                         title="Khôi phục"
                       >
                         <FaUndo size={18} />
