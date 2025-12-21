@@ -21,7 +21,7 @@ export default function UserManagement() {
       if (searchTerm.trim() !== '') {
         response = await searchUserByAdmin(searchTerm, page - 1, 5);
       } else {
-        response = await GetUserList(page);
+        response = await GetUserList(page - 1);
       }
       if (response.error) {
         setToast({ type: 'error', message: response.error });
