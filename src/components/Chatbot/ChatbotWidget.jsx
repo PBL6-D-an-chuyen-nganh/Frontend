@@ -14,10 +14,10 @@ export default function ChatbotWidget() {
     { 
         role: 'assistant', 
         content: `Xin chào! Mình là chatbot y tế da liễu. Mình có thể giúp bạn:
-      - Chẩn đoán sơ bộ từ ảnh anh/ chị tải lên
-      - Tra cứu bệnh: triệu chứng / nguyên nhân / điều trị / phòng ngừa
-      - Gợi ý bệnh theo mô tả triệu chứng
-      - Đặt lịch khám với bác sĩ da liễu`
+- Chẩn đoán sơ bộ từ ảnh anh/ chị tải lên
+- Tra cứu bệnh: triệu chứng / nguyên nhân / điều trị / phòng ngừa
+- Gợi ý bệnh theo mô tả triệu chứng
+- Đặt lịch khám với bác sĩ da liễu`
     },
   ]);
   const [input, setInput] = useState('');
