@@ -50,8 +50,7 @@ function ProfessorPage() {
           filters.name.trim(),
           filters.degree,      
           filters.position,    
-          currentPage - 1,
-          5
+          currentPage,
         );
       } else {
         data = await getAllDoctors(currentPage - 1, 5);
