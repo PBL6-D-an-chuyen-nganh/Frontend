@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaEdit, FaTrash, FaUserMd, FaUndo } from 'react-icons/fa';
-import { EditModal } from '../RoleAdmin/EditModal';
+import EditModal from './EditModal';
 import { editDoctorInfor } from '../../api/getDoctorInforToEdit';
 import { editDoctor } from '../../api/editDoctorInfor';
 import { deleteDoctor } from '../../api/deleteDoctor';
