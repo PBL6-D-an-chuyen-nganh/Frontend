@@ -138,15 +138,13 @@ const DoctorList = () => {
             Quản lý danh sách bác sĩ trong hệ thống
           </p>
 
+          <h1 className="text-3xl font-semibold text-green-900 text-center mt-6">
+            CHUYÊN GIA - BÁC SĨ
+          </h1>
           <SearchInput
             placeholder="Tìm bác sĩ..."
             onSearch={handleSearch}
           />
-
-          <h1 className="text-3xl font-semibold text-green-900 text-center mt-6">
-            CHUYÊN GIA - BÁC SĨ
-          </h1>
-
           <div className="flex justify-center mt-6 mb-8">
             <Dropdown
               options={positionOptions}
