@@ -23,19 +23,18 @@ export default function UserManagement() {
       } else {
         response = await GetUserList(page - 1);
       }
-      if (response.error) {
-        setToast({ type: 'error', message: response.error });
-      } else {
-        const data = response.users || {}; 
-        setUsers(data.content || []); 
-        setTotalPages(data.totalPages || 1);
-      }
+
+      setUsers(response.content || []);
+      setTotalPages(response.totalPages || 1);
+
     } catch (error) {
-      console.error(error); 
+      console.error(error);
       setToast({ type: 'error', message: 'Không thể tải dữ liệu người dùng.' });
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
+
 
   useEffect(() => {
     fetchUsers();
