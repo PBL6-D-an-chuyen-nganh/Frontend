@@ -7,6 +7,7 @@ import Dropdown from "../../components/Dropdown";
 import Btn from "../../components/Button";
 import Toast from "../../components/Notification";
 import { searchDoctorByAdmin } from "../../api/searchDoctorByAdmin";
+import { getDoctorListByAdmin } from "../../api/getDoctorListByAdmin";
 
 const DoctorList = () => {
   const [doctors, setDoctors] = useState([]);
@@ -21,8 +22,10 @@ const DoctorList = () => {
     degree: "",
   });
 
-  const [selectedPositionLabel, setSelectedPositionLabel] = useState("Chức vụ");
-  const [selectedDegreeLabel, setSelectedDegreeLabel] = useState("Học vị");
+  const [selectedPositionLabel, setSelectedPositionLabel] =
+    useState("Chức vụ");
+  const [selectedDegreeLabel, setSelectedDegreeLabel] =
+    useState("Học vị");
 
   const positionOptions = [
     { id: "all", label: "Tất cả" },
@@ -41,18 +44,38 @@ const DoctorList = () => {
     { id: "BS", label: "Bác sĩ" },
   ];
 
+  // 👉 Kiểm tra có đang search / filter không
+  const hasActiveFilters = () => {
+    return (
+      filters.name.trim() !== "" ||
+      filters.position !== "" ||
+      filters.degree !== ""
+    );
+  };
+
   const loadDoctors = async (pageNumber) => {
     setLoading(true);
     try {
-      const res = await searchDoctorByAdmin({
-        page: pageNumber - 1,
-        size: 10,
-        name: filters.name,
-        position: filters.position,
-        degree: filters.degree,
-      });
+      let res;
 
-      setDoctors(res?.content || []); 
+      if (hasActiveFilters()) {
+        // 🔍 SEARCH / FILTER
+        res = await searchDoctorByAdmin({
+          page: pageNumber - 1,
+          size: 10,
+          name: filters.name,
+          position: filters.position,
+          degree: filters.degree,
+        });
+      } else {
+        // 📄 NORMAL LIST
+        res = await getDoctorListByAdmin({
+          page: pageNumber - 1,
+          size: 10,
+        });
+      }
+
+      setDoctors(res?.content || []);
       setTotalPages(res?.totalPages || 1);
     } catch (error) {
       console.error(error);
@@ -118,7 +141,10 @@ const DoctorList = () => {
             Quản lý danh sách bác sĩ trong hệ thống
           </p>
 
-          <SearchInput placeholder="Tìm bác sĩ..." onSearch={handleSearch} />
+          <SearchInput
+            placeholder="Tìm bác sĩ..."
+            onSearch={handleSearch}
+          />
 
           <h1 className="text-3xl font-semibold text-green-900 text-center mt-6">
             CHUYÊN GIA - BÁC SĨ
@@ -142,7 +168,7 @@ const DoctorList = () => {
         {/* Main */}
         {loading ? (
           <div className="flex justify-center items-center h-64">
-            <p className="text-gray-500">Đang tải..</p>
+            <p className="text-gray-500">Đang tải...</p>
           </div>
         ) : (
           <>
