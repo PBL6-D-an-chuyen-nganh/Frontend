@@ -5,7 +5,7 @@ import { editDoctorInfor } from '../../api/getDoctorInforToEdit';
 import { editDoctor } from '../../api/editDoctorInfor';
 import { deleteDoctor } from '../../api/deleteDoctor';
 import { reOpenDoctor } from '../../api/reopenDoctor';
-import ConfirmModal from '../Modal/ConfirmModal';
+import ConfirmModal from '../../components/Modal/ConfirmModal';
 
 const DoctorTable = ({ doctors, setToast, onDataChange }) => { 
   const [isModalOpen, setIsModalOpen] = useState(false);
